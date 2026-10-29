@@ -13,7 +13,8 @@ HERE = Path(__file__).resolve().parent
 SRC = HERE / "index.html"
 OUT = HERE / "docs"
 # Venue published on Alex's decision (29/10): drawn textures only, no photos or names inside.
-MODELS = ["kit-google.glb", "lieu-574.glb", "mobilier-574.glb", "disposition-574.json", "disposition-validee.json"]
+MODELS = ["kit-google.glb", "lieu-574.glb", "mobilier-574.glb", "disposition-574.json", "disposition-validee.json",
+          "plan-incendie-574.jpg"]  # fire plan cropped above its title block (no architect contact details)
 # The only e-mail address allowed online: where visitors send their 3D layout.
 ALLOWED_EMAILS = {"alexandre.cormeraie@sncf.fr"}
 

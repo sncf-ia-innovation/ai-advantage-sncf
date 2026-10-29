@@ -157,6 +157,28 @@ header.hero .wrap{position:relative}
 .v3d-tools .grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
 .v3d-tools .sep{color:var(--faint)}
 .v3d-fshint{margin:6px 0 0}
+.v3d-intro{margin:-6px 0 16px;max-width:72ch;font-size:16px;line-height:1.55;color:var(--ink)}
+.v3d-intro strong{font-weight:500;color:var(--ink);box-shadow:inset 0 -0.45em 0 rgba(192,40,30,.16)}
+.v3d-layout{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:900px){.v3d-layout{grid-template-columns:minmax(220px,300px) minmax(0,1fr);align-items:start}}
+.v3d-layout>.v3d{min-width:0}
+.v3d-plan{margin:0}
+.v3d-plan a{display:block;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+.v3d-plan a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.v3d-plan img{display:block;width:100%;height:auto}
+@media (max-width:899px){.v3d-plan img{max-height:60vh;object-fit:contain}}
+.v3d-plan figcaption{margin-top:6px;font-size:13px;color:var(--muted)}
+.v3d-coach{position:absolute;top:12px;left:12px;z-index:2;max-width:min(320px,calc(100% - 24px));padding:12px 14px 8px;border-radius:12px;background:rgba(255,255,255,.94);color:#1d1d1f;box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:13px;line-height:1.4}
+.v3d-coach[hidden]{display:none}
+.v3d-coach .t{margin:0 0 6px;font-size:14px;font-weight:500}
+.v3d-coach ul{margin:0;padding:0;list-style:none}
+.v3d-coach li{display:grid;grid-template-columns:22px 1fr;gap:4px;margin:3px 0}
+.v3d-coach .ic{text-align:center}
+.v3d-coach .v3d-link{color:#1a5fd0;font-size:13px;margin-top:4px}
+.v3d-more{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.v3d-more summary{cursor:pointer;padding:4px 0}
+.v3d-more summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.v3d-more p{margin:4px 0 0}
 .v3d-public-note{margin:-8px 0 14px;padding:10px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--ink);border-radius:0 8px 8px 0;font-size:14px}
 .v3d-public-note[hidden]{display:none}
 html[data-public="1"] #v3dImpOpen,html[data-public="1"] #v3dImp,html[data-public="1"] #v3dImpUndo{display:none!important}
@@ -250,7 +272,13 @@ html.v3d-lock{overflow:hidden}
 <section id="plan3d">
   <div class="wrap">
     <h2 data-i18n="d3_h">Plan 3D du lieu</h2>
+    <p class="v3d-intro"><span data-i18n="v3d_intro1">Voici le lieu : le 574 à Saint-Denis, 3e étage, aile sud. Ci-dessous, le plan du bâtiment (plan incendie) et sa maquette 3D.</span> <strong data-i18n="v3d_intro2">Tout ce qui est dans la zone rouge est l'espace sur lequel on peut travailler ; le reste est grisé.</strong> <span data-i18n="v3d_intro3">Nous avons remodélisé le lieu et disposé les éléments que vous nous avez proposés. Dites-nous si ça vous convient. Vous pouvez aussi les déplacer vous-mêmes dans la 3D.</span></p>
     <p class="v3d-public-note" id="v3dPublicNote" data-i18n="v3d_public_note" hidden>Ce site n'est relié à rien : vos modifications (3D et calendrier) restent dans votre navigateur. Pour les partager, copiez-les et envoyez-les à Alexandre, qui mettra la version commune à jour.</p>
+    <div class="v3d-layout">
+    <figure class="v3d-plan">
+      <a href="3d/plan-incendie-574.jpg" target="_blank" rel="noopener"><img src="3d/plan-incendie-574.jpg" width="1100" height="1720" loading="lazy" data-i18n-alt="v3d_plan_alt" alt="Plan du 3e étage, aile sud, avec la zone de l'événement entourée en rouge"></a>
+      <figcaption data-i18n="v3d_plan_cap">Plan du 3e étage (plan incendie). En rouge : la zone de l'événement. Cliquez pour agrandir.</figcaption>
+    </figure>
     <div class="v3d" id="v3d">
       <div class="v3d-bar" id="v3dBar" hidden>
         <span class="grp" role="group">
@@ -263,6 +291,16 @@ html.v3d-lock{overflow:hidden}
       <div class="v3d-stage" id="v3dStage">
         <canvas id="v3dCanvas" tabindex="0" role="application" aria-label="Maquette 3D du kit Google : faites glisser pour tourner, cliquez un élément pour le sélectionner, Entrée pour passer au suivant, Q et E pour le pivoter, flèches pour le déplacer."></canvas>
         <div class="v3d-msg" id="v3dMsg" role="status" aria-live="polite">Chargement de la 3D…</div>
+        <div class="v3d-coach" id="v3dCoach" hidden>
+          <p class="t" data-i18n="v3d_coach_t">Cette 3D se modifie à la main</p>
+          <ul>
+            <li><span class="ic" aria-hidden="true">✋</span><span data-i18n="v3d_coach_1">Cliquez un élément pour l'attraper, glissez-le pour le déplacer</span></li>
+            <li><span class="ic" aria-hidden="true">⟳</span><span data-i18n="v3d_coach_2">Tournez-le avec l'anneau qui apparaît autour</span></li>
+            <li><span class="ic" aria-hidden="true">✕</span><span data-i18n="v3d_coach_3">Retirez-le avec « Retirer » sous la 3D (ou la touche Suppr)</span></li>
+            <li><span class="ic" aria-hidden="true">↻</span><span data-i18n="v3d_coach_4">Glissez dans le vide pour tourner la vue, molette pour zoomer</span></li>
+          </ul>
+          <button type="button" class="v3d-link" id="v3dCoachOk" data-i18n="v3d_coach_ok">J'ai compris</button>
+        </div>
       </div>
       <p class="status v3d-fshint" id="v3dFsHint" hidden></p>
       <div class="v3d-tools" id="v3dTools" hidden>
@@ -286,7 +324,8 @@ html.v3d-lock{overflow:hidden}
         <div class="row"><button type="button" class="v3d-link" id="v3dClCopy"></button><button type="button" class="v3d-link" id="v3dClClear"></button><span class="ok" id="v3dClOk" role="status" aria-live="polite"></span></div>
       </div>
       <div class="v3d-cap" id="v3dCap" aria-live="polite"></div>
-      <p class="status" data-i18n="v3d_hint">Vue d'ensemble : glissez dans le vide pour tourner, molette ou pincement pour zoomer vers le curseur, clic droit pour déplacer la vue, double-clic au sol pour s'y rendre. Cliquez un élément (kit ou mobilier) : glissez-le pour le déplacer, tournez-le avec l'anneau autour (Maj = par 15°) ; Q / E aussi. « Déplacer : une pièce » (ou double-clic) pour bouger une pièce seule. Suppr : retirer l'élément. F : plein écran ; Échap pour désélectionner.</p>
+      <details class="v3d-more"><summary data-i18n="v3d_more">Toutes les commandes (souris et clavier)</summary>
+        <p class="status" data-i18n="v3d_hint">Vue d'ensemble : glissez dans le vide pour tourner, molette ou pincement pour zoomer vers le curseur, clic droit pour déplacer la vue, double-clic au sol pour s'y rendre. Cliquez un élément (kit ou mobilier) : glissez-le pour le déplacer, tournez-le avec l'anneau autour (Maj = par 15°) ; Q / E aussi. « Déplacer : une pièce » (ou double-clic) pour bouger une pièce seule. Suppr : retirer l'élément. F : plein écran ; Échap pour désélectionner.</p></details>
       <p class="status" id="v3dHintChar" data-i18n="v3d_hint_char" hidden>Personnage : un petit personnage se promène dans la salle, vu de derrière. ↑ / ↓ (ou Z / S, W / S) pour avancer ou reculer ; ← / → (ou Q / D, A / D) pour tourner (Maj pour courir). Glissez pour tourner la caméra autour de lui, molette pour l'éloigner ou le rapprocher, cliquez au sol pour qu'il y aille. Les éléments se sélectionnent et se déplacent comme d'habitude. F : plein écran. Échap pour quitter.</p>
       <p class="status" id="v3dHintWalk" data-i18n="v3d_hint_walk" hidden>Visite : vous êtes dans la salle, à hauteur d'yeux. Glissez pour regarder autour de vous ; W A S D ou les flèches pour marcher (Maj pour aller plus vite) ; cliquez au sol pour y aller ; la molette fait avancer ou reculer. Les éléments et le mobilier se déplacent et se tournent (anneau) comme en vue d'ensemble. F : plein écran, plus immersif. Échap pour quitter.</p>
       <div class="v3d-share" id="v3dShare" hidden>
@@ -393,6 +432,13 @@ var I18N = (function(){
     e3_tag:"Welcome", e3_h:"Badges at the entrance", e3_p:"A registration area to pick up badges. Guests arrive via 12 rue Jean-Philippe Rameau: someone must walk them to 574.",
     
     d3_h:"3D site plan",
+    v3d_intro1:"Here is the venue: the 574 building in Saint-Denis, 3rd floor, south wing. Below are the building plan (fire safety plan) and its 3D model.",
+    v3d_intro2:"Everything inside the red zone is the space we can work with; the rest is greyed out.",
+    v3d_intro3:"We have modelled the venue again and placed the elements you suggested. Let us know if it works for you. You can also move them yourselves in the 3D.",
+    v3d_plan_cap:"3rd floor plan (fire safety plan). In red: the event zone. Click to enlarge.", v3d_plan_alt:"3rd floor plan, south wing, with the event zone circled in red",
+    v3d_coach_t:"You can change this 3D by hand", v3d_coach_1:"Click an element to grab it, drag it to move it", v3d_coach_2:"Turn it with the ring that appears around it",
+    v3d_coach_3:"Remove it with “Remove” below the 3D (or the Delete key)", v3d_coach_4:"Drag empty space to turn the view, wheel to zoom", v3d_coach_ok:"Got it",
+    v3d_more:"All controls (mouse and keyboard)",
     v3d_hint:"Overview: drag empty space to orbit, wheel or pinch to zoom towards the cursor, right-drag to pan, double-click the floor to fly there. Click an element (kit or furniture): drag it to move it, turn it with the ring around it (Shift = 15° steps); Q / E work too. “Move: one piece” (or double-click) moves a single piece. Del: remove the element. F: full screen; Esc to deselect.",
     v3d_soon:"The 574 venue model could not be loaded: the kit is shown on a grid for now.",
     v3d_aria:"3D model of the Google kit: drag to rotate, click an element to select it, Enter for the next one, Q and E to rotate it, arrow keys to move it.",
@@ -444,7 +490,7 @@ var I18N = (function(){
     s_b_pause:"Break", s_b_crm:"Deep-dive: customer data and call centre", s_b_frugal:"Frugal IT for dedicated subsidiaries",
     s_new:"New block",
     v3d_loading:"Loading the 3D…", v3d_err:"The 3D view could not be loaded (connection or file). The rest of the page works normally.", v3d_retry:"Try again",
-    v3d_none:"No element selected · {n} elements to move", v3d_detached:"detached", v3d_left:"Rotate left", v3d_right:"Rotate right",
+    v3d_none:"Click an element to grab it · {n} elements you can move", v3d_detached:"detached", v3d_left:"Rotate left", v3d_right:"Rotate right",
     v3d_detach:"Detach a piece", v3d_regroup:"Group again", v3d_confirm:"Put every element back in its original place?",
     m_moved:"Block moved.", m_deleted:"Block deleted.", m_added:"New block added. Type its title.", m_badtime:"Time not understood. Example: 14:30.",
     m_baddur:"Duration not understood. Example: 30.", m_tpl:"Replace the current schedule with template Option ", m_tpl2:"?",
@@ -508,7 +554,7 @@ var I18N = (function(){
     v3d_public_note:"Ce site n'est relié à rien : vos modifications (3D et calendrier) restent dans votre navigateur. Pour les partager, copiez-les et envoyez-les à Alexandre, qui mettra la version commune à jour.",
     v3d_pub_msg:"Vous avez modifié le plan. Copiez vos modifications et envoyez-les à Alexandre pour qu'il mette à jour la version commune.", v3d_later:"Plus tard", v3d_pill:"Envoyer mes modifications",
     v3d_loading:"Chargement de la 3D…", v3d_err:"La vue 3D n'a pas pu être chargée (connexion ou fichier). Le reste de la page fonctionne normalement.", v3d_retry:"Réessayer",
-    v3d_none:"Aucun élément sélectionné · {n} éléments déplaçables", v3d_detached:"détachée", v3d_left:"Pivoter à gauche", v3d_right:"Pivoter à droite",
+    v3d_none:"Cliquez un élément pour l'attraper · {n} éléments déplaçables", v3d_detached:"détachée", v3d_left:"Pivoter à gauche", v3d_right:"Pivoter à droite",
     v3d_detach:"Détacher une pièce", v3d_regroup:"Rattacher", v3d_confirm:"Remettre tous les éléments à leur place d'origine ?",
     m_moved:"Bloc déplacé.", m_deleted:"Bloc supprimé.", m_added:"Nouveau bloc ajouté. Tapez son titre.", m_badtime:"Heure non comprise. Exemple : 14h30.",
     m_baddur:"Durée non comprise. Exemple : 30.", m_tpl:"Repartir du modèle Option ", m_tpl2:" ? Le planning actuel sera remplacé.",
@@ -541,6 +587,11 @@ var I18N = (function(){
       var k = el.getAttribute("data-i18n");
       if (!(k in original)) original[k] = el.textContent;
       el.textContent = lang === "en" && EN[k] ? EN[k] : original[k];
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function(el){
+      var k = el.getAttribute("data-i18n-alt");
+      if (!(k in original)) original[k] = el.alt;
+      el.alt = lang === "en" && EN[k] ? EN[k] : original[k];
     });
     var add = document.getElementById("todoAdd");
     if (add){
@@ -886,8 +937,13 @@ function makeEditable(el, label, value, onSave){
   var T = null;                          // three.js namespace once loaded
   var S = null;                          // scene objects once ready
 
+  // "How to" card over the 3D: shown once the view is ready, until it is dismissed or the visitor moves something.
+  var coachEl = document.getElementById("v3dCoach"), COACH_KEY = "aiadv-sncf-3d-coach";
+  function coachSeen(){ try { return localStorage.getItem(COACH_KEY) === "1"; } catch(e){ return false; } }
+  function coachDone(){ coachEl.hidden = true; try { localStorage.setItem(COACH_KEY, "1"); } catch(e){} }
+  document.getElementById("v3dCoachOk").addEventListener("click", function(){ coachDone(); canvas.focus({preventScroll:true}); });
   function renderMsg(){
-    if (state === "ready"){ msgEl.hidden = true; return; }
+    if (state === "ready"){ msgEl.hidden = true; if (!coachSeen()) coachEl.hidden = false; return; }
     msgEl.hidden = false; msgEl.className = "v3d-msg" + (state === "error" ? " err" : "");
     msgEl.textContent = "";
     if (state === "error"){
@@ -1038,7 +1094,7 @@ function makeEditable(el, label, value, onSave){
     raw = raw.replace(/[\s\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]/g, function(c){ return "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4); });
     return t("v3d_sh_head") + " — " + new Date().toISOString().slice(0, 10) + "\n" + MARK + raw;
   }
-  function notifyChange(){ try { document.dispatchEvent(new Event("aiadv:changed")); } catch(e){} }
+  function notifyChange(){ if (!coachEl.hidden) coachDone(); try { document.dispatchEvent(new Event("aiadv:changed")); } catch(e){} }
   function mailHref(){
     var code = shareCode(), to = shMail.getAttribute("data-mail"), subj = t("v3d_sh_subj");
     var mk = function(body){ return "mailto:" + to + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body); };
@@ -1400,6 +1456,42 @@ function makeEditable(el, label, value, onSave){
     });
     gltf.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
     if (mobGltf) mobGltf.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
+
+    // Outside the red event zone, the venue and its furniture are greyed out so the usable area reads at a glance.
+    // The zone is drawn once into a mask texture; each fragment looks up its floor position (x, z) in it,
+    // so a piece of furniture dragged out of the zone turns grey too. The kit keeps its colours.
+    var ezPts = dispo && Array.isArray(dispo.event_zone) ? dispo.event_zone.filter(function(p){ return p && isFinite(p[0]) && isFinite(p[1]); }) : [];
+    if (ezPts.length > 2 && (venue || mobGltf)){
+      var zx0 = Infinity, zz0 = Infinity, zx1 = -Infinity, zz1 = -Infinity;
+      ezPts.forEach(function(p){ zx0 = Math.min(zx0, p[0]); zx1 = Math.max(zx1, p[0]); zz0 = Math.min(zz0, p[1]); zz1 = Math.max(zz1, p[1]); });
+      zx0 -= 0.5; zz0 -= 0.5; zx1 += 0.5; zz1 += 0.5;
+      var zcv = document.createElement("canvas"); zcv.width = zcv.height = 1024;
+      var zcx = zcv.getContext("2d");
+      zcx.fillStyle = "#000"; zcx.fillRect(0, 0, 1024, 1024); zcx.fillStyle = "#fff"; zcx.beginPath();
+      ezPts.forEach(function(p, i){ var u = (p[0] - zx0) / (zx1 - zx0) * 1024, v = (p[1] - zz0) / (zz1 - zz0) * 1024; if (i) zcx.lineTo(u, v); else zcx.moveTo(u, v); });
+      zcx.closePath(); zcx.fill();
+      var zTex = new T.CanvasTexture(zcv); zTex.flipY = false;
+      var zUni = {zoneTex: {value: zTex}, zoneBox: {value: new T.Vector4(zx0, zz0, 1 / (zx1 - zx0), 1 / (zz1 - zz0))}};
+      var greyOut = function(m){
+        if (!m || m.userData.__zone || /^Ligne_zone/.test(m.name || "")) return;   // the red line itself stays red
+        m.userData.__zone = 1;
+        m.onBeforeCompile = function(sh){
+          sh.uniforms.zoneTex = zUni.zoneTex; sh.uniforms.zoneBox = zUni.zoneBox;
+          sh.vertexShader = "varying vec3 vZoneW;\n" + sh.vertexShader.replace("#include <project_vertex>",
+            "#include <project_vertex>\nvZoneW = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+          sh.fragmentShader = "uniform sampler2D zoneTex;\nuniform vec4 zoneBox;\nvarying vec3 vZoneW;\n" + sh.fragmentShader.replace("#include <dithering_fragment>",
+            "#include <dithering_fragment>\n{ vec2 zuv = (vZoneW.xz - zoneBox.xy) * zoneBox.zw;\n" +
+            "  float zin = (zuv.x < 0.0 || zuv.y < 0.0 || zuv.x > 1.0 || zuv.y > 1.0) ? 0.0 : texture2D(zoneTex, zuv).r;\n" +
+            "  float zg = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114));\n" +
+            "  gl_FragColor.rgb = mix(vec3(0.5 + zg * 0.4), gl_FragColor.rgb, zin); }");
+        };
+        m.customProgramCacheKey = function(){ return "zone-grey"; };
+        m.needsUpdate = true;
+      };
+      [venue, mobGltf && mobGltf.scene].forEach(function(r){
+        if (r) r.traverse(function(o){ if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach(greyOut); });
+      });
+    }
 
     // Frame on the event zone: the kit as placed, plus the zone markers.
     var box = new T.Box3();
