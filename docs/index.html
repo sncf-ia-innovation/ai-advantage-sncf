@@ -34,6 +34,12 @@ h1{font-size:clamp(30px,5vw,46px);line-height:1.12;font-weight:400;letter-spacin
 h2{font-size:22px;font-weight:400;letter-spacing:-.01em;margin:0 0 20px}
 h3{font-size:16px;font-weight:500;margin:0 0 6px}
 .lead{font-size:18px;color:var(--muted);max-width:680px;margin:0}
+.rsvp{margin:28px 0 0}
+.rsvp a{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:15px;font-weight:400;transition:transform .15s,box-shadow .15s}
+.rsvp a:hover{transform:translateY(-1px);box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 35%,transparent)}
+.rsvp a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+:root[data-theme="dark"] .rsvp a{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rsvp a{color:#0f1115}}
 .facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin:28px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
 section{padding:56px 0}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
@@ -159,6 +165,7 @@ header.hero .wrap{position:relative}
       <li data-i18n="f_people">~100 personnes</li>
       <li data-i18n="f_google">Matériel, contenu et intervenants Google pris en charge par Google</li>
     </ul>
+    <p class="rsvp"><a href="https://rsvp.withgoogle.com/events/google_cloud_ai_advantage_for_sncf" target="_blank" rel="noopener"><span data-i18n="rsvp">S'inscrire à l'événement</span> <span aria-hidden="true">→</span></a></p>
   </div>
 </header>
 
@@ -272,6 +279,7 @@ var I18N = (function(){
     lead:"Half a day at 574 Rimbaud to show what we already do with AI, look ahead, and leave with concrete levers for our use cases.",
     f_date:"Tuesday 17 November (to be confirmed)", f_time:"About 12:00 to 17:30", f_people:"~100 people",
     f_google:"Equipment, content and Google speakers provided by Google",
+    rsvp:"Register for the event",
     principe_h:"The idea",
     p1_h:"A European tour", p1_p:"Google Cloud is taking AI Advantage to more than 30 organisations across Europe in 2026 and offers us to host one stop.",
     p2_h:"They come to us", p2_p:"Google brings the demos, logistics, content and speakers. They set up the day before and pack up right after the event.",
