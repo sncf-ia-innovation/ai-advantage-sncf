@@ -1,0 +1,71 @@
+{
+ "_notes": "Disposition par defaut du kit Google dans le lieu 574 (R+3 sud). Meme repere que lieu-574.glb et mobilier-574.glb : metres, Y en haut, origine au centre de la zone evenement ; x/z = position au sol du noeud parent de l'element, rotY_deg = rotation autour de l'axe vertical (sens three.js, positif = anti-horaire vu de dessus ; a 0 la face avant de l'element regarde vers +Z). Verifie (grille 5 cm) : aucune emprise ne touche le fixe (murs, noyaux, mur plein du hub, tunnel d'entree, casiers, etageres...) ni le mobilier deplacable a sa position par defaut (mobilier-574.glb), 0,6 m mini entre elements ; ni les rideaux Mob_Rideau_* ouverts (defaut) ni leur trace ferme. Presentation_Scene est posee devant le mur plein du hub (ecrans) ; ses 100 chaises (PS_Chaise_*) font double emploi avec les rangs de chaises du lieu (Mob_Rang_*) : la visionneuse peut les masquer. AI Quick-Build est dans la zone du fond liberee (table poussee au fond, chaises contre les vitres). Meet the Experts a l'agora, Creative Agent cote terrasse, accueil a la sortie du tunnel d'entree.",
+ "hide_children_prefix": {
+  "Presentation_Scene": "PS_Chaise"
+ },
+ "Presentation_Scene": {
+  "x": -2.075,
+  "z": -13.85,
+  "rotY_deg": 26.2
+ },
+ "Accueil_Registration": {
+  "x": 9.263,
+  "z": 9.28,
+  "rotY_deg": -30.6
+ },
+ "Corner_AIQuickBuild": {
+  "x": -8.232,
+  "z": -9.279,
+  "rotY_deg": 38.1
+ },
+ "Corner_MeetTheExperts": {
+  "x": 4.861,
+  "z": 6.986,
+  "rotY_deg": -133.2
+ },
+ "Corner_CreativeAgent": {
+  "x": 14.346,
+  "z": 10.178,
+  "rotY_deg": -167.2
+ },
+ "Objets_Brandes": {
+  "x": 5.86,
+  "z": 10.379,
+  "rotY_deg": -109.2
+ },
+ "Totem_AIAdvantage": {
+  "x": 2.467,
+  "z": 2.695,
+  "rotY_deg": 8.7
+ },
+ "Totem_BestPlatform": {
+  "x": 6.16,
+  "z": 1.297,
+  "rotY_deg": -34.9
+ },
+ "Totem_PlaysNice": {
+  "x": 1.27,
+  "z": 8.881,
+  "rotY_deg": 58.0
+ },
+ "Table_Haute_1": {
+  "x": 1.769,
+  "z": 4.29,
+  "rotY_deg": 0.0
+ },
+ "Table_Haute_2": {
+  "x": 4.962,
+  "z": 3.493,
+  "rotY_deg": 0.0
+ },
+ "Table_Haute_3": {
+  "x": 0.665,
+  "z": 1.498,
+  "rotY_deg": 0.0
+ },
+ "Table_Haute_4": {
+  "x": -1.429,
+  "z": 1.594,
+  "rotY_deg": 0.0
+ }
+}

@@ -12,7 +12,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "index.html"
 OUT = HERE / "docs"
-MODELS = ["kit-google.glb", "lieu-574.glb", "disposition-574.json"]
+# Venue published on Alex's decision (29/10): drawn textures only, no photos or names inside.
+MODELS = ["kit-google.glb", "lieu-574.glb", "mobilier-574.glb", "disposition-574.json"]
+# The only e-mail address allowed online: where visitors send their 3D layout.
+ALLOWED_EMAILS = {"alexandre.cormeraie@sncf.fr"}
 
 
 def drop(html, pattern, what):
@@ -26,6 +29,8 @@ def main():
     html = SRC.read_text(encoding="utf-8")
     # To-do section and its script (tasks name people and site security steps).
     html = drop(html, r'<section id="etapes">.*?</section>\s*', "the to-do section")
+    html = drop(html, r'<section id="google-qa">.*?</section>\s*', "the Google Q&A section")
+    html = drop(html, r'<script>\s*// ── Google Q&A.*?</script>\s*', "the Google Q&A script")
     html = drop(html, r'<script>\s*// ── To-do.*?</script>\s*', "the to-do script")
     # Logistics card: delivery dock, service lift, overnight storage.
     html = drop(html, r'\s*<div class="card"><span class="tag" data-i18n="e4_tag">.*?</div>(?=\s*</div>\s*</div>\s*</section>)',
@@ -36,8 +41,9 @@ def main():
         if word in html:
             raise SystemExit(f"build-public: '{word}' is still in the page; stopping")
     # Safety net: nothing that looks like an e-mail address may go online.
-    if re.search(r"[\w.+-]+@[A-Za-z][\w-]*\.[A-Za-z]{2,}", html):
-        raise SystemExit("build-public: an e-mail address is still in the page; stopping")
+    emails = set(re.findall(r"[\w.+-]+@[A-Za-z][\w-]*\.[A-Za-z]{2,}", html)) - ALLOWED_EMAILS
+    if emails:
+        raise SystemExit(f"build-public: e-mail address(es) still in the page: {sorted(emails)}; stopping")
 
     if OUT.exists():
         shutil.rmtree(OUT)

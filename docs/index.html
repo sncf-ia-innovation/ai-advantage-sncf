@@ -136,7 +136,10 @@ header.hero .wrap{position:relative}
 .v3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;outline:none;cursor:grab}
 .v3d-stage canvas:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
 .v3d-stage canvas.over{cursor:pointer}
+.v3d-stage canvas.selmode{cursor:copy}
+.v3d-stage canvas.ring{cursor:grab}
 .v3d-stage canvas.drag{cursor:grabbing}
+.v3d-cap .ang{color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
 .v3d-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);font-size:15px;pointer-events:none}
 .v3d-msg[hidden]{display:none}
 .v3d-msg.err{pointer-events:auto}
@@ -147,7 +150,70 @@ header.hero .wrap{position:relative}
 .v3d-link[hidden]{display:none}
 .v3d-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;margin-top:6px}
 .v3d-foot p{margin:0}
+.v3d-bar{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px;padding:0 2px 8px;font-size:14px;color:var(--muted)}
+.v3d-bar[hidden]{display:none}
+.v3d-tools{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px;padding:10px 2px 0;font-size:14px;color:var(--muted)}
+.v3d-tools[hidden]{display:none}
+.v3d-tools .grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+.v3d-tools .sep{color:var(--faint)}
+.v3d-fshint{margin:6px 0 0}
+.v3d-share{margin:8px 0 0}
+.v3d-share[hidden]{display:none}
+.v3d-share p{margin:0 0 4px}
+.v3d-share .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px}
+.v3d-share .ok{color:var(--accent);font-weight:600;font-size:13px}
+.v3d-share .bad{color:var(--warn);font-size:13px}
+.v3d-share a.v3d-link{display:inline-block}
+.v3d-imp{margin:6px 0 0}
+.v3d-imp[hidden]{display:none}
+.v3d-imp textarea{width:100%;min-height:72px;resize:vertical;font:inherit;font-size:13px;font-weight:300;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.v3d-imp textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.v3d.fs .v3d-share .intro{display:none}
+.v3d-share .quiet{color:var(--muted)}
+.v3d-claude{margin:10px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--soft);font-size:14px}
+.v3d-claude[hidden]{display:none}
+.v3d-claude p{margin:0 0 6px;color:var(--muted)}
+.v3d-claude ol{margin:0 0 8px;padding:0 0 0 22px}
+.v3d-claude li{margin:2px 0;overflow-wrap:anywhere}
+.v3d-claude li .meta{color:var(--muted)}
+.v3d-claude label{display:block;color:var(--muted);margin:6px 0 4px}
+.v3d-claude textarea{width:100%;min-height:64px;resize:vertical;font:inherit;font-weight:300;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.v3d-claude textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.v3d-claude .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-top:6px}
+.v3d-claude .ok{color:var(--accent);font-weight:600}
+.v3d.fs .v3d-claude{max-height:38vh;overflow:auto;flex:0 0 auto}
+.v3d-fshint[hidden]{display:none}
+html.v3d-lock{overflow:hidden}
+.v3d.fs{position:fixed;inset:0;z-index:2147483000;background:var(--bg);display:flex;flex-direction:column;padding:10px 16px;overflow:auto}
+.v3d.fs .v3d-stage{flex:1 1 auto;height:auto;min-height:200px}
+.v3d.fs .v3d-stage canvas{position:absolute;inset:0}
+.v3d.fs>p.status{display:none}
+.v3d.fs .v3d-cap{min-height:0;padding-top:6px}
+.v3d-bar .grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px}
+.v3d-link[aria-pressed="true"]{color:var(--ink);font-weight:400;text-decoration:none;cursor:default}
+.v3d-stage.walk canvas{cursor:crosshair}
+.v3d-stage.walk canvas.over{cursor:pointer}
+.v3d-stage.walk canvas.ring{cursor:grab}
+.v3d-stage.walk canvas.drag{cursor:grabbing}
 @media (max-width:600px){.v3d-stage{height:380px}}
+.qa{font-size:14px}
+.qa td,.qa th{padding:10px 12px 10px 0}
+.qa td:nth-child(1){color:var(--faint);white-space:nowrap}
+.qa td:nth-child(2){color:var(--ink);min-width:180px}
+.qa td:nth-child(3){min-width:260px}
+.qa td:nth-child(5){white-space:nowrap}
+.qa-s,.qa-sum span{display:inline-block;font-size:12px;border-radius:999px;padding:2px 10px;white-space:nowrap;background:var(--soft);color:var(--muted)}
+[data-s="ok"] .qa-s,.qa-sum [data-s="ok"]{background:color-mix(in srgb,var(--t-demo) 16%,transparent);color:var(--t-demo)}
+[data-s="confirm"] .qa-s,.qa-sum [data-s="confirm"]{background:color-mix(in srgb,#f29900 18%,transparent);color:#b06f00}
+[data-s="get"] .qa-s,.qa-sum [data-s="get"]{background:color-mix(in srgb,var(--t-sncf) 14%,transparent);color:var(--t-sncf)}
+.qa-sum{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.qa td[contenteditable]{min-height:1.4em}
+.qa input[type=checkbox]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:1.5px solid var(--faint);border-radius:50%;cursor:pointer;display:grid;place-items:center;background:var(--bg)}
+.qa input[type=checkbox]::after{content:"";width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:transform .15s}
+.qa input[type=checkbox]:checked{background:var(--t-demo);border-color:var(--t-demo)}
+.qa input[type=checkbox]:checked::after{transform:rotate(45deg) scale(1)}
+.qa tr.validated td{background:color-mix(in srgb,var(--t-demo) 6%,transparent)}
+.qa-sum [data-s="done"]{background:var(--t-demo);color:#fff}
 </style>
 </head>
 <body>
@@ -246,14 +312,60 @@ header.hero .wrap{position:relative}
   <div class="wrap">
     <h2 data-i18n="d3_h">Plan 3D du lieu</h2>
     <div class="v3d" id="v3d">
-      <div class="v3d-stage">
+      <div class="v3d-bar" id="v3dBar" hidden>
+        <span class="grp" role="group">
+          <button type="button" class="v3d-link" id="v3dModeOver" aria-pressed="true" data-i18n="v3d_mode_over">Vue d'ensemble</button>
+          <button type="button" class="v3d-link" id="v3dModeWalk" aria-pressed="false" data-i18n="v3d_mode_walk">Visite</button>
+        </span>
+        <span class="grp" id="v3dZones" role="group"></span>
+      </div>
+      <div class="v3d-stage" id="v3dStage">
         <canvas id="v3dCanvas" tabindex="0" role="application" aria-label="Maquette 3D du kit Google : faites glisser pour tourner, cliquez un élément pour le sélectionner, Entrée pour passer au suivant, Q et E pour le pivoter, flèches pour le déplacer."></canvas>
         <div class="v3d-msg" id="v3dMsg" role="status" aria-live="polite">Chargement de la 3D…</div>
       </div>
+      <p class="status v3d-fshint" id="v3dFsHint" hidden></p>
+      <div class="v3d-tools" id="v3dTools" hidden>
+        <span class="grp" id="v3dMoveGrp" role="group"><span data-i18n="v3d_move">Déplacer :</span>
+          <button type="button" class="v3d-link" id="v3dMoveAll" aria-pressed="true" data-i18n="v3d_move_all">l'ensemble</button><span class="sep" aria-hidden="true">·</span>
+          <button type="button" class="v3d-link" id="v3dMovePiece" aria-pressed="false" data-i18n="v3d_move_piece">une pièce</button></span>
+        <button type="button" class="v3d-link" id="v3dDeco" hidden></button>
+        <button type="button" class="v3d-link" id="v3dFov" hidden></button>
+        <button type="button" class="v3d-link" id="v3dRestore" hidden></button>
+        <span class="grp" id="v3dCurt" role="group" hidden><span data-i18n="v3d_curt">Rideaux :</span>
+          <button type="button" class="v3d-link" id="v3dCurtOpen" data-i18n="v3d_curt_open_all">tout ouvrir</button><span class="sep" aria-hidden="true">·</span>
+          <button type="button" class="v3d-link" id="v3dCurtClose" data-i18n="v3d_curt_close_all">tout fermer</button></span>
+        <button type="button" class="v3d-link" id="v3dSelBtn" aria-pressed="false"></button>
+        <button type="button" class="v3d-link" id="v3dFs"></button>
+      </div>
+      <div class="v3d-claude" id="v3dClaude" hidden>
+        <p id="v3dClHead"></p>
+        <ol id="v3dClList"></ol>
+        <label for="v3dClWant" id="v3dClWantLbl"></label>
+        <textarea id="v3dClWant" rows="3"></textarea>
+        <div class="row"><button type="button" class="v3d-link" id="v3dClCopy"></button><button type="button" class="v3d-link" id="v3dClClear"></button><span class="ok" id="v3dClOk" role="status" aria-live="polite"></span></div>
+      </div>
       <div class="v3d-cap" id="v3dCap" aria-live="polite"></div>
-      <p class="status" data-i18n="v3d_hint">Glissez dans le vide pour tourner, molette ou pincement pour zoomer, clic droit pour déplacer la vue. Cliquez un élément puis glissez-le ; Q / E le font pivoter ; double-clic sur une pièce pour la détacher ; Échap pour désélectionner.</p>
+      <p class="status" data-i18n="v3d_hint">Vue d'ensemble : glissez dans le vide pour tourner, molette ou pincement pour zoomer vers le curseur, clic droit pour déplacer la vue, double-clic au sol pour s'y rendre. Cliquez un élément (kit ou mobilier) : glissez-le pour le déplacer, tournez-le avec l'anneau autour (Maj = par 15°) ; Q / E aussi. « Déplacer : une pièce » (ou double-clic) pour bouger une pièce seule. Suppr : retirer l'élément. F : plein écran ; Échap pour désélectionner.</p>
+      <p class="status" id="v3dHintWalk" data-i18n="v3d_hint_walk" hidden>Visite : vous êtes dans la salle, à hauteur d'yeux. Glissez pour regarder autour de vous ; W A S D ou les flèches pour marcher (Maj pour aller plus vite) ; cliquez au sol pour y aller ; la molette fait avancer ou reculer. Les éléments et le mobilier se déplacent et se tournent (anneau) comme en vue d'ensemble. F : plein écran, plus immersif. Échap pour quitter.</p>
+      <div class="v3d-share" id="v3dShare" hidden>
+        <p class="status intro" data-i18n="v3d_share_p">Vous pouvez modifier la 3D comme vous voulez (déplacer, tourner, retirer, ouvrir/fermer les rideaux). Quand c'est bon, copiez vos modifications et envoyez-les à Alexandre.</p>
+        <div class="row">
+          <button type="button" class="v3d-link" id="v3dShCopy"></button>
+          <a class="v3d-link" id="v3dShMail" data-mail="alexandre.cormeraie@sncf.fr" href="#"></a>
+          <span class="ok" id="v3dShOk" role="status" aria-live="polite"></span>
+        </div>
+        <div class="row">
+          <button type="button" class="v3d-link quiet" id="v3dImpOpen" aria-expanded="false"></button>
+          <button type="button" class="v3d-link" id="v3dImpUndo" hidden></button>
+        </div>
+        <div class="v3d-imp" id="v3dImp" hidden>
+          <label for="v3dImpTa" class="status" id="v3dImpLbl"></label>
+          <textarea id="v3dImpTa" rows="3" spellcheck="false"></textarea>
+          <div class="row"><button type="button" class="v3d-link" id="v3dImpGo"></button><button type="button" class="v3d-link" id="v3dImpClose"></button><span class="bad" id="v3dImpMsg" role="status" aria-live="polite"></span></div>
+        </div>
+      </div>
       <div class="v3d-foot">
-        <p class="status" data-i18n="v3d_soon">La maquette du lieu (574) sera ajoutée bientôt, à partir du plan incendie et des photos.</p>
+        <p class="status" id="v3dSoon" data-i18n="v3d_soon" hidden>La maquette du lieu (574) n'a pas pu être chargée : le kit est présenté sur une grille en attendant.</p>
         <p class="status"><button type="button" class="v3d-link" id="v3dReset" data-i18n="v3d_reset">Réinitialiser la disposition</button></p>
       </div>
     </div>
@@ -302,8 +414,30 @@ var I18N = (function(){
     e3_tag:"Welcome", e3_h:"Badges at the entrance", e3_p:"A registration area to pick up badges. Guests arrive via 12 rue Jean-Philippe Rameau: someone must walk them to 574.",
     
     d3_h:"3D site plan",
-    v3d_hint:"Drag empty space to orbit, wheel or pinch to zoom, right-drag to pan. Click an element then drag it; Q / E rotate it; double-click a piece to detach it; Esc to deselect.",
-    v3d_soon:"The 574 venue model will be added soon, built from the fire-safety plan and photos.",
+    v3d_hint:"Overview: drag empty space to orbit, wheel or pinch to zoom towards the cursor, right-drag to pan, double-click the floor to fly there. Click an element (kit or furniture): drag it to move it, turn it with the ring around it (Shift = 15° steps); Q / E work too. “Move: one piece” (or double-click) moves a single piece. Del: remove the element. F: full screen; Esc to deselect.",
+    v3d_soon:"The 574 venue model could not be loaded: the kit is shown on a grid for now.",
+    v3d_aria:"3D model of the Google kit: drag to rotate, click an element to select it, Enter for the next one, Q and E to rotate it, arrow keys to move it.",
+    v3d_aria_walk:"Walk-through of the venue in first person: drag to look around, W A S D or arrow keys to walk, click the floor to go there, Escape to leave.",
+    v3d_hint_walk:"Walk-through: you are inside the room, at eye level. Drag to look around; W A S D or the arrow keys to walk (Shift to go faster); click the floor to go there; the wheel steps forward or back. Elements and furniture move and turn (ring) just like in the overview. F: full screen, more immersive. Esc to leave.",
+    v3d_mode_over:"Overview", v3d_mode_walk:"Walk-through", v3d_modes:"View mode", v3d_goto:"Go to:", v3d_none_walk:"Walk-through · {n} elements you can move, click one to select it · Esc to leave",
+    v3d_move:"Move:", v3d_move_all:"the whole", v3d_move_piece:"one piece", v3d_fs:"Full screen", v3d_fs_exit:"Exit full screen",
+    v3d_deco_show:"Show hanging decor", v3d_deco_hide:"Hide hanging decor", v3d_fov_wide:"Wide view", v3d_fov_norm:"Normal view",
+    v3d_grp_kit:"Google kit", v3d_grp_mob:"Venue furniture", v3d_alone:"single piece",
+    v3d_fshint:"Tip: full screen makes the walk-through much more immersive.", v3d_fshint_go:"Go full screen",
+    v3d_cl_toggle:"Select for Claude", v3d_cl_head:"Selection mode: click furniture, kit elements (or pieces, in “one piece” mode) to add or remove them; click the empty floor to drop a numbered point. Then describe what you want and copy the prompt.",
+    v3d_cl_empty:"Nothing selected yet.", v3d_cl_want:"What I want", v3d_cl_copy:"Copy prompt", v3d_cl_clear:"Clear the list", v3d_cl_ok:"Copied", v3d_cl_fail:"Copy failed: select the text by hand.",
+    v3d_cl_remove:"Remove", v3d_cl_kit:"Kit", v3d_cl_mob:"Furniture", v3d_cl_pt:"Floor point", v3d_cl_ph:"e.g. move this table against the windows",
+    v3d_cl_intro:"In the 3D model of the 574 venue (local version), here are the selected items:", v3d_cl_wantp:"What I want:", v3d_cl_none:"(nothing selected)",
+    v3d_cl_dkit:"Google kit, group {g}", v3d_cl_dkitp:"Google kit, piece {p} of group {g}", v3d_cl_dmob:"venue furniture, group {g}", v3d_cl_dmobp:"venue furniture, piece {p} of group {g}",
+    v3d_cl_pointp:"Floor point no. {n}", v3d_cl_rot:"rotation",
+    v3d_remove:"Remove", v3d_restore:"Bring back removed items ({n})", v3d_curt:"Curtains:", v3d_curt_open_all:"open all", v3d_curt_close_all:"close all", v3d_curt_close:"Close curtain", v3d_curt_open:"Open curtain",
+    v3d_share_p:"You can change the 3D as you like (move, turn, remove, open/close the curtains). When it looks right, copy your changes and send them to Alexandre.",
+    v3d_sh_copy:"Copy my changes", v3d_sh_mail:"Send by e-mail", v3d_sh_ok:"Copied ✓", v3d_sh_none:"No changes yet", v3d_sh_fail:"Copy failed: select the text by hand.",
+    v3d_sh_head:"3D layout AI Advantage 574", v3d_sh_subj:"My 3D layout – AI Advantage 574",
+    v3d_sh_body0:"Hello Alexandre,\n\nHere is my 3D layout of the 574.\n", v3d_sh_body1:"Paste below the text copied with “Copy my changes”:\n\n", v3d_sh_body2:"(no changes to send yet)",
+    v3d_imp_open:"Load a received version", v3d_imp_lbl:"Paste the whole text you received:", v3d_imp_go:"Load", v3d_imp_close:"Close", v3d_imp_undo:"Undo import",
+    v3d_imp_confirm:"Replace your current layout?", v3d_imp_done:"Version loaded.", v3d_imp_undone:"Previous layout restored.",
+    v3d_imp_e_marker:"Code not found: the text must contain a line starting with AIADV574:", v3d_imp_e_json:"The code is not valid (unreadable).", v3d_imp_e_shape:"The code does not look like a 3D layout (wrong content).", v3d_imp_e_empty:"Paste the received text first.",
     v3d_reset:"Reset layout", k_note:"Some dimensions are assumptions, to confirm with Google. Blender and 3D files are in the “3d” folder.",
     
     
@@ -362,6 +496,29 @@ var I18N = (function(){
     s_b_talk2:"Conférence courte n°2 (même contenu)", s_b_tgv:"Deep-dive : IA locale embarquée TGV", s_b_ic:"Deep-dive : maintenance prédictive Intercités",
     s_b_pause:"Pause", s_b_crm:"Deep-dive : référentiel client et centre d'appels", s_b_frugal:"IT frugal pour les sociétés dédiées",
     s_new:"Nouveau bloc",
+    v3d_soon:"La maquette du lieu (574) n'a pas pu être chargée : le kit est présenté sur une grille en attendant.",
+    v3d_aria:"Maquette 3D du kit Google : faites glisser pour tourner, cliquez un élément pour le sélectionner, Entrée pour passer au suivant, Q et E pour le pivoter, flèches pour le déplacer.",
+    v3d_aria_walk:"Visite du lieu à la première personne : faites glisser pour regarder autour de vous, W A S D ou les flèches pour marcher, cliquez au sol pour y aller, Échap pour quitter.",
+    v3d_mode_over:"Vue d'ensemble", v3d_mode_walk:"Visite", v3d_modes:"Mode d'affichage", v3d_goto:"Aller à :",
+    v3d_none_walk:"Visite · {n} éléments déplaçables, cliquez-en un pour le sélectionner · Échap pour quitter",
+    v3d_move:"Déplacer :", v3d_move_all:"l'ensemble", v3d_move_piece:"une pièce", v3d_fs:"Plein écran", v3d_fs_exit:"Quitter le plein écran",
+    v3d_deco_show:"Afficher la déco suspendue", v3d_deco_hide:"Masquer la déco suspendue", v3d_fov_wide:"Vue large", v3d_fov_norm:"Vue normale",
+    v3d_grp_kit:"Kit Google", v3d_grp_mob:"Mobilier du lieu", v3d_alone:"pièce seule",
+    v3d_fshint:"Astuce : le plein écran rend la visite bien plus immersive.", v3d_fshint_go:"Passer en plein écran",
+    v3d_cl_toggle:"Sélection pour Claude", v3d_cl_head:"Mode sélection : cliquez des meubles, des éléments du kit (ou des pièces, en mode « une pièce ») pour les ajouter ou les retirer ; cliquez au sol dans le vide pour poser un point numéroté. Décrivez ensuite ce que vous voulez et copiez le prompt.",
+    v3d_cl_empty:"Rien de sélectionné pour l'instant.", v3d_cl_want:"Ce que je veux", v3d_cl_copy:"Copier le prompt", v3d_cl_clear:"Vider la liste", v3d_cl_ok:"Copié", v3d_cl_fail:"Copie impossible : sélectionnez le texte à la main.",
+    v3d_cl_remove:"Retirer", v3d_cl_kit:"Kit", v3d_cl_mob:"Mobilier", v3d_cl_pt:"Point au sol", v3d_cl_ph:"ex. : pousser cette table contre les baies vitrées",
+    v3d_cl_intro:"Dans la 3D du 574 (version locale), voici les éléments sélectionnés :", v3d_cl_wantp:"Ce que je veux :", v3d_cl_none:"(rien de sélectionné)",
+    v3d_cl_dkit:"kit Google, groupe {g}", v3d_cl_dkitp:"kit Google, pièce {p} du groupe {g}", v3d_cl_dmob:"mobilier du lieu, groupe {g}", v3d_cl_dmobp:"mobilier du lieu, pièce {p} du groupe {g}",
+    v3d_cl_pointp:"Point au sol n°{n}", v3d_cl_rot:"rotation",
+    v3d_remove:"Retirer", v3d_restore:"Remettre les éléments retirés ({n})", v3d_curt:"Rideaux :", v3d_curt_open_all:"tout ouvrir", v3d_curt_close_all:"tout fermer", v3d_curt_close:"Fermer le rideau", v3d_curt_open:"Ouvrir le rideau",
+    v3d_share_p:"Vous pouvez modifier la 3D comme vous voulez (déplacer, tourner, retirer, ouvrir/fermer les rideaux). Quand c'est bon, copiez vos modifications et envoyez-les à Alexandre.",
+    v3d_sh_copy:"Copier mes modifications", v3d_sh_mail:"Envoyer par e-mail", v3d_sh_ok:"Copié ✓", v3d_sh_none:"Aucune modification pour l'instant", v3d_sh_fail:"Copie impossible : sélectionnez le texte à la main.",
+    v3d_sh_head:"Disposition 3D AI Advantage 574", v3d_sh_subj:"Ma disposition 3D – AI Advantage 574",
+    v3d_sh_body0:"Bonjour Alexandre,\n\nVoici ma disposition 3D du 574.\n", v3d_sh_body1:"Collez ci-dessous le texte copié avec « Copier mes modifications » :\n\n", v3d_sh_body2:"(aucune modification à envoyer pour l'instant)",
+    v3d_imp_open:"Charger une version reçue", v3d_imp_lbl:"Collez ici tout le texte reçu :", v3d_imp_go:"Charger", v3d_imp_close:"Fermer", v3d_imp_undo:"Annuler l'import",
+    v3d_imp_confirm:"Remplacer votre disposition actuelle ?", v3d_imp_done:"Version chargée.", v3d_imp_undone:"Disposition précédente rétablie.",
+    v3d_imp_e_marker:"Code introuvable : le texte doit contenir une ligne qui commence par AIADV574:", v3d_imp_e_json:"Le code n'est pas valide (illisible).", v3d_imp_e_shape:"Le code ne ressemble pas à une disposition 3D (contenu incorrect).", v3d_imp_e_empty:"Collez d'abord le texte reçu.",
     v3d_loading:"Chargement de la 3D…", v3d_err:"La vue 3D n'a pas pu être chargée (connexion ou fichier). Le reste de la page fonctionne normalement.", v3d_retry:"Réessayer",
     v3d_none:"Aucun élément sélectionné · {n} éléments déplaçables", v3d_detached:"détachée", v3d_left:"Pivoter à gauche", v3d_right:"Pivoter à droite",
     v3d_detach:"Détacher une pièce", v3d_regroup:"Rattacher", v3d_confirm:"Remettre tous les éléments à leur place d'origine ?",
@@ -713,12 +870,26 @@ function makeEditable(el, label, value, onSave){
   "use strict";
   var t = I18N.t;
   var GLB = window.__V3D_GLB || "3d/kit-google.glb";
-  var KEY = "aiadv-sncf-3d-layout-v1";
+  var VENUE = window.__V3D_VENUE || "3d/lieu-574.glb";
+  var DISPO = window.__V3D_DISPO || "3d/disposition-574.json";
+  var MOB = window.__V3D_MOB || "3d/mobilier-574.glb";   // movable furniture of the venue (optional)
+  var KEY = "aiadv-sncf-3d-layout-v3";   // v3: furniture + single pieces; everybody sees the new defaults
+  var EYE = 1.65;                         // eye height in the walk-through, metres
+  var ZONES = ["Zone_Hub", "Zone_Agora", "Zone_Entree", "Zone_Terrasse"];
   var canvas = document.getElementById("v3dCanvas");
   var msgEl = document.getElementById("v3dMsg");
   var capEl = document.getElementById("v3dCap");
   var resetBtn = document.getElementById("v3dReset");
   var stage = canvas.parentNode;
+  var barEl = document.getElementById("v3dBar"), zonesEl = document.getElementById("v3dZones");
+  var modeOverBtn = document.getElementById("v3dModeOver"), modeWalkBtn = document.getElementById("v3dModeWalk");
+  var hintWalkEl = document.getElementById("v3dHintWalk"), soonEl = document.getElementById("v3dSoon");
+  var box = document.getElementById("v3d"), toolsEl = document.getElementById("v3dTools"), fsHintEl = document.getElementById("v3dFsHint");
+  var moveAllBtn = document.getElementById("v3dMoveAll"), movePieceBtn = document.getElementById("v3dMovePiece");
+  var selBtn = document.getElementById("v3dSelBtn"), clEl = document.getElementById("v3dClaude"), clHead = document.getElementById("v3dClHead"), clList = document.getElementById("v3dClList");
+  var clWant = document.getElementById("v3dClWant"), clWantLbl = document.getElementById("v3dClWantLbl"), clCopy = document.getElementById("v3dClCopy"), clClear = document.getElementById("v3dClClear"), clOk = document.getElementById("v3dClOk");
+  var restoreBtn = document.getElementById("v3dRestore"), curtEl = document.getElementById("v3dCurt");
+  var decoBtn = document.getElementById("v3dDeco"), fovBtn = document.getElementById("v3dFov"), fsBtn = document.getElementById("v3dFs");
   var state = "idle", progress = 0;      // idle | loading | error | ready
   var T = null;                          // three.js namespace once loaded
   var S = null;                          // scene objects once ready
@@ -763,19 +934,223 @@ function makeEditable(el, label, value, onSave){
     var sel = S.sel;
     if (!sel){
       var m = document.createElement("span");
-      m.textContent = t("v3d_none").replace("{n}", S.elements.length);
+      m.textContent = t(S.mode === "walk" ? "v3d_none_walk" : "v3d_none").replace("{n}", S.elements.length);
       capEl.appendChild(m); return;
     }
+    var tag = document.createElement("span"); tag.textContent = t(sel.el.userData.__grp === "mob" ? "v3d_grp_mob" : "v3d_grp_kit");
+    capEl.appendChild(tag);
     var name = document.createElement("span"); name.className = "name";
     var txt = labelOf(sel.el);
-    if (sel.piece) txt += " › " + pieceLabel(sel.piece) + " (" + t("v3d_detached") + ")";
+    if (sel.piece) txt += " › " + pieceLabel(sel.piece) + " (" + t(S.pieceMode ? "v3d_alone" : "v3d_detached") + ")";
     name.textContent = txt; capEl.appendChild(name);
+    var angEl = document.createElement("span"); angEl.className = "ang"; angEl.id = "v3dAng"; angEl.setAttribute("aria-hidden", "true");
+    capEl.appendChild(angEl); if (S.updateAngle) S.updateAngle();
     link("⟲ " + t("v3d_left"), function(){ S.rotate(15); });
     link("⟳ " + t("v3d_right"), function(){ S.rotate(-15); });
-    if (sel.piece) link(t("v3d_regroup"), function(){ S.regroup(); });
+    var cu = !sel.piece && sel.el.userData.__curt;
+    if (cu) link(t(cu.isClosed ? "v3d_curt_open" : "v3d_curt_close"), function(){ S.toggleCurtain(sel.el); });
+    link(t("v3d_remove"), function(){ S.removeSel(); });
+    if (S.pieceMode){ /* single-piece mode: every click already picks one piece */ }
+    else if (sel.piece) link(t("v3d_regroup"), function(){ S.regroup(); });
     else if (sel.el.children.length > 0) link(t("v3d_detach"), function(){ S.detach(); });
   }
-  I18N.onChange(function(){ renderMsg(); renderCap(); });
+  // Move mode / hanging decor / wide view / full screen links (below the 3D view).
+  function renderTools(){
+    var ok = state === "ready" && !!S;
+    toolsEl.hidden = !ok;
+    var fsHint = ok && S.mode === "walk" && !fsOn;
+    fsHintEl.hidden = !fsHint;
+    if (fsHint){
+      fsHintEl.textContent = t("v3d_fshint") + " ";
+      var gb = document.createElement("button"); gb.type = "button"; gb.className = "v3d-link"; gb.textContent = t("v3d_fshint_go");
+      gb.addEventListener("click", function(){ enterFs(); canvas.focus({preventScroll:true}); });
+      fsHintEl.appendChild(gb);
+    }
+    if (!ok) return;
+    toolsEl.querySelector(".grp").setAttribute("aria-label", t("v3d_move"));
+    moveAllBtn.setAttribute("aria-pressed", S.pieceMode ? "false" : "true");
+    movePieceBtn.setAttribute("aria-pressed", S.pieceMode ? "true" : "false");
+    decoBtn.hidden = !S.decoNodes.length;
+    decoBtn.textContent = t(S.decoOn ? "v3d_deco_hide" : "v3d_deco_show");
+    fovBtn.hidden = S.mode !== "walk";
+    fovBtn.textContent = t(wide ? "v3d_fov_norm" : "v3d_fov_wide");
+    fsBtn.textContent = t(fsOn ? "v3d_fs_exit" : "v3d_fs");
+    restoreBtn.hidden = !S.removed.length;
+    restoreBtn.textContent = t("v3d_restore").replace("{n}", S.removed.length);
+    curtEl.hidden = !S.curtains.length;
+    if (S.curtains.length) curtEl.setAttribute("aria-label", t("v3d_curt"));
+    selBtn.textContent = t("v3d_cl_toggle") + (S.picks.length ? " (" + S.picks.length + ")" : "");
+    selBtn.setAttribute("aria-pressed", S.selMode ? "true" : "false");
+    clEl.hidden = !S.selMode;
+    if (S.selMode) S.renderClaude();
+  }
+  // ── full screen: real Fullscreen API on the viewer, or a fixed full-window overlay when it is refused ──
+  var fsOn = false, fsFallback = false, wide = false, scrollY0 = 0;
+  function nativeFs(){ return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function syncFs(){
+    var on = nativeFs() === box || fsFallback;
+    if (on && !fsOn){ scrollY0 = window.pageYOffset; }
+    box.classList.toggle("fs", on);
+    document.documentElement.classList.toggle("v3d-lock", on);
+    if (!on && fsOn){ try { window.scrollTo(0, scrollY0); } catch(e){} }
+    if (on !== fsOn){ fsOn = on; wide = on; if (S && S.onFs) S.onFs(on); }
+    renderTools();
+  }
+  function enterFs(){
+    if (fsOn) return;
+    var rq = box.requestFullscreen || box.webkitRequestFullscreen;
+    function fb(){ fsFallback = true; syncFs(); }
+    if (!rq){ fb(); return; }
+    try {
+      var pr = rq.call(box);
+      if (pr && pr.then) pr.then(null, fb);
+    } catch(e){ fb(); }
+  }
+  function exitFs(){
+    fsFallback = false;
+    if (nativeFs() === box){ try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch(e){} }
+    syncFs();
+  }
+  function toggleFs(){ if (fsOn) exitFs(); else enterFs(); }
+  document.addEventListener("fullscreenchange", syncFs);
+  document.addEventListener("webkitfullscreenchange", syncFs);
+  fsBtn.addEventListener("click", function(){ toggleFs(); canvas.focus({preventScroll:true}); });
+  restoreBtn.addEventListener("click", function(){ if (S) S.bringBack(); canvas.focus({preventScroll:true}); });
+  document.getElementById("v3dCurtOpen").addEventListener("click", function(){ if (S) S.allCurtains(false); canvas.focus({preventScroll:true}); });
+  document.getElementById("v3dCurtClose").addEventListener("click", function(){ if (S) S.allCurtains(true); canvas.focus({preventScroll:true}); });
+  selBtn.addEventListener("click", function(){ if (S) S.setSelMode(!S.selMode); canvas.focus({preventScroll:true}); });
+  moveAllBtn.addEventListener("click", function(){ if (S) S.setPieceMode(false); canvas.focus({preventScroll:true}); });
+  movePieceBtn.addEventListener("click", function(){ if (S) S.setPieceMode(true); canvas.focus({preventScroll:true}); });
+  decoBtn.addEventListener("click", function(){ if (S) S.setDeco(!S.decoOn); canvas.focus({preventScroll:true}); });
+  fovBtn.addEventListener("click", function(){ wide = !wide; if (S) S.applyFov(); renderTools(); canvas.focus({preventScroll:true}); });
+
+
+  // ── Share / import of a layout (plain text; only JSON.parse ever touches pasted text) ──
+  var shareEl = document.getElementById("v3dShare"), shCopy = document.getElementById("v3dShCopy"), shMail = document.getElementById("v3dShMail"), shOk = document.getElementById("v3dShOk");
+  var impOpen = document.getElementById("v3dImpOpen"), impUndo = document.getElementById("v3dImpUndo"), impBox = document.getElementById("v3dImp"), impTa = document.getElementById("v3dImpTa");
+  var impLbl = document.getElementById("v3dImpLbl"), impGo = document.getElementById("v3dImpGo"), impClose = document.getElementById("v3dImpClose"), impMsg = document.getElementById("v3dImpMsg");
+  var MARK = "AIADV574:", BAK = KEY + "-avant-import", NONE = "__aucune__";
+  function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function shareCode(){
+    var raw = lsGet(KEY); if (!raw) return null;
+    return t("v3d_sh_head") + " — " + new Date().toISOString().slice(0, 10) + "\n" + MARK + raw;
+  }
+  function mailHref(){
+    var code = shareCode(), to = shMail.getAttribute("data-mail"), subj = t("v3d_sh_subj");
+    var mk = function(body){ return "mailto:" + to + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body); };
+    var h = mk(t("v3d_sh_body0") + (code ? "\n" + code : "\n" + t("v3d_sh_body2")));
+    if (!code || h.length > 1800) h = mk(t("v3d_sh_body0") + "\n" + t("v3d_sh_body1"));
+    return h;
+  }
+  var shTimer = 0;
+  function flash(el, msg){ el.textContent = msg; clearTimeout(shTimer); shTimer = setTimeout(function(){ el.textContent = ""; }, 3500); }
+  function copyText(txt, done){
+    function fb(){
+      var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+      shareEl.appendChild(ta); ta.select(); var ok = false;
+      try { ok = document.execCommand("copy"); } catch(e){}
+      ta.parentNode.removeChild(ta); done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function(){ done(true); }, fb); else fb();
+  }
+  shCopy.addEventListener("click", function(){
+    var code = shareCode();
+    if (!code){ flash(shOk, t("v3d_sh_none")); return; }
+    copyText(code, function(ok){ flash(shOk, t(ok ? "v3d_sh_ok" : "v3d_sh_fail")); });
+  });
+  function freshMail(){ shMail.href = mailHref(); }
+  ["pointerdown", "focus", "mouseover", "touchstart", "keydown"].forEach(function(ev){ shMail.addEventListener(ev, freshMail); });
+  shMail.addEventListener("click", freshMail);
+  // Validate a received layout: returns a clean {v,n,h,c} object or throws a message key.
+  function isNum7(a){ if (!Array.isArray(a) || a.length !== 7) return false; for (var i = 0; i < 7; i++) if (typeof a[i] !== "number" || !isFinite(a[i]) || Math.abs(a[i]) > 1e5) return false; return true; }
+  function keyList(a){ if (a === undefined) return []; if (!Array.isArray(a) || a.length > 3000) throw "v3d_imp_e_shape"; return a.map(function(k){ if (typeof k !== "string" || k.length > 200) throw "v3d_imp_e_shape"; return k; }); }
+  function parseShare(text){
+    var i = String(text || "").indexOf(MARK);
+    if (!String(text || "").trim()) throw "v3d_imp_e_empty";
+    if (i < 0) throw "v3d_imp_e_marker";
+    // Mail clients may wrap the code over several lines or quote it ("> "): drop line breaks, quote
+    // marks and spaces (the code has none of its own), then keep the balanced {...} block only,
+    // so a "thanks" or a signature after it is ignored.
+    var rest = text.slice(i + MARK.length).replace(/^[ \t]*>+[ \t]?/gm, "").replace(/=\r?\n/g, "").replace(/\s+/g, ""), raw = "", depth = 0, d;
+    for (var k = 0; k < rest.length; k++){
+      var ch = rest.charAt(k);
+      if (ch === "{") depth++;
+      if (depth > 0) raw += ch;
+      if (ch === "}" && --depth === 0) break;
+    }
+    if (raw.length > 400000) throw "v3d_imp_e_shape";
+    try { d = JSON.parse(raw); } catch(e){ throw "v3d_imp_e_json"; }
+    if (!d || typeof d !== "object" || Array.isArray(d) || d.v !== 1) throw "v3d_imp_e_shape";
+    var n = d.n === undefined ? {} : d.n;
+    if (!n || typeof n !== "object" || Array.isArray(n)) throw "v3d_imp_e_shape";
+    var keys = Object.keys(n); if (keys.length > 3000) throw "v3d_imp_e_shape";
+    var out = {v: 1, n: {}};
+    keys.forEach(function(k){ if (k.length > 200 || !isNum7(n[k])) throw "v3d_imp_e_shape"; out.n[k] = n[k].slice(); });
+    var h = keyList(d.h), c = keyList(d.c);
+    if (h.length) out.h = h; if (c.length) out.c = c;
+    if (!keys.length && !h.length && !c.length) throw "v3d_imp_e_shape";
+    return out;
+  }
+  function renderShare(){
+    var ok = state === "ready" && !!S;
+    shareEl.hidden = !ok; if (!ok) return;
+    shCopy.textContent = t("v3d_sh_copy"); shMail.textContent = t("v3d_sh_mail");
+    impOpen.textContent = t("v3d_imp_open"); impLbl.textContent = t("v3d_imp_lbl"); impGo.textContent = t("v3d_imp_go"); impClose.textContent = t("v3d_imp_close");
+    impUndo.textContent = t("v3d_imp_undo"); impUndo.hidden = lsGet(BAK) === null;
+    shareEl.querySelector(".row").setAttribute("role", "group");
+    freshMail();
+  }
+  impOpen.addEventListener("click", function(){
+    var open = impBox.hidden; impBox.hidden = !open; impOpen.setAttribute("aria-expanded", open ? "true" : "false");
+    impMsg.textContent = ""; impMsg.className = "bad"; if (open) impTa.focus();
+  });
+  impClose.addEventListener("click", function(){ impBox.hidden = true; impOpen.setAttribute("aria-expanded", "false"); impMsg.textContent = ""; });
+  impGo.addEventListener("click", function(){
+    var lay;
+    try { lay = parseShare(impTa.value); } catch(k){ impMsg.className = "bad"; impMsg.textContent = t(typeof k === "string" ? k : "v3d_imp_e_json"); return; }
+    if (!confirm(t("v3d_imp_confirm"))) return;
+    try {
+      var cur = lsGet(KEY);
+      localStorage.setItem(BAK, cur === null ? NONE : cur);
+      localStorage.setItem(KEY, JSON.stringify(lay));
+    } catch(e){ impMsg.className = "bad"; impMsg.textContent = t("v3d_imp_e_json"); return; }
+    if (S && S.reloadLayout) S.reloadLayout();
+    impTa.value = ""; impMsg.className = "ok"; impMsg.textContent = t("v3d_imp_done"); renderShare();
+  });
+  impUndo.addEventListener("click", function(){
+    var b = lsGet(BAK); if (b === null) return;
+    try { if (b === NONE) localStorage.removeItem(KEY); else localStorage.setItem(KEY, b); localStorage.removeItem(BAK); } catch(e){}
+    if (S && S.reloadLayout) S.reloadLayout();
+    impMsg.className = "ok"; impMsg.textContent = t("v3d_imp_undone"); renderShare();
+  });
+
+  function renderBar(){
+    renderTools(); renderShare();
+    if (state === "ready" && S) canvas.setAttribute("aria-label", t(S.mode === "walk" ? "v3d_aria_walk" : "v3d_aria"));
+    var showBar = state === "ready" && !!S && !!S.venue;
+    barEl.hidden = !showBar;
+    hintWalkEl.hidden = !showBar;
+    soonEl.hidden = !(state === "ready" && S && !S.venue);
+    if (!showBar) return;
+    barEl.querySelector(".grp").setAttribute("aria-label", t("v3d_modes"));
+    modeOverBtn.setAttribute("aria-pressed", S.mode === "over" ? "true" : "false");
+    modeWalkBtn.setAttribute("aria-pressed", S.mode === "walk" ? "true" : "false");
+    zonesEl.textContent = "";
+    if (!S.zones.length) return;
+    var lab = document.createElement("span"); lab.textContent = t("v3d_goto"); zonesEl.appendChild(lab);
+    S.zones.forEach(function(z){
+      var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link"; b.textContent = zoneLabel(z.node);
+      b.addEventListener("click", function(){ S.goZone(z); canvas.focus({preventScroll:true}); });
+      zonesEl.appendChild(b);
+    });
+  }
+  function zoneLabel(node){
+    var u = node.userData || {}, l = I18N.lang();
+    return u["label_" + l] || u.label_fr || u.label_en || pretty(node.name.replace(/^Zone_/, ""));
+  }
+  I18N.onChange(function(){ renderMsg(); renderCap(); renderBar(); });
+  modeOverBtn.addEventListener("click", function(){ if (S) S.setMode("over"); });
+  modeWalkBtn.addEventListener("click", function(){ if (S) S.setMode("walk"); canvas.focus({preventScroll:true}); });
 
   // ── loading ──
   var started = false;
@@ -790,9 +1165,15 @@ function makeEditable(el, label, value, onSave){
     ]).then(function(m){
       T = m[0];
       var loader = new m[1].GLTFLoader();
+      // The venue and the default layout are optional: if either fails, the kit alone is shown.
+      var venueP = new Promise(function(res){ loader.load(VENUE, function(g){ res(g); }, null, function(){ res(null); }); });
+      var dispoP = fetch(DISPO).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).catch(function(){ return null; });
+      var mobP = new Promise(function(res){ loader.load(MOB, function(g){ res(g); }, null, function(){ res(null); }); });
       loader.load(GLB, function(gltf){
-        try { build(gltf, m[2].OrbitControls, m[3]); state = "ready"; renderMsg(); renderCap(); S.render(); }
-        catch(e){ fail(e); }
+        Promise.all([venueP, dispoP, mobP]).then(function(x){
+          try { build(gltf, m[2].OrbitControls, m[3], x[0], x[1], x[2]); state = "ready"; renderMsg(); renderCap(); renderBar(); S.render(); }
+          catch(e){ fail(e); }
+        });
       }, function(ev){
         if (ev && ev.total){ progress = Math.min(99, Math.round(ev.loaded / ev.total * 100)); renderMsg(); }
       }, fail);
@@ -805,7 +1186,7 @@ function makeEditable(el, label, value, onSave){
   }
 
   // ── scene ──
-  function build(gltf, OrbitControls, RoomEnv){
+  function build(gltf, OrbitControls, RoomEnv, venueGltf, dispo, mobGltf){
     if (S) return;
     var renderer;
     try { renderer = new T.WebGLRenderer({canvas: canvas, antialias: true}); }
@@ -819,12 +1200,77 @@ function makeEditable(el, label, value, onSave){
     if (kids.length === 1 && kids[0].children.length > 1 && !kids[0].isMesh){ root = kids[0]; kids = root.children.slice(); }
     scene.add(gltf.scene);
     if (!kids.length) throw new Error("empty model");
-    var elements = kids;
+    var kitEls = kids.slice(), mobEls = [];
+    kitEls.forEach(function(e){ e.userData.__grp = "kit"; });
+    // Movable furniture of the venue: same contract as the kit (top-level groups), optional.
+    if (mobGltf){
+      var mk = mobGltf.scene.children.slice();
+      if (mk.length === 1 && mk[0].children.length > 1 && !mk[0].isMesh) mk = mk[0].children.slice();
+      if (mk.length){ scene.add(mobGltf.scene); mobEls = mk; mobEls.forEach(function(e){ e.userData.__grp = "mob"; }); }
+      else mobGltf = null;
+    }
+    var elements = kitEls.concat(mobEls);
+    var Yaxis = new T.Vector3(0, 1, 0);
+    var tmpB = new T.Box3();
+    // Bounding box of what is really visible (hidden children are ignored).
+    function boxOf(obj, out){
+      out.makeEmpty(); obj.updateMatrixWorld(true);
+      (function w(o){
+        if (!o.visible) return;
+        if (o.isMesh && o.geometry){
+          if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+          tmpB.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld); out.union(tmpB);
+        }
+        for (var i = 0; i < o.children.length; i++) w(o.children[i]);
+      })(obj);
+      return out;
+    }
+
+    // Venue: a fixed base under the kit (not an element: never selectable).
+    var venue = null, venueMeshes = [], zones = [], spawnNode = null, decoNodes = [];
+    function inDeco(o){ for (; o; o = o.parent) if (o.name === "Deco_suspendue") return true; return false; }
+    if (venueGltf){
+      venue = venueGltf.scene; scene.add(venue); venue.updateMatrixWorld(true);
+      // Hanging decor is excluded from walls / floor tests (it is optional and can be hidden).
+      venue.traverse(function(o){ if (o.name === "Deco_suspendue" && !inDeco(o.parent)) decoNodes.push(o); });
+      venue.traverse(function(o){ if (o.isMesh){ o.receiveShadow = true; o.castShadow = false; if (!inDeco(o)) venueMeshes.push(o); } });
+      decoNodes.forEach(function(n){ n.visible = false; });
+      spawnNode = venue.getObjectByName("Spawn_Entree");
+      ZONES.forEach(function(nm){
+        var n = venue.getObjectByName(nm);
+        if (n) zones.push({name: nm, node: n, pos: n.getWorldPosition(new T.Vector3())});
+      });
+    }
+
+    // Default layout proposed for the venue (what "Reset" returns to).
+    var hiddenCount = 0, placed = 0;
+    if (dispo && typeof dispo === "object"){
+      kitEls.forEach(function(el){
+        var d = dispo[el.name];
+        if (!d || typeof d.x !== "number" || typeof d.z !== "number" || !isFinite(d.x) || !isFinite(d.z)) return;
+        el.position.x = d.x; el.position.z = d.z;
+        el.quaternion.setFromAxisAngle(Yaxis, (+d.rotY_deg || 0) * Math.PI / 180);
+        placed++;
+      });
+      var hp = dispo.hide_children_prefix;
+      if (hp && typeof hp === "object") Object.keys(hp).forEach(function(nm){
+        var el = null, prefix = String(hp[nm]);
+        kitEls.forEach(function(e){ if (e.name === nm) el = e; });
+        if (!el || !prefix) return;
+        (function hide(o){
+          o.children.forEach(function(c){
+            if (c.name.indexOf(prefix) === 0){ c.visible = false; hiddenCount++; } else hide(c);
+          });
+        })(el);
+      });
+      gltf.scene.updateMatrixWorld(true);
+    }
+    if (mobGltf) mobGltf.scene.updateMatrixWorld(true);
 
     // Registry of every node with its original transform (for save / reset).
     var registry = {}, originals = {}, seen = {};
     elements.forEach(function(el, i){
-      var base = el.name || ("el" + i);
+      var base = (el.userData.__grp === "mob" ? "M:" : "") + (el.name || ("el" + i));
       if (seen[base]){ seen[base]++; base += "~" + seen[base]; } else seen[base] = 1;
       (function walk(n, key){
         registry[key] = n;
@@ -833,21 +1279,43 @@ function makeEditable(el, label, value, onSave){
         n.children.forEach(function(c, j){ walk(c, key + "/" + j); });
       })(el, base);
     });
+    // Curtains: furniture groups with an "_ouvert" (gathered) and a "_ferme" (drawn) child; open by default.
+    var curtains = [];
+    mobEls.forEach(function(el){
+      var op = null, cl = null;
+      el.children.forEach(function(c){ var nm = c.name.replace(/\.\d+$/, ""); if (/_ouvert$/.test(nm)) op = c; else if (/_ferme$/.test(nm)) cl = c; });
+      if (op && cl){   // nothing is hidden in the file itself: apply the default state here (extras.state, "ouvert" unless said otherwise)
+        var def = String(el.userData.state || "").toLowerCase().indexOf("ferm") === 0;
+        el.userData.__curt = {open: op, closed: cl, isClosed: def, def: def}; op.visible = !def; cl.visible = def; curtains.push(el);
+      }
+    });
     gltf.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
+    if (mobGltf) mobGltf.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
 
-    var box = new T.Box3().setFromObject(gltf.scene);
+    // Frame on the event zone: the kit as placed, plus the zone markers.
+    var box = new T.Box3();
+    // (the red event-zone outline of the venue, when there is one, plus the kit as placed; furniture elsewhere does not widen the view)
+    kitEls.forEach(function(el){ box.union(boxOf(el, new T.Box3())); });
+    var evNode = venue && venue.getObjectByName("Ligne_zone_evenement"), evBox = evNode ? boxOf(evNode, new T.Box3()) : null;
+    if (evBox && !evBox.isEmpty()) box.union(evBox);
     if (box.isEmpty()) throw new Error("empty bbox");
+    zones.forEach(function(z){ box.expandByPoint(z.pos); });
+    if (venue) box.expandByScalar(1.5);
+    var venueBox = venue ? boxOf(venue, new T.Box3()) : box.clone().expandByScalar(10);
+    var fullBox = box.clone(); elements.forEach(function(el){ fullBox.union(boxOf(el, new T.Box3())); });
     var size = box.getSize(new T.Vector3()), center = box.getCenter(new T.Vector3());
-    var floorY = box.min.y;
-    var half = Math.ceil(Math.max(Math.abs(box.min.x), Math.abs(box.max.x), Math.abs(box.min.z), Math.abs(box.max.z)) + 3);
-    half = Math.max(5, Math.min(half, 80));
+    var floorY = venue ? 0 : box.min.y;
+    var half = Math.ceil(Math.max(Math.abs(fullBox.min.x), Math.abs(fullBox.max.x), Math.abs(fullBox.min.z), Math.abs(fullBox.max.z)) + 3);
+    half = Math.max(5, Math.min(half, 120));
 
     // floor grid (1 m cells) + shadow catcher
     var grid = new T.GridHelper(half * 2, half * 2);
     grid.position.y = floorY + 0.002;
     grid.material.transparent = true; grid.material.opacity = 0.22;
     scene.add(grid);
+    if (venue) grid.visible = false;   // the venue floor replaces the 1 m grid
     var floor = new T.Mesh(new T.PlaneGeometry(half * 2, half * 2), new T.ShadowMaterial({opacity: 0.18}));
+    if (venue) floor.visible = false;
     floor.rotation.x = -Math.PI / 2; floor.position.y = floorY; floor.receiveShadow = true;
     scene.add(floor);
 
@@ -867,14 +1335,83 @@ function makeEditable(el, label, value, onSave){
     // camera
     var camera = new T.PerspectiveCamera(40, 1, 0.1, 500);
     var radius = Math.max(size.length() / 2, 2);
-    var dist = radius / Math.sin(camera.fov * Math.PI / 360) * 0.85;
-    camera.position.set(center.x + dist * 0.55, center.y + dist * 0.5, center.z + dist * 0.75);
+    if (venue) radius = Math.max(radius * 0.55, 4);      // tight on the red event zone, not the whole building
+    var dist = radius / Math.sin(camera.fov * Math.PI / 360) * 0.8;
+    center.y = floorY;
+    camera.position.set(center.x + dist * 0.55, floorY + dist * 0.62, center.z + dist * 0.75);
+    var vSize = venueBox.getSize(new T.Vector3());
+    var MIN_D = 1.5, MAX_D = Math.max(vSize.length() * 0.8, dist * 2, 40), MIN_H = 1.2;
+    // Smooth navigation: the wheel is handled here (zoom towards the floor point under the cursor, speed proportional
+    // to the distance, so it is never sluggish far away nor jumpy close up). Registered before OrbitControls so it wins.
+    var nav = null, navRaf = 0, navT = 0;
+    function navKick(){ if (!navRaf){ navT = performance.now(); navRaf = requestAnimationFrame(navTick); } }
+    function navTick(ts){
+      navRaf = 0; if (!nav) return;
+      var dt = Math.min(0.3, Math.max(0.001, (ts - navT) / 1000)); navT = ts;
+      var k = 1 - Math.exp(-dt * nav.rate);
+      camera.position.lerp(nav.pos, k); controls.target.lerp(nav.tgt, k);
+      var eps = 0.004 * camera.position.distanceTo(controls.target) + 0.004;
+      if (camera.position.distanceTo(nav.pos) < eps && controls.target.distanceTo(nav.tgt) < eps){ camera.position.copy(nav.pos); controls.target.copy(nav.tgt); nav = null; }
+      controls.update(); requestRender();
+      if (nav) navRaf = requestAnimationFrame(navTick);   // (keep navT = frame time: no reset between frames)
+    }
+    function clampNav(pos, tgt){            // keep the view target inside the venue (plus a margin), on the floor
+      tgt.y = floorY;
+      var cx = Math.min(venueBox.max.x + 3, Math.max(venueBox.min.x - 3, tgt.x)), cz = Math.min(venueBox.max.z + 3, Math.max(venueBox.min.z - 3, tgt.z));
+      pos.x += cx - tgt.x; pos.z += cz - tgt.z; tgt.x = cx; tgt.z = cz;
+      if (pos.y < floorY + MIN_H) pos.y = floorY + MIN_H;
+    }
+    function navBase(){ return nav ? {pos: nav.pos.clone(), tgt: nav.tgt.clone()} : {pos: camera.position.clone(), tgt: controls.target.clone()}; }
+    function floorAt(ev){                  // floor point under the pointer (null if the ray goes to the sky or too far)
+      var r = canvas.getBoundingClientRect(), n2 = new T.Vector2((ev.clientX - r.left) / r.width * 2 - 1, -((ev.clientY - r.top) / r.height * 2 - 1));
+      var rc = new T.Raycaster(); rc.setFromCamera(n2, camera);
+      var p = new T.Vector3();
+      if (!rc.ray.intersectPlane(new T.Plane(new T.Vector3(0, 1, 0), -floorY), p) || p.distanceTo(camera.position) > MAX_D * 2) return null;
+      return p;
+    }
+    function zoomAt(ev, dy){
+      dy = Math.max(-300, Math.min(300, dy));
+      var f = Math.exp(dy * (ev.ctrlKey ? 0.012 : 0.0028));            // > 1 = away
+      var b = navBase(), d0 = b.pos.distanceTo(b.tgt), h0 = b.pos.y - floorY;
+      var P = floorAt(ev) || b.tgt.clone();
+      f = Math.max(f, MIN_D / d0); f = Math.min(f, MAX_D / d0);
+      if (f < 1 && h0 > MIN_H) f = Math.max(f, MIN_H / h0);
+      else if (f < 1) f = 1;
+      if (Math.abs(f - 1) < 1e-4) return;
+      var pos = P.clone().add(b.pos.sub(P).multiplyScalar(f)), tgt = P.clone().add(b.tgt.sub(P).multiplyScalar(f));
+      clampNav(pos, tgt);
+      nav = {pos: pos, tgt: tgt, rate: 14}; navKick();
+    }
+    function panBy(dx, dy){                // two-finger sideways scroll: slide the view
+      var b = navBase(), d = b.pos.distanceTo(b.tgt);
+      var right = new T.Vector3(1, 0, 0).applyQuaternion(camera.quaternion); right.y = 0; right.normalize();
+      var fwd = new T.Vector3(0, 0, -1).applyQuaternion(camera.quaternion); fwd.y = 0; fwd.normalize();
+      var m = d * 0.0016, sh = right.multiplyScalar(dx * m).add(fwd.multiplyScalar(-dy * m));
+      b.pos.add(sh); b.tgt.add(sh); clampNav(b.pos, b.tgt);
+      nav = {pos: b.pos, tgt: b.tgt, rate: 14}; navKick();
+    }
+    // Fly the view so that `to` (a floor point) is at the centre, `d` metres away, keeping the viewing direction (never flatter than ~35°).
+    function flyTo(to, d){
+      var b = navBase(), off = b.pos.sub(b.tgt), hor = Math.hypot(off.x, off.z) || 1;
+      var el = Math.max(0.62, Math.atan2(off.y, hor));
+      var ox = off.x / hor, oz = off.z / hor;
+      var tgt = new T.Vector3(to.x, floorY, to.z), pos = new T.Vector3(to.x + ox * Math.cos(el) * d, floorY + Math.sin(el) * d, to.z + oz * Math.cos(el) * d);
+      clampNav(pos, tgt);
+      nav = {pos: pos, tgt: tgt, rate: 5}; navKick();
+    }
+    canvas.addEventListener("wheel", function(ev){
+      if (mode !== "over") return;
+      ev.preventDefault(); ev.stopImmediatePropagation();
+      var u = ev.deltaMode === 1 ? 16 : ev.deltaMode === 2 ? 100 : 1, dy = ev.deltaY * u, dx = ev.deltaX * u;
+      if (!ev.ctrlKey && Math.abs(dx) > Math.abs(dy) * 1.5) panBy(dx, 0); else zoomAt(ev, dy);
+    }, {passive: false});
     var controls = new OrbitControls(camera, canvas);
     controls.target.copy(center);
     controls.maxPolarAngle = Math.PI / 2 - 0.03;
-    controls.minDistance = 0.5; controls.maxDistance = Math.max(dist * 3, 20);
-    // Faster zoom, towards the pointer, so reaching a corner takes one or two wheel moves.
-    controls.zoomSpeed = 3; controls.zoomToCursor = true; controls.panSpeed = 1.5;
+    controls.minDistance = MIN_D * 0.5; controls.maxDistance = MAX_D;
+    controls.enableDamping = true; controls.dampingFactor = 0.14; controls.screenSpacePanning = false;
+    controls.zoomToCursor = true; controls.panSpeed = 1.2;     // (pinch on a touch screen still goes through OrbitControls)
+    controls.addEventListener("start", function(){ nav = null; });
     controls.update();
 
     // selection outline
@@ -883,19 +1420,122 @@ function makeEditable(el, label, value, onSave){
     outline.material.depthTest = false; outline.material.transparent = true; outline.renderOrder = 999; outline.visible = false;
     scene.add(outline);
 
+    // hover highlight: a thin outline around what a click would grab
+    var hoverBox = new T.Box3(), hoverObj = null;
+    var hoverHelper = new T.Box3Helper(hoverBox, new T.Color(cssColor("--accent", "#2f6bff")));
+    hoverHelper.material.depthTest = false; hoverHelper.material.transparent = true; hoverHelper.material.opacity = 0.55; hoverHelper.renderOrder = 997; hoverHelper.visible = false;
+    scene.add(hoverHelper);
+    function setHover(o){
+      if (o === hoverObj) return;
+      hoverObj = o; hoverHelper.visible = false;
+      if (o) updateHover();
+      requestRender();
+    }
+    function updateHover(){
+      if (!hoverObj) return;
+      boxOf(hoverObj, hoverBox); hoverHelper.visible = !hoverBox.isEmpty() && hoverObj !== active();
+    }
+    // rotation ring: lies on the floor around the selection, with two round grab handles
+    var ringG = new T.Group(); ringG.visible = false; ringG.renderOrder = 998;
+    var ringMat = new T.MeshBasicMaterial({color: new T.Color(cssColor("--accent", "#2f6bff")), transparent: true, opacity: 0.85, side: T.DoubleSide, depthTest: false, depthWrite: false});
+    var ringMesh = new T.Mesh(new T.RingGeometry(0.9, 1, 96), ringMat); ringMesh.rotation.x = -Math.PI / 2; ringMesh.renderOrder = 998;
+    var handleMat = new T.MeshBasicMaterial({color: new T.Color(cssColor("--accent", "#2f6bff")), depthTest: false, depthWrite: false});
+    var handles = [0, 1].map(function(){
+      var m = new T.Mesh(new T.SphereGeometry(1, 24, 16), handleMat); m.renderOrder = 1000; ringG.add(m); return m;
+    });
+    ringG.add(ringMesh); scene.add(ringG);
+    var rg = {c: new T.Vector3(), r: 1, phi: 0, key: null, geo: null, px: 0.01};   // centre, radius, handle angle (world, around +Y), ring geometry key, metres per pixel
+    var rotd = null;                                                              // active ring drag
+    function ringRadius(a, c){
+      var best = 0, v = new T.Vector3(), b = new T.Box3();
+      a.updateMatrixWorld(true);
+      (function w(o){
+        if (!o.visible) return;
+        if (o.isMesh && o.geometry){
+          if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+          var g = o.geometry.boundingBox;
+          for (var i = 0; i < 8; i++){
+            v.set(i & 1 ? g.max.x : g.min.x, i & 2 ? g.max.y : g.min.y, i & 4 ? g.max.z : g.min.z).applyMatrix4(o.matrixWorld);
+            best = Math.max(best, Math.hypot(v.x - c.x, v.z - c.z));
+          }
+        }
+        for (var j = 0; j < o.children.length; j++) w(o.children[j]);
+      })(a);
+      return best;
+    }
+    var hv = new T.Vector3();
+    function updateRing(a){
+      if (!rotd){                      // while turning, centre and radius stay frozen
+        boxOf(a, outBox); if (outBox.isEmpty()){ ringG.visible = false; return; }
+        outBox.getCenter(rg.c);
+        rg.r = Math.max(0.45, ringRadius(a, rg.c) + 0.3);
+      }
+      ringG.visible = true;
+      ringG.position.set(rg.c.x, floorY + 0.03, rg.c.z);
+      var h = Math.max(1, stage.clientHeight);
+      var dist = camera.position.distanceTo(ringG.position);
+      rg.px = 2 * dist * Math.tan(camera.fov * Math.PI / 360) / h;
+      var th = Math.min(rg.r * 0.25, Math.max(rg.px * 3, 0.02));
+      var key = Math.round(rg.r * 100) + "/" + Math.round(th * 400);
+      if (key !== rg.key){
+        rg.key = key; ringMesh.geometry.dispose(); ringMesh.geometry = new T.RingGeometry(rg.r - th / 2, rg.r + th / 2, 96);
+      }
+      var hr = Math.min(rg.r * 0.4, rg.px * 11);
+      handles.forEach(function(m, i){
+        var ph = rg.phi + i * Math.PI;
+        m.position.set(Math.cos(ph) * rg.r, 0.005, -Math.sin(ph) * rg.r); m.scale.setScalar(hr);
+      });
+    }
+    function ringGrab(ev){            // is the pointer on a handle or on the ring? returns the floor point or null
+      if (!ringG.visible || !S.sel) return null;
+      var r = canvas.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+      var reach = ev.pointerType === "mouse" ? 18 : 28, i;
+      for (i = 0; i < 2; i++){
+        handles[i].getWorldPosition(hv).project(camera);
+        if (hv.z < 1 && Math.hypot((hv.x + 1) / 2 * r.width - mx, (1 - hv.y) / 2 * r.height - my) <= reach) return {handle: i};
+      }
+      setNdc(ev);
+      var pl = new T.Plane(Y, -ringG.position.y), p = new T.Vector3();
+      if (!ray.ray.intersectPlane(pl, p)) return null;
+      var d = Math.hypot(p.x - rg.c.x, p.z - rg.c.z);
+      return Math.abs(d - rg.r) <= Math.max(rg.px * 9, 0.06) ? {handle: -1} : null;
+    }
+    function ringAngle(ev){           // angle of the pointer around the centre, on the floor plane
+      setNdc(ev);
+      var pl = new T.Plane(Y, -ringG.position.y), p = new T.Vector3();
+      if (!ray.ray.intersectPlane(pl, p)) return null;
+      return Math.atan2(-(p.z - rg.c.z), p.x - rg.c.x);
+    }
+    function heading(a){
+      var e = new T.Euler().setFromQuaternion(a.getWorldQuaternion(new T.Quaternion()), "YXZ");
+      var d = Math.round(e.y * 180 / Math.PI); return ((d % 360) + 360) % 360;
+    }
+    function updateAngle(){
+      var el = document.getElementById("v3dAng"), a = active();
+      if (el) el.textContent = a ? heading(a) + "°" : "";
+    }
+
     function applyTheme(){
       scene.background = new T.Color(cssColor("--soft", "#f7f8fa"));
       var col = new T.Color(cssColor("--faint", "#a3a9b4")), c = grid.geometry.attributes.color;
       for (var i = 0; i < c.count; i++) c.setXYZ(i, col.r, col.g, col.b);
       c.needsUpdate = true;
       outline.material.color.set(cssColor("--accent", "#2f6bff"));
+      hoverHelper.material.color.set(cssColor("--accent", "#2f6bff")); ringMat.color.set(cssColor("--accent", "#2f6bff")); handleMat.color.set(cssColor("--accent", "#2f6bff"));
       requestRender();
     }
 
     // ── render on demand ──
     var dirty = true, raf = 0;
     function requestRender(){ dirty = true; if (!raf) raf = requestAnimationFrame(frame); }
-    function frame(){ raf = 0; if (!dirty) return; dirty = false; if (S && S.sel) updateOutline(); renderer.render(scene, camera); }
+    function frame(){
+      raf = 0; if (!dirty) return; dirty = false;
+      if (mode === "over" && controls.enabled && !nav) controls.update();            // damping keeps asking for frames until it settles
+      if (S && S.sel) updateOutline();
+      if (hoverObj) updateHover();
+      if (S && picks.length) updatePickVisuals();
+      renderer.render(scene, camera);
+    }
     controls.addEventListener("change", requestRender);
 
     function resize(){
@@ -909,16 +1549,23 @@ function makeEditable(el, label, value, onSave){
 
     // ── selection ──
     S = { elements: elements, sel: null, render: requestRender, rotate: rotate, detach: detach, regroup: regroup, select: select, save: save, reset: reset,
-          scene: scene, camera: camera, renderer: renderer, controls: controls, registry: registry, root: gltf.scene, hit: hitAt, nudge: nudge };
+          scene: scene, camera: camera, renderer: renderer, controls: controls, registry: registry, root: gltf.scene, hit: hitAt, nudge: nudge,
+          venue: venue, zones: zones, selMode: false, picks: [], removed: [], curtains: [], mode: "over", kit: kitEls, mob: mobEls, decoNodes: decoNodes, decoOn: false, pieceMode: false, hidden: hiddenCount, placed: placed, boxOf: boxOf };
     var lastPiece = null;
+    S.updateAngle = updateAngle;
+    S.ring = function(){ var out = {visible: ringG.visible, r: rg.r, phi: rg.phi, c: rg.c.clone(), handles: [], heading: S.sel ? heading(active()) : null}, r = canvas.getBoundingClientRect();
+      handles.forEach(function(m){ var v = m.getWorldPosition(new T.Vector3()).project(camera); out.handles.push({x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height}); }); return out; };
 
     function active(){ return S.sel ? (S.sel.piece || S.sel.el) : null; }
     function updateOutline(){
-      var a = active(); if (!a){ outline.visible = false; return; }
-      outBox.setFromObject(a); outline.visible = !outBox.isEmpty();
+      var a = active(); if (!a){ outline.visible = false; ringG.visible = false; return; }
+      boxOf(a, outBox); outline.visible = !outBox.isEmpty();
+      updateRing(a);
     }
     function select(el, piece){
+      var prev = S.sel;
       S.sel = el ? {el: el, piece: piece && piece !== el ? piece : null} : null;
+      if (!prev || !S.sel || prev.el !== S.sel.el || prev.piece !== S.sel.piece) rg.phi = Math.PI / 4;   // handles start at the front-left
       updateOutline(); renderCap(); requestRender();
     }
     function detach(){
@@ -927,6 +1574,139 @@ function makeEditable(el, label, value, onSave){
       if (p && p !== S.sel.el) select(S.sel.el, p);
     }
     function regroup(){ if (S.sel) select(S.sel.el, null); }
+    // ── "Select for Claude": a list of elements / pieces / floor points, with a ready-to-paste prompt ──
+    var selMode = false, picks = [], ptN = 0, lastPt = {t: 0, x: 0, y: 0};
+    var pickGroup = new T.Group(); pickGroup.renderOrder = 1001; scene.add(pickGroup);
+    var pickCol = new T.Color(0xff8a1f), numTex = {}, pickVis = [];
+    function numSprite(n){
+      var tex = numTex[n];
+      if (!tex){
+        var c = document.createElement("canvas"); c.width = c.height = 64; var g = c.getContext("2d");
+        g.fillStyle = "#ff8a1f"; g.beginPath(); g.arc(32, 32, 29, 0, 7); g.fill();
+        g.lineWidth = 3; g.strokeStyle = "#fff"; g.stroke();
+        g.fillStyle = "#fff"; g.font = "bold 30px system-ui,sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(String(n), 32, 34);
+        tex = numTex[n] = new T.CanvasTexture(c); tex.colorSpace = T.SRGBColorSpace;
+      }
+      var sp = new T.Sprite(new T.SpriteMaterial({map: tex, depthTest: false, depthWrite: false, transparent: true}));
+      sp.renderOrder = 1002; return sp;
+    }
+    function rebuildPickVisuals(){
+      pickVis.forEach(function(v){ pickGroup.remove(v.obj); if (v.sprite){ v.sprite.material.dispose(); } if (v.helper){ v.helper.geometry.dispose(); v.helper.material.dispose(); } if (v.dot){ v.dot.geometry.dispose(); v.dot.material.dispose(); } });
+      pickVis = [];
+      picks.forEach(function(p, i){
+        var g = new T.Group(), v = {obj: g, p: p};
+        v.sprite = numSprite(i + 1); g.add(v.sprite);
+        if (p.type === "pt"){
+          v.dot = new T.Mesh(new T.RingGeometry(0.12, 0.2, 32), new T.MeshBasicMaterial({color: pickCol, side: T.DoubleSide, depthTest: false, transparent: true}));
+          v.dot.rotation.x = -Math.PI / 2; v.dot.renderOrder = 1001; v.dot.position.set(p.x, floorY + 0.03, p.z); g.add(v.dot);
+          v.sprite.position.set(p.x, floorY + 0.55, p.z);
+        } else {
+          v.box = new T.Box3();
+          v.helper = new T.Box3Helper(v.box, pickCol); v.helper.material.depthTest = false; v.helper.material.transparent = true; v.helper.renderOrder = 1001; g.add(v.helper);
+        }
+        pickGroup.add(g); pickVis.push(v);
+      });
+      renderClaude(); renderTools(); requestRender();
+    }
+    function updatePickVisuals(){
+      var c = new T.Vector3();
+      pickVis.forEach(function(v){
+        var d = camera.position.distanceTo(v.sprite.position);
+        if (v.p.type !== "pt"){
+          boxOf(v.p.piece || v.p.el, v.box);
+          if (v.box.isEmpty()){ v.helper.visible = v.sprite.visible = false; return; }
+          v.helper.visible = v.sprite.visible = true;
+          v.box.getCenter(c); v.sprite.position.set(c.x, v.box.max.y + 0.35, c.z);
+          d = camera.position.distanceTo(v.sprite.position);
+        }
+        v.sprite.scale.setScalar(Math.max(0.25, d * 0.045));
+      });
+    }
+    function togglePick(h){
+      var obj = pieceMode && h.piece ? h.piece : h.el, i;
+      for (i = 0; i < picks.length; i++) if (picks[i].type === "obj" && (picks[i].piece || picks[i].el) === obj) break;
+      if (i < picks.length) picks.splice(i, 1);
+      else picks.push({type: "obj", el: h.el, piece: obj !== h.el ? obj : null});
+      rebuildPickVisuals();
+    }
+    function addPoint(ev){
+      var now = Date.now();
+      if (now - lastPt.t < 400 && Math.hypot(ev.clientX - lastPt.x, ev.clientY - lastPt.y) < 8) return;   // second click of a double-click
+      var fp = floorAt(ev); if (!fp) return;
+      if (fp.x < venueBox.min.x - 1 || fp.x > venueBox.max.x + 1 || fp.z < venueBox.min.z - 1 || fp.z > venueBox.max.z + 1) return;
+      lastPt = {t: now, x: ev.clientX, y: ev.clientY};
+      picks.push({type: "pt", n: ++ptN, x: fp.x, z: fp.z}); rebuildPickVisuals();
+    }
+    function r1(v){ return String(Math.round(v * 10) / 10 + 0); }
+    function pickInfo(p){
+      if (p.type === "pt") return {kind: "pt", label: t("v3d_cl_pointp").replace("{n}", p.n), x: p.x, z: p.z, rot: null};
+      var o = p.piece || p.el, w = o.getWorldPosition(new T.Vector3()), mob = p.el.userData.__grp === "mob";
+      var label = labelOf(p.el) + (p.piece ? " › " + pieceLabel(p.piece) : "");
+      var desc = t(mob ? (p.piece ? "v3d_cl_dmobp" : "v3d_cl_dmob") : (p.piece ? "v3d_cl_dkitp" : "v3d_cl_dkit")).replace("{g}", p.el.name).replace("{p}", p.piece ? p.piece.name : "");
+      return {kind: mob ? "mob" : "kit", label: label, desc: desc, x: w.x, z: w.z, rot: heading(o)};
+    }
+    function claudePrompt(){
+      var lines = [t("v3d_cl_intro")];
+      if (!picks.length) lines.push(t("v3d_cl_none"));
+      picks.forEach(function(p, i){
+        var f = pickInfo(p), pos = "x=" + r1(f.x) + " m, z=" + r1(f.z) + " m";
+        lines.push((i + 1) + ". " + f.label + (f.kind === "pt" ? "" : " (" + f.desc + ")") + " — " + pos + (f.rot === null ? "" : ", " + t("v3d_cl_rot") + " " + f.rot + "°"));
+      });
+      lines.push(t("v3d_cl_wantp") + " " + clWant.value.trim());
+      return lines.join("\n");
+    }
+    function renderClaude(){
+      clHead.textContent = t("v3d_cl_head"); clWantLbl.textContent = t("v3d_cl_want"); clWant.placeholder = t("v3d_cl_ph");
+      clCopy.textContent = t("v3d_cl_copy"); clClear.textContent = t("v3d_cl_clear"); clClear.hidden = !picks.length;
+      clList.textContent = "";
+      if (!picks.length){ var li0 = document.createElement("li"); li0.className = "meta"; li0.style.listStyle = "none"; li0.style.marginLeft = "-22px"; li0.textContent = t("v3d_cl_empty"); clList.appendChild(li0); return; }
+      picks.forEach(function(p, i){
+        var f = pickInfo(p), li = document.createElement("li");
+        var a = document.createElement("span"); a.textContent = f.label + " ";
+        var m = document.createElement("span"); m.className = "meta";
+        m.textContent = "· " + t(f.kind === "kit" ? "v3d_cl_kit" : f.kind === "mob" ? "v3d_cl_mob" : "v3d_cl_pt") + " · x " + r1(f.x) + " m · z " + r1(f.z) + " m" + (f.rot === null ? "" : " · " + f.rot + "°") + " ";
+        var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link"; b.textContent = t("v3d_cl_remove");
+        b.setAttribute("aria-label", t("v3d_cl_remove") + " " + f.label);
+        b.addEventListener("click", function(){ picks.splice(i, 1); rebuildPickVisuals(); });
+        li.appendChild(a); li.appendChild(m); li.appendChild(b); clList.appendChild(li);
+      });
+    }
+    var okTimer = 0;
+    function flashOk(msg, bad){ clOk.textContent = msg; clOk.style.color = bad ? "var(--warn)" : ""; clearTimeout(okTimer); okTimer = setTimeout(function(){ clOk.textContent = ""; }, 3000); }
+    function copyPrompt(){
+      var txt = claudePrompt(); S.lastPrompt = txt;
+      function fallback(){
+        var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+        clEl.appendChild(ta); ta.select(); var ok = false;
+        try { ok = document.execCommand("copy"); } catch(e){}
+        ta.parentNode.removeChild(ta); flashOk(t(ok ? "v3d_cl_ok" : "v3d_cl_fail") + (ok ? " ✓" : ""), !ok);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(function(){ flashOk(t("v3d_cl_ok") + " ✓"); }, fallback);
+      } else fallback();
+    }
+    clCopy.addEventListener("click", copyPrompt);
+    clClear.addEventListener("click", function(){ picks.length = 0; rebuildPickVisuals(); });
+    function setSelMode(on){
+      selMode = S.selMode = !!on;
+      if (selMode){ select(null); endDrag(false); }
+      canvas.classList.toggle("selmode", selMode);
+      renderTools(); requestRender();
+    }
+    S.picks = picks; S.setSelMode = setSelMode; S.renderClaude = renderClaude; S.claudePrompt = claudePrompt; S.floorAt = floorAt; S.flyTo = flyTo; S.togglePick = togglePick;
+    S.navState = function(){ return {pos: camera.position.clone(), tgt: controls.target.clone(), dist: camera.position.distanceTo(controls.target), flying: !!nav}; };
+    var pieceMode = false;
+    function setPieceMode(on){
+      pieceMode = S.pieceMode = !!on;
+      if (!pieceMode && S.sel && S.sel.piece) select(S.sel.el, null);
+      else { renderCap(); }
+      renderTools();
+    }
+    function setDeco(on){
+      S.decoOn = !!on; decoNodes.forEach(function(n){ n.visible = S.decoOn; });
+      renderTools(); requestRender();
+    }
+    S.setPieceMode = setPieceMode; S.setDeco = setDeco;
 
     function elementOf(o){ while (o && o.parent && elements.indexOf(o) < 0) o = o.parent; return o && elements.indexOf(o) >= 0 ? o : null; }
     function pieceOf(o, el){ while (o && o.parent !== el) o = o.parent; return o || null; }
@@ -946,9 +1726,60 @@ function makeEditable(el, label, value, onSave){
         for (var p = o; p; p = p.parent) if (!p.visible){ vis = false; break; }
         if (!vis) continue;
         var el = elementOf(o);
-        if (el) return {el: el, piece: el === o ? null : pieceOf(o, el), point: hits[i].point};
+        if (el){
+          if (venueMeshes.length){      // a wall in front hides the element
+            var vh = ray.intersectObjects(venueMeshes, false)[0];
+            if (vh && vh.distance < hits[i].distance - 0.02) return null;
+          }
+          return {el: el, piece: el === o ? null : pieceOf(o, el), point: hits[i].point};
+        }
       }
-      return null;
+      return nearHit(ev);
+    }
+    // Forgiving pick: when the ray hits nothing selectable, take the selectable thing (group, or piece in "one piece" mode)
+    // whose mesh box, seen on screen, contains the cursor or is within a few pixels of it (closest and smallest first).
+    var nhB = new T.Box3(), nhV = new T.Vector3();
+    function nearHit(ev){
+      var r = canvas.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top, pad = ev.pointerType === "touch" ? 18 : 11;
+      var best = null, bestA = Infinity;
+      function scan(cand, el, piece){
+        cand.updateMatrixWorld(true);
+        (function w(o){
+          if (!o.visible) return;
+          if (o.isMesh && o.geometry){
+            if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+            var g = o.geometry.boundingBox, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, behind = false, i;
+            for (i = 0; i < 8; i++){
+              nhV.set(i & 1 ? g.max.x : g.min.x, i & 2 ? g.max.y : g.min.y, i & 4 ? g.max.z : g.min.z).applyMatrix4(o.matrixWorld).project(camera);
+              if (nhV.z > 1){ behind = true; break; }
+              var sx = (nhV.x + 1) / 2 * r.width, sy = (1 - nhV.y) / 2 * r.height;
+              if (sx < x0) x0 = sx; if (sx > x1) x1 = sx; if (sy < y0) y0 = sy; if (sy > y1) y1 = sy;
+            }
+            if (!behind){
+              var ddx = Math.max(x0 - mx, 0, mx - x1), ddy = Math.max(y0 - my, 0, my - y1), dd = Math.hypot(ddx, ddy);
+              if (dd <= pad){
+                // closest box wins (0 when the cursor is inside), big boxes count a little against: a long table's box must not steal a near-miss on a stool
+                var a = dd + 0.06 * Math.sqrt(Math.max(1, (x1 - x0) * (y1 - y0)));
+                if (a < bestA){ bestA = a; best = {el: el, piece: piece, mesh: o}; }
+              }
+            }
+          }
+          for (var j = 0; j < o.children.length; j++) w(o.children[j]);
+        })(cand);
+      }
+      elements.forEach(function(el){
+        if (!el.visible) return;
+        if (pieceMode && el.children.length) el.children.forEach(function(c){ if (c.visible) scan(c, el, c); });
+        else scan(el, el, null);
+      });
+      if (!best) return null;
+      nhB.makeEmpty(); boxOf(best.mesh, nhB);
+      var pt = nhB.getCenter(new T.Vector3());
+      if (venueMeshes.length){        // a wall in front hides it
+        var vh = ray.intersectObjects(venueMeshes, false)[0];
+        if (vh && vh.distance < nhB.distanceToPoint(camera.position) - 0.02) return null;
+      }
+      return {el: best.el, piece: best.piece, point: pt, near: true};
     }
 
     // ── transforms ──
@@ -956,9 +1787,15 @@ function makeEditable(el, label, value, onSave){
     function setWorldPos(o, w){ o.position.copy(o.parent.worldToLocal(tmpV.copy(w))); o.updateMatrixWorld(true); }
     function rotate(deg){
       var a = active(); if (!a) return;
-      var c = new T.Box3().setFromObject(a).getCenter(new T.Vector3());
+      var c = boxOf(a, new T.Box3()).getCenter(new T.Vector3());
+      rotateFrom(a, c, a.getWorldPosition(new T.Vector3()), a.getWorldQuaternion(new T.Quaternion()), deg);
+      rg.phi += deg * Math.PI / 180;
+      save(); updateOutline(); updateAngle(); requestRender();
+    }
+    // Turn `a` by `deg` degrees around the vertical axis through c, starting from the world pose (wp, wq).
+    function rotateFrom(a, c, wp, wq, deg){
       var R = new T.Quaternion().setFromAxisAngle(Y, deg * Math.PI / 180);
-      var wp = a.getWorldPosition(new T.Vector3()), wq = a.getWorldQuaternion(new T.Quaternion());
+      wp = wp.clone();
       var np = wp.sub(c).applyQuaternion(R).add(c);
       var nq = R.multiply(wq);
       a.parent.updateMatrixWorld(true);
@@ -966,12 +1803,11 @@ function makeEditable(el, label, value, onSave){
       a.quaternion.copy(pq.multiply(nq)).normalize();
       a.position.copy(a.parent.worldToLocal(np));
       a.updateMatrixWorld(true);
-      save(); requestRender();
     }
     function nudge(dx, dz){
       var a = active(); if (!a) return;
       var w = a.getWorldPosition(new T.Vector3()); w.x += dx; w.z += dz;
-      setWorldPos(a, w); save(); requestRender();
+      setWorldPos(a, w); save(); updateOutline(); requestRender();
     }
 
     // ── persistence ──
@@ -983,65 +1819,156 @@ function makeEditable(el, label, value, onSave){
         for (i = 0; i < 7; i++) if (Math.abs(a[i] - b[i]) > 1e-5){ diff = true; break; }
         if (diff) out[k] = a.map(function(x){ return Math.round(x * 1e5) / 1e5; });
       }
+      // Additive fields (older saves stay valid): h = removed nodes, c = closed curtains.
+      var hid = removed.map(function(n){ return n.userData.__key; }), clo = curtains.filter(function(e){ return e.userData.__curt.isClosed; }).map(function(e){ return e.userData.__key; });
+      var rec = {v: 1, n: out}; if (hid.length) rec.h = hid; if (clo.length) rec.c = clo;
       try {
-        if (Object.keys(out).length) localStorage.setItem(KEY, JSON.stringify({v: 1, n: out}));
+        if (Object.keys(out).length || hid.length || clo.length) localStorage.setItem(KEY, JSON.stringify(rec));
         else localStorage.removeItem(KEY);
       } catch(e){}
     }
     function restore(){
       var data = null;
       try { data = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
-      if (!data || data.v !== 1 || !data.n) return;
-      Object.keys(data.n).forEach(function(k){
+      if (!data || data.v !== 1 || (!data.n && !data.h && !data.c)) return;
+      Object.keys(data.n || {}).forEach(function(k){
         var n = registry[k], v = data.n[k];
         if (!n || !v || v.length !== 7) return;
         for (var i = 0; i < 7; i++) if (typeof v[i] !== "number" || !isFinite(v[i])) return;
         n.position.set(v[0], v[1], v[2]); n.quaternion.set(v[3], v[4], v[5], v[6]).normalize();
       });
-      gltf.scene.updateMatrixWorld(true);
+      (Array.isArray(data.h) ? data.h : []).forEach(function(k){ var n = registry[k]; if (n && removed.indexOf(n) < 0){ n.visible = false; removed.push(n); } });
+      (Array.isArray(data.c) ? data.c : []).forEach(function(k){ var n = registry[k]; if (n && n.userData.__curt) setCurtain(n, true); });
+      scene.updateMatrixWorld(true);
     }
-    function reset(){
+    var removed = S.removed;
+    function setCurtain(el, closed){
+      var c = el.userData.__curt; if (!c) return;
+      c.isClosed = !!closed; c.open.visible = !closed; c.closed.visible = !!closed;
+      if (S.sel && S.sel.el === el && S.sel.piece && !S.sel.piece.visible) select(el, null);
+    }
+    function toggleCurtain(el){ setCurtain(el, !el.userData.__curt.isClosed); save(); updateOutline(); renderCap(); renderTools(); requestRender(); }
+    function allCurtains(closed){ curtains.forEach(function(e){ setCurtain(e, closed); }); save(); updateOutline(); renderCap(); requestRender(); }
+    function removeSel(){
+      var a = active(); if (!a || removed.indexOf(a) >= 0) return;
+      a.visible = false; removed.push(a);
+      var before = picks.length;
+      for (var i = picks.length - 1; i >= 0; i--) if (picks[i].type === "obj" && (picks[i].piece || picks[i].el) === a) picks.splice(i, 1);
+      select(null); save();
+      if (picks.length !== before) rebuildPickVisuals();
+      renderTools(); requestRender();
+    }
+    function bringBack(){
+      removed.forEach(function(n){ n.visible = true; }); removed.length = 0;
+      save(); renderTools(); requestRender();
+    }
+    S.curtains = curtains; S.toggleCurtain = toggleCurtain; S.allCurtains = allCurtains; S.removeSel = removeSel; S.bringBack = bringBack;
+    function resetScene(){
       for (var k in registry){
         var o = originals[k], n = registry[k];
         n.position.set(o[0], o[1], o[2]); n.quaternion.set(o[3], o[4], o[5], o[6]);
       }
-      gltf.scene.updateMatrixWorld(true);
-      try { localStorage.removeItem(KEY); } catch(e){}
-      updateOutline(); requestRender();
+      removed.forEach(function(n){ n.visible = true; }); removed.length = 0;
+      curtains.forEach(function(e){ setCurtain(e, e.userData.__curt.def); });
+      scene.updateMatrixWorld(true);
     }
+    function reset(){
+      resetScene();
+      try { localStorage.removeItem(KEY); } catch(e){}
+      updateOutline(); requestRender(); renderTools();
+    }
+    // Re-read the stored layout (after an import / undo): everything back to the file's positions, then the saved layout on top.
+    S.reloadLayout = function(){
+      select(null); resetScene(); restore();
+      for (var i = picks.length - 1; i >= 0; i--) if (picks[i].type === "obj" && !((picks[i].piece || picks[i].el).visible)) picks.splice(i, 1);
+      rebuildPickVisuals(); updateOutline(); renderCap(); renderTools(); requestRender();
+    };
     resetBtn.addEventListener("click", function(){ if (confirm(t("v3d_confirm"))) reset(); });
     restore();
 
     // ── pointer interaction ──
-    var drag = null, down = null, pointers = 0, hoverQueued = false, lastEv = null;
+    var mode = "over";
+    var drag = null, down = null, look = null, pointers = 0, hoverQueued = false, lastEv = null;
     var plane = new T.Plane(), pt = new T.Vector3();
     function endDrag(moved){
       if (!drag) return;
-      drag = null; controls.enabled = true; canvas.classList.remove("drag");
+      drag = null; controls.enabled = mode === "over"; canvas.classList.remove("drag");
       if (moved) save();
+    }
+    function endRot(){
+      if (!rotd) return;
+      var moved = rotd.moved; rotd = null; controls.enabled = mode === "over"; canvas.classList.remove("drag");
+      if (moved) save();
+      updateOutline(); requestRender();
     }
     canvas.addEventListener("pointerdown", function(ev){
       pointers++;
-      if (pointers > 1){ endDrag(true); down = null; return; }
+      if (pointers > 1){ endDrag(true); endRot(); look = null; down = null; return; }
       if (ev.button !== 0) { down = null; return; }
       canvas.focus({preventScroll: true});
+      setHover(null);
+      if (selMode){                                   // selection mode: a click picks, nothing moves
+        var sh = hitAt(ev);
+        down = {x: ev.clientX, y: ev.clientY, empty: !sh, pick: sh};
+        if (!sh && mode === "walk"){
+          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, moved: false};
+          try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
+        }
+        return;
+      }
+      var rh = ringGrab(ev), ra = active();
+      if (rh && ra){
+        var p0 = ringAngle(ev);
+        if (p0 !== null){
+          controls.enabled = false; down = {x: ev.clientX, y: ev.clientY, empty: false};
+          rotd = {id: ev.pointerId, obj: ra, c: rg.c.clone(), p0: p0, wp: ra.getWorldPosition(new T.Vector3()), wq: ra.getWorldQuaternion(new T.Quaternion()),
+                  h0: heading(ra), phi0: rg.phi, moved: false};
+          // keep the handle under the pointer when grabbing the ring itself
+          if (rh.handle < 0) rotd.phi0 = rg.phi = p0;
+          try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
+          canvas.classList.add("drag"); requestRender();
+          return;
+        }
+      }
       var h = hitAt(ev);
       down = {x: ev.clientX, y: ev.clientY, empty: !h};
-      if (!h) return;
+      if (!h){
+        if (mode === "walk"){
+          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, moved: false};
+          try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
+        }
+        return;
+      }
       controls.enabled = false;
       lastPiece = h.piece;
       var sel = S.sel;
-      if (sel && sel.piece && h.el === sel.el && h.piece) select(h.el, h.piece);      // detached mode: switch piece
+      if (pieceMode) select(h.el, h.piece);                                              // one piece at a time
+      else if (sel && sel.piece && h.el === sel.el && h.piece) select(h.el, h.piece);      // detached mode: switch piece
       else if (sel && sel.piece && h.el === sel.el && !h.piece) select(h.el, null);
       else select(h.el, null);
       var a = active();
       plane.set(Y, -h.point.y);
-      if (!ray.ray.intersectPlane(plane, pt)) { controls.enabled = true; return; }
+      if (!ray.ray.intersectPlane(plane, pt)) { controls.enabled = mode === "over"; return; }
       drag = {id: ev.pointerId, start: pt.clone(), wp: a.getWorldPosition(new T.Vector3()), moved: false, obj: a};
       try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
     });
     canvas.addEventListener("pointermove", function(ev){
-      if (drag && ev.pointerId === drag.id){
+      if (rotd && ev.pointerId === rotd.id){
+        if (!rotd.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 3) return;
+        var ang = ringAngle(ev); if (ang === null) return;
+        rotd.moved = true;
+        var deg = (ang - rotd.p0) * 180 / Math.PI;
+        if (ev.shiftKey){ deg = Math.round((rotd.h0 + deg) / 15) * 15 - rotd.h0; }   // snap the final heading to 15° steps
+        rotateFrom(rotd.obj, rotd.c, rotd.wp, rotd.wq, deg);
+        rg.phi = rotd.phi0 + deg * Math.PI / 180;
+        updateOutline(); updateAngle(); requestRender();
+      } else if (look && ev.pointerId === look.id){
+        if (!look.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4) return;
+        look.moved = true; canvas.classList.add("drag");
+        yaw = look.yaw + (ev.clientX - down.x) * 0.005;
+        pitch = Math.max(-1.3, Math.min(1.3, look.pitch + (ev.clientY - down.y) * 0.005));
+        applyLook(); requestRender();
+      } else if (drag && ev.pointerId === drag.id){
         if (!drag.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4) return;
         drag.moved = true; canvas.classList.add("drag");
         setNdc(ev);
@@ -1050,27 +1977,55 @@ function makeEditable(el, label, value, onSave){
         setWorldPos(drag.obj, w); requestRender();
       } else if (ev.pointerType === "mouse" && !ev.buttons){
         lastEv = ev;
-        if (!hoverQueued){ hoverQueued = true; requestAnimationFrame(function(){ hoverQueued = false; canvas.classList.toggle("over", !!hitAt(lastEv)); }); }
+        if (!hoverQueued){ hoverQueued = true; requestAnimationFrame(function(){
+          hoverQueued = false;
+          var onRing = !!ringGrab(lastEv);
+          canvas.classList.toggle("ring", onRing);
+          var hh = onRing ? null : hitAt(lastEv);
+          canvas.classList.toggle("over", !!hh);
+          var tg = null;
+          if (hh){
+            var s0 = S.sel;
+            tg = (pieceMode || (s0 && s0.piece && s0.el === hh.el)) && hh.piece ? hh.piece : hh.el;
+          }
+          setHover(tg);
+        }); }
       }
     });
     function up(ev){
       pointers = Math.max(0, pointers - 1);
-      if (drag && ev.pointerId === drag.id) endDrag(drag.moved);
-      else if (down && down.empty && ev.type === "pointerup" && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4 && pointers === 0) select(null);
-      if (!pointers){ controls.enabled = true; down = null; }
+      var selTap = selMode && down && ev.type === "pointerup" && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4 && pointers === 0;
+      var selPick = selTap && down.pick, selEmpty = selTap && down.empty;
+      var tap = !selMode && down && down.empty && ev.type === "pointerup" && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4 && pointers === 0;
+      if (look && ev.pointerId === look.id){ look = null; canvas.classList.remove("drag"); }
+      if (rotd && ev.pointerId === rotd.id){ endRot(); canvas.classList.remove("ring"); }
+      else if (drag && ev.pointerId === drag.id) endDrag(drag.moved);
+      else if (selPick) togglePick(selPick);
+      else if (selEmpty) addPoint(ev);
+      else if (tap){ select(null); if (mode === "walk") tapFloor(ev); }
+      if (!pointers){ controls.enabled = mode === "over"; down = null; }
     }
+    canvas.addEventListener("pointerleave", function(){ if (!pointers) setHover(null); });
     canvas.addEventListener("pointerup", up);
     canvas.addEventListener("pointercancel", up);
     canvas.addEventListener("dblclick", function(ev){
       var h = hitAt(ev);
+      if (selMode) return;
       if (h && h.piece) { lastPiece = h.piece; select(h.el, h.piece); }
+      else if (!h && mode === "over"){            // double-click on the empty floor: fly there
+        var fp = floorAt(ev);
+        if (fp) flyTo(fp, Math.max(6, Math.min(16, camera.position.distanceTo(controls.target) * 0.45)));
+      }
     });
 
     // ── keyboard ──
     canvas.addEventListener("keydown", function(ev){
       var k = ev.key, step = ev.shiftKey ? 0.5 : 0.1, used = true;
+      if (mode === "walk" && walkKey(ev, true)){ ev.preventDefault(); return; }
       if (k === "q" || k === "Q") rotate(15);
       else if (k === "e" || k === "E") rotate(-15);
+      else if ((k === "f" || k === "F") && !ev.ctrlKey && !ev.metaKey && !ev.altKey) toggleFs();
+      else if ((k === "Delete" || k === "Backspace") && S.sel && !selMode) removeSel();
       else if (k === "Escape") select(null);
       else if (k === "Enter"){
         var i = S.sel ? elements.indexOf(S.sel.el) : -1;
@@ -1083,6 +2038,167 @@ function makeEditable(el, label, value, onSave){
       else used = false;
       if (used) ev.preventDefault();
     });
+
+    canvas.addEventListener("keyup", function(ev){ if (mode === "walk" && walkKey(ev, false)) ev.preventDefault(); });
+    canvas.addEventListener("blur", function(){ held = {}; });
+
+    // ── walk-through (first person) ──
+    var RADIUS = 0.3, EYE_Y = floorY + EYE;
+    var yaw = 0, pitch = 0, saved = null, held = {}, fast = false, glide = null, loopRaf = 0, lastT = 0;
+    var wallRay = new T.Raycaster(), wDir = new T.Vector3(), wOrg = new T.Vector3(), nrm = new T.Vector3();
+    function applyLook(){ camera.rotation.order = "YXZ"; camera.rotation.set(pitch, yaw, 0); }
+    // How far can we go from p along dir (horizontal, unit) before a venue wall? Knee and waist height.
+    function freeDist(p, dir, maxD){
+      if (!venueMeshes.length) return maxD;
+      var allowed = maxD, hs = [0.5, 1.1];
+      for (var i = 0; i < hs.length; i++){
+        wOrg.set(p.x, floorY + hs[i], p.z);
+        wallRay.set(wOrg, dir); wallRay.near = 0; wallRay.far = maxD + RADIUS;
+        var h = wallRay.intersectObjects(venueMeshes, false)[0];
+        if (h) allowed = Math.min(allowed, Math.max(0, h.distance - RADIUS));
+      }
+      return allowed;
+    }
+    // Move by (dx, dz) one axis at a time, so we slide along walls instead of sticking.
+    function tryMove(dx, dz){
+      var p = camera.position, x0 = p.x, z0 = p.z;
+      if (dx){ wDir.set(dx > 0 ? 1 : -1, 0, 0); p.x += wDir.x * freeDist(p, wDir, Math.abs(dx)); }
+      if (dz){ wDir.set(0, 0, dz > 0 ? 1 : -1); p.z += wDir.z * freeDist(p, wDir, Math.abs(dz)); }
+      return p.x !== x0 || p.z !== z0;
+    }
+    function anyHeld(){ for (var k in held) return true; return false; }
+    function kickLoop(){ if (!loopRaf && mode === "walk" && (glide || anyHeld())){ lastT = performance.now(); loopRaf = requestAnimationFrame(loop); } }
+    function loop(ts){
+      loopRaf = 0;
+      var dt = Math.min(0.25, Math.max(0, (ts - lastT) / 1000)); lastT = ts;
+      if (mode !== "walk") return;
+      var f = 0, r = 0, id;
+      for (var k in held){ id = held[k]; if (id === "f") f++; else if (id === "b") f--; else if (id === "r") r++; else if (id === "l") r--; }
+      if (f || r){
+        glide = null;
+        var n = Math.hypot(f, r), sp = (fast ? 3.2 : 1.4) * dt / n;
+        var fx = -Math.sin(yaw), fz = -Math.cos(yaw);
+        tryMove((fx * f + (-fz) * r) * sp, (fz * f + fx * r) * sp);
+      }
+      if (glide){
+        glide.t = Math.min(1, glide.t + dt / glide.dur);
+        var e = glide.t < 0.5 ? 2 * glide.t * glide.t : 1 - Math.pow(-2 * glide.t + 2, 2) / 2;
+        camera.position.x = glide.fx + (glide.tx - glide.fx) * e;
+        camera.position.z = glide.fz + (glide.tz - glide.fz) * e;
+        if (glide.ty !== null){ yaw = glide.fy + (glide.ty - glide.fy) * e; applyLook(); }
+        if (glide.t >= 1) glide = null;
+      }
+      dirty = true; frame();
+      kickLoop();
+    }
+    function walkKey(ev, down){
+      var c = ev.code, k = ev.key, id = null;
+      fast = ev.shiftKey;
+      if (S.sel && (k === "q" || k === "Q" || k === "e" || k === "E")) return false;   // rotate the selection instead
+      if (c === "KeyW" || c === "ArrowUp" || k === "z" || k === "Z" || k === "w" || k === "W") id = "f";
+      else if (c === "KeyS" || c === "ArrowDown") id = "b";
+      else if (c === "KeyA" || c === "ArrowLeft" || k === "q" || k === "Q") id = "l";
+      else if (c === "KeyD" || c === "ArrowRight") id = "r";
+      if (!id) return false;
+      var kk = c || k;
+      if (down) held[kk] = id; else delete held[kk];
+      kickLoop(); return true;
+    }
+    function glideTo(x, z, opts){
+      opts = opts || {};
+      var p = camera.position, dx = x - p.x, dz = z - p.z, d = Math.hypot(dx, dz);
+      var ty = typeof opts.yaw === "number" ? opts.yaw : null;
+      if (d < 0.05 && ty === null) return false;
+      if (d >= 0.05 && !opts.free){
+        wDir.set(dx / d, 0, dz / d);
+        var a = freeDist(p, wDir, d);
+        x = p.x + wDir.x * a; z = p.z + wDir.z * a; d = a;
+        if (d < 0.05) return false;
+      }
+      var fy = yaw;
+      if (ty !== null) ty = fy + Math.atan2(Math.sin(ty - fy), Math.cos(ty - fy));
+      glide = {fx: p.x, fz: p.z, tx: x, tz: z, fy: fy, ty: ty, t: 0, dur: Math.max(0.35, Math.min(1.8, d / 3.5))};
+      kickLoop(); return true;
+    }
+    function tapFloor(ev){
+      if (!venueMeshes.length) return;
+      setNdc(ev);
+      var h = ray.intersectObjects(venueMeshes, false)[0];
+      if (!h || !h.face) return;
+      nrm.copy(h.face.normal).transformDirection(h.object.matrixWorld);
+      if (nrm.y < 0.7 || Math.abs(h.point.y - floorY) > 0.25) return;
+      glideTo(h.point.x, h.point.z);
+    }
+    canvas.addEventListener("wheel", function(ev){
+      if (mode !== "walk") return;
+      ev.preventDefault();
+      var d = -Math.sign(ev.deltaY) * Math.min(2, Math.max(0.3, Math.abs(ev.deltaY) / 100)) * 0.6;
+      glide = null; tryMove(-Math.sin(yaw) * d, -Math.cos(yaw) * d); requestRender();
+    }, {passive: false});
+    document.addEventListener("keydown", function(ev){
+      if (ev.key !== "Escape") return;
+      if (fsFallback){ exitFs(); return; }          // first Esc leaves the full-window overlay
+      if (mode === "walk") setMode("over");
+    });
+
+    function spawnPose(){
+      var pos = new T.Vector3(0, 0, 0), yw = 0;
+      if (spawnNode){
+        spawnNode.updateWorldMatrix(true, false);
+        spawnNode.getWorldPosition(pos);
+        var q = spawnNode.getWorldQuaternion(new T.Quaternion());
+        var toC = new T.Vector3(-pos.x, 0, -pos.z), best = null, bd = -2;
+        if (toC.lengthSq() > 0.01) toC.normalize();
+        [1, -1].forEach(function(sg){
+          var dv = new T.Vector3(0, 0, sg).applyQuaternion(q); dv.y = 0;
+          if (dv.lengthSq() < 0.01) return; dv.normalize();
+          var dd = toC.lengthSq() ? dv.dot(toC) : 0;
+          if (dd > bd){ bd = dd; best = dv; }
+        });
+        if (!best || (toC.lengthSq() && bd < 0.2)) best = toC.lengthSq() ? toC : new T.Vector3(0, 0, -1);
+        var ld = spawnNode.userData && spawnNode.userData.look_dir;   // explicit look direction (world), if the model gives one
+        if (ld && ld.length >= 3 && isFinite(ld[0]) && isFinite(ld[2]) && Math.hypot(ld[0], ld[2]) > 0.01){
+          best = new T.Vector3(ld[0], 0, ld[2]).normalize();
+        }
+        yw = Math.atan2(-best.x, -best.z);
+      }
+      return {x: pos.x, z: pos.z, yaw: yw};
+    }
+    function setMode(m){
+      if (m === mode || !venue) return;
+      glide = null; held = {}; nav = null;
+      if (m === "walk"){
+        saved = {pos: camera.position.clone(), target: controls.target.clone(), fov: camera.fov, near: camera.near};
+        var sp = spawnPose();
+        controls.enabled = false;
+        camera.fov = wide ? 90 : 70; camera.near = 0.05; camera.updateProjectionMatrix();
+        camera.position.set(sp.x, EYE_Y, sp.z); yaw = sp.yaw; pitch = 0; applyLook();
+        stage.classList.add("walk");
+      } else {
+        stage.classList.remove("walk");
+        camera.fov = saved.fov; camera.near = saved.near; camera.updateProjectionMatrix();
+        camera.position.copy(saved.pos); controls.target.copy(saved.target);
+        controls.enabled = true; controls.update();
+      }
+      mode = S.mode = m;
+      setDeco(m === "walk");           // hanging decor: shown in the walk-through, hidden in the overview
+      canvas.setAttribute("aria-label", t(m === "walk" ? "v3d_aria_walk" : "v3d_aria"));
+      renderBar(); renderCap(); updateOutline(); requestRender();
+    }
+    function goZone(z){
+      if (mode === "walk"){
+        var far = Math.hypot(z.pos.x, z.pos.z) > 2.5;
+        glideTo(z.pos.x, z.pos.z, {free: true, yaw: far ? Math.atan2(z.pos.x, z.pos.z) : undefined});
+      } else {
+        flyTo(z.pos, 9);
+      }
+    }
+    S.applyFov = function(){ if (mode === "walk"){ camera.fov = wide ? 90 : 70; camera.updateProjectionMatrix(); requestRender(); } };
+    S.onFs = function(){ S.applyFov(); resize(); requestRender(); };
+    S.setMode = setMode; S.goZone = goZone; S.spawn = spawnPose;
+    S.pose = function(){ return {mode: mode, x: camera.position.x, y: camera.position.y, z: camera.position.z, yaw: yaw, pitch: pitch}; };
+    S.tapFloor = tapFloor;
+    S.free = function(dx, dz, maxD){ wDir.set(dx, 0, dz).normalize(); return freeDist(camera.position, wDir, maxD); };
 
     // theme follows the system / the data-theme attribute
     applyTheme();
