@@ -1,0 +1,7 @@
+# Only the public build (docs/) and its build script go online.
+# The full page (index.html) and the working 3D files stay on Alex's Mac.
+/*
+!/docs/
+!/build-public.py
+!/README.md
+!/.gitignore

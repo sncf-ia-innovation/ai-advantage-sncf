@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Advantage SNCF</title>
+<style>
+:root{
+  --bg:#ffffff; --soft:#f7f8fa; --ink:#3b414c; --muted:#6f7684; --faint:#a3a9b4; --line:#eef0f3;
+  --accent:#2f6bff; --accent-soft:#eef3ff; --warn:#a15c00; --warn-soft:#fff8ec;
+  --t-talk:#2f6bff; --t-demo:#16a37a; --t-break:#b3b8c2; --t-workshop:#9a6bff; --t-sncf:#e2405a;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111317; --soft:#191c21; --ink:#d9dce2; --muted:#9aa1ad; --faint:#6f7683; --line:#23272e;
+    --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12;
+    --t-talk:#7aa2ff; --t-demo:#48cc9b; --t-break:#6f7683; --t-workshop:#b796ff; --t-sncf:#ff7489;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111317; --soft:#191c21; --ink:#d9dce2; --muted:#9aa1ad; --faint:#6f7683; --line:#23272e;
+  --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12;
+  --t-talk:#7aa2ff; --t-demo:#48cc9b; --t-break:#6f7683; --t-workshop:#b796ff; --t-sncf:#ff7489;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:300}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.hero{padding:72px 0 40px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:0 0 14px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.12;font-weight:400;letter-spacing:-.02em;margin:0 0 16px}
+h2{font-size:22px;font-weight:400;letter-spacing:-.01em;margin:0 0 20px}
+h3{font-size:16px;font-weight:500;margin:0 0 6px}
+.lead{font-size:18px;color:var(--muted);max-width:680px;margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin:28px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+section{padding:56px 0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--soft);border-radius:var(--radius);padding:22px}
+.card p,.card ul{margin:0;color:var(--muted);font-size:15px}
+.card ul{padding-left:18px}
+.card li{margin-bottom:2px}
+.tag{display:block;font-size:12px;font-weight:400;letter-spacing:.04em;margin-bottom:10px;color:var(--accent)}
+.note{background:var(--warn-soft);border-radius:var(--radius);padding:22px}
+.note h3{color:var(--warn)}
+.note p,.note ul{color:var(--muted);font-size:15px}
+.note ul{margin:0;padding-left:18px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+tbody td{color:var(--muted)}
+th{font-size:13px;color:var(--faint);font-weight:400}
+tbody th{color:var(--ink);font-weight:400}
+.table-scroll{overflow-x:auto}
+
+/* Planner */
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.status{font-size:13px;color:var(--faint)}
+.tracks{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:24px}
+.track{min-width:0}
+.track-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.track-head h3{margin:0}
+.list{min-height:60px;display:flex;flex-direction:column;gap:6px;border-radius:10px}
+.slot{position:relative;display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:baseline;background:var(--soft);border-radius:10px;padding:11px 14px 11px 22px;cursor:grab;user-select:none;transition:background .15s, box-shadow .15s}
+.slot::before{content:"";position:absolute;left:10px;top:21px;width:6px;height:6px;border-radius:50%;background:var(--t-talk)}
+.slot:hover{background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06)}
+.slot:active{cursor:grabbing}
+.slot.dragging{opacity:.35}
+.placeholder{height:3px;border-radius:2px;background:var(--accent);margin:2px 0}
+[contenteditable]{cursor:text;border-radius:4px;outline:none;padding:1px 3px;margin:-1px -3px;user-select:text}
+[contenteditable]:hover{background:var(--accent-soft)}
+[contenteditable]:focus{background:var(--bg);box-shadow:0 0 0 1.5px var(--accent)}
+.slot .title{font-weight:400;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.slot .dur{font-size:13px;color:var(--faint);white-space:nowrap}
+.start{font-variant-numeric:tabular-nums;color:var(--ink)}
+.tray{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.newblock,.trash{flex:1 1 240px;border:1.5px dashed var(--line);border-radius:var(--radius);padding:14px;text-align:center;color:var(--faint);font-size:14px;transition:all .15s}
+.newblock{cursor:grab;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.newblock:hover{background:var(--accent-soft)}
+.newblock small{display:block;font-size:12px;color:var(--faint)}
+.trash.over{border-color:var(--t-sncf);color:var(--t-sncf);background:color-mix(in srgb,var(--t-sncf) 7%,transparent)}
+.slot[data-type="demo"]::before{background:var(--t-demo)}
+.slot[data-type="break"]::before{background:var(--t-break)}
+.slot[data-type="workshop"]::before{background:var(--t-workshop)}
+.slot[data-type="sncf"]::before{background:var(--t-sncf)}
+.time{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);white-space:nowrap}
+.end{font-size:13px;color:var(--faint);margin:10px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--faint);margin-top:20px}
+.legend span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;margin:0 7px 1px 0;vertical-align:middle;background:var(--c)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+footer{padding:40px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line)}
+
+@media print{
+    body{background:#fff}
+  section{break-inside:avoid-page}
+  .slot{break-inside:avoid}
+}
+strong{font-weight:500}
+.todo-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:6px 0 10px}
+.todo-count{font-size:32px;font-weight:300;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.todo-count small{font-size:15px;color:var(--faint);margin-left:4px}
+.todo-bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden;margin-bottom:22px}
+.todo-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--t-talk),var(--t-demo));border-radius:2px;transition:width .4s ease}
+.todo-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.todo-card{background:var(--soft);border-radius:var(--radius);padding:16px 16px 8px}
+.todo-card-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.todo-group{margin:0;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.todo-gcount{font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}
+.todo-list{list-style:none;margin:0;padding:0}
+.todo-item{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start;padding:10px 6px;margin:0 -6px;border-radius:8px;transition:background .15s,opacity .2s}
+.todo-item + .todo-item{border-top:1px solid var(--line)}
+.todo-item:hover{background:var(--bg)}
+.todo-item input{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:2px 0 0;border:1.5px solid var(--faint);border-radius:50%;cursor:pointer;display:grid;place-items:center;transition:all .15s;background:var(--bg)}
+.todo-item input:hover{border-color:var(--accent)}
+.todo-item input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.todo-item input::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:transform .15s}
+.todo-item input:checked{background:var(--t-demo);border-color:var(--t-demo)}
+.todo-item input:checked::after{transform:rotate(45deg) scale(1)}
+.todo-item .txt{font-size:15px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.todo-item .who{grid-column:2;justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);white-space:nowrap}
+.todo-item .who::before{content:attr(data-i);display:grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:500;color:#fff;background:var(--c,var(--faint))}
+.todo-item.done{opacity:.55}
+.todo-item.done .txt{text-decoration:line-through;text-decoration-color:var(--faint)}
+.lang{position:absolute;top:24px;right:16px;font-size:13px;color:var(--faint)}
+.lang a{color:var(--faint);text-decoration:none;padding:2px 4px;border-radius:4px}
+.lang a[aria-current="true"]{color:var(--ink);font-weight:500}
+.lang a:hover{color:var(--ink)}
+header.hero .wrap{position:relative}
+.v3d-stage{position:relative;height:520px;border-radius:var(--radius);overflow:hidden;background:var(--soft)}
+.v3d-stage canvas{display:block;width:100%;height:100%;touch-action:none;outline:none;cursor:grab}
+.v3d-stage canvas:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.v3d-stage canvas.over{cursor:pointer}
+.v3d-stage canvas.drag{cursor:grabbing}
+.v3d-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);font-size:15px;pointer-events:none}
+.v3d-msg[hidden]{display:none}
+.v3d-msg.err{pointer-events:auto}
+.v3d-cap{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;min-height:44px;padding:10px 2px 0;font-size:14px;color:var(--muted)}
+.v3d-cap .name{color:var(--ink);font-weight:400;overflow-wrap:anywhere}
+.v3d-link{font:inherit;font-size:13px;font-weight:300;color:var(--accent);background:none;border:0;padding:4px 2px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;border-radius:4px}
+.v3d-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.v3d-link[hidden]{display:none}
+.v3d-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;margin-top:6px}
+.v3d-foot p{margin:0}
+@media (max-width:600px){.v3d-stage{height:380px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="lang" aria-label="Langue / Language"><a href="#" data-lang="fr" hreflang="fr">FR</a> · <a href="#" data-lang="en" hreflang="en">EN</a></nav>
+    <p class="eyebrow" data-i18n="eyebrow">Proposition d'organisation · document de travail</p>
+    <h1>Google Cloud AI Advantage × SNCF</h1>
+    <p class="lead" data-i18n="lead">Une demi-journée au 574 Rimbaud pour montrer ce que nous faisons déjà avec l'IA, se projeter sur la suite, et repartir avec des leviers concrets pour nos cas d'usage.</p>
+    <ul class="facts">
+      <li>574 Rimbaud, Saint-Denis</li>
+      <li data-i18n="f_date">Mardi 17 novembre (à confirmer)</li>
+      <li data-i18n="f_time">De 12h à 17h30 environ</li>
+      <li data-i18n="f_people">~100 personnes</li>
+      <li data-i18n="f_google">Matériel, contenu et intervenants Google pris en charge par Google</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section id="principe">
+  <div class="wrap">
+    <h2 data-i18n="principe_h">Le principe</h2>
+    <div class="grid">
+      <div class="card"><h3 data-i18n="p1_h">Une tournée européenne</h3><p data-i18n="p1_p">Google Cloud emmène AI Advantage dans plus de 30 organisations en Europe en 2026 et nous propose d'accueillir une étape.</p></div>
+      <div class="card"><h3 data-i18n="p2_h">Ils viennent chez nous</h3><p data-i18n="p2_p">Google apporte les démos, la logistique, le contenu et ses intervenants. Ils s'installent la veille et démontent juste après l'événement.</p></div>
+      <div class="card"><h3 data-i18n="p3_h">Un programme fait sur mesure</h3><p data-i18n="p3_p">Nous construisons l'agenda ensemble, autour de nos priorités. C'est un événement privé, réservé à SNCF.</p></div>
+      <div class="card"><h3 data-i18n="p4_h">Le but</h3><p data-i18n="p4_p">Embarquer largement les équipes, valoriser ce qui existe déjà et repérer concrètement ce qui peut accélérer nos cas d'usage.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="axes">
+  <div class="wrap">
+    <h2 data-i18n="axes_h">Trois grands axes de contenu</h2>
+    <div class="grid">
+      <div class="card"><span class="tag" data-i18n="a1_tag">1 · Déjà réalisé</span><h3 data-i18n="a1_h">Ce que nous avons déjà fait</h3><p data-i18n="a1_p">Mettre en avant les réalisations internes : le studio génératif basé sur les modèles Google, et d'autres initiatives des équipes (avec leurs propres modèles ou d'autres outils).</p></div>
+      <div class="card"><span class="tag" data-i18n="a2_tag">2 · Demain</span><h3 data-i18n="a2_h">Ce que nous pourrions faire</h3><p data-i18n="a2_p">« Make Dream » et perspectives, y compris au-delà de l'IA : Chromebook et les autres produits Google disponibles dans le groupe.</p></div>
+      <div class="card"><span class="tag" data-i18n="a3_tag">3 · Cas concrets</span><h3 data-i18n="a3_h">Use cases chez ou pour SNCF</h3>
+        <ul>
+          <li data-i18n="uc1">IT frugal pour les sociétés dédiées</li>
+          <li data-i18n="uc2">IA locale embarquée TGV</li>
+          <li data-i18n="uc3">Maintenance prédictive Intercités</li>
+          <li data-i18n="uc4">Référentiel client</li>
+          <li data-i18n="uc5">Modernisation du centre d'appels</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="planning">
+  <div class="wrap">
+    <h2 data-i18n="plan_h">Planning modifiable</h2>
+    <p class="status" style="margin-bottom:6px" data-i18n="plan_intro">Ouverture à 12h avec un déjeuner, stands ouverts dès 12h30, plénière à 13h45 avec le contenu fort avant 15h, puis un apéro / goûter. Glissez les blocs, cliquez sur un texte pour le modifier.</p>
+    <p class="status"><span data-i18n="plan_tpl">Repartir d'un modèle :</span> <a href="#planning" data-tpl="A">Option A</a> · <a href="#planning" data-tpl="B">Option B</a></p>
+    <p class="sr" id="status" role="status" aria-live="polite"></p>
+
+    <div class="tracks" id="tracks"></div>
+
+    <div class="tray">
+      <div class="newblock" id="newBlock" draggable="true"><span data-i18n="newblock">＋ Nouveau bloc</span> <small data-i18n="newblock_hint">(glissez-le dans une salle)</small></div>
+      <div class="trash" id="trash" data-i18n="trash">🗑 Glissez un bloc ici pour le supprimer</div>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span style="--c:var(--t-talk)" data-i18n="lg_talk">Conférence Google</span>
+      <span style="--c:var(--t-sncf)" data-i18n="lg_sncf">Intervention SNCF</span>
+      <span style="--c:var(--t-workshop)" data-i18n="lg_ws">Atelier / deep-dive</span>
+      <span style="--c:var(--t-demo)" data-i18n="lg_demo">Démos / networking</span>
+      <span style="--c:var(--t-break)" data-i18n="lg_break">Pause / logistique</span>
+    </div>
+  </div>
+</section>
+
+<section id="espaces">
+  <div class="wrap">
+    <h2 data-i18n="esp_h">Sur place au 574</h2>
+    <div class="grid">
+      <div class="card"><span class="tag" data-i18n="e1_tag">Démos</span><h3 data-i18n="e1_h">Trois corners répartis</h3><p data-i18n="e1_p">Environ 2 m × 4 m chacun, écran au centre, bornes Google clé en main. Plutôt répartis que regroupés : un à l'entrée (à droite, sur une grande table), un près de la terrasse, un dans l'agora.</p>
+        <ul style="margin-top:8px">
+          <li data-i18n="e1_l1">Creative Agent : un dessin devient une vidéo</li>
+          <li data-i18n="e1_l2">AI Quick-Build : un défi de création en temps réel</li>
+          <li data-i18n="e1_l3">Gemini Enterprise : les agents IA au travail</li>
+        </ul>
+      </div>
+      <div class="card"><span class="tag" data-i18n="e2_tag">Conférence</span><h3 data-i18n="e2_h">Le hub reste libre</h3><p data-i18n="e2_p">L'espace conférence garde tout son espace, avec notre propre matériel son et vidéo. Les tables et chaises sont fixes : on compose avec l'existant.</p></div>
+      <div class="card"><span class="tag" data-i18n="e3_tag">Accueil</span><h3 data-i18n="e3_h">Badges à l'entrée</h3><p data-i18n="e3_p">Une zone d'enregistrement pour récupérer son badge. Les invités arrivent par le 12 rue Jean-Philippe Rameau : il faut quelqu'un pour les accompagner jusqu'au 574.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="plan3d">
+  <div class="wrap">
+    <h2 data-i18n="d3_h">Plan 3D du lieu</h2>
+    <div class="v3d" id="v3d">
+      <div class="v3d-stage">
+        <canvas id="v3dCanvas" tabindex="0" role="application" aria-label="Maquette 3D du kit Google : faites glisser pour tourner, cliquez un élément pour le sélectionner, Entrée pour passer au suivant, Q et E pour le pivoter, flèches pour le déplacer."></canvas>
+        <div class="v3d-msg" id="v3dMsg" role="status" aria-live="polite">Chargement de la 3D…</div>
+      </div>
+      <div class="v3d-cap" id="v3dCap" aria-live="polite"></div>
+      <p class="status" data-i18n="v3d_hint">Glissez dans le vide pour tourner, molette ou pincement pour zoomer, clic droit pour déplacer la vue. Cliquez un élément puis glissez-le ; Q / E le font pivoter ; double-clic sur une pièce pour la détacher ; Échap pour désélectionner.</p>
+      <div class="v3d-foot">
+        <p class="status" data-i18n="v3d_soon">La maquette du lieu (574) sera ajoutée bientôt, à partir du plan incendie et des photos.</p>
+        <p class="status"><button type="button" class="v3d-link" id="v3dReset" data-i18n="v3d_reset">Réinitialiser la disposition</button></p>
+      </div>
+    </div>
+    <p class="status" data-i18n="k_note">Dimensions en partie supposées, à confirmer avec Google. Fichiers Blender et 3D dans le dossier « 3d ».</p>
+  </div>
+</section>
+
+
+</main>
+
+<footer><div class="wrap" data-i18n="footer">Document de travail, contenu indicatif. Basé sur la présentation « AI Advantage for SNCF » de Google Cloud et la synthèse interne.</div></footer>
+
+<script>
+// ── Language ─────────────────────────────────────────────────────────────
+// French is written in the HTML; English comes from this table. Default texts
+// of the planning and the to-do list are keys, so they follow the language;
+// anything the person typed stays as typed.
+var I18N = (function(){
+  "use strict";
+  var LANG_KEY = "aiadv-sncf-lang";
+  var EN = {
+    eyebrow:"Event proposal · working document",
+    lead:"Half a day at 574 Rimbaud to show what we already do with AI, look ahead, and leave with concrete levers for our use cases.",
+    f_date:"Tuesday 17 November (to be confirmed)", f_time:"About 12:00 to 17:30", f_people:"~100 people",
+    f_google:"Equipment, content and Google speakers provided by Google",
+    principe_h:"The idea",
+    p1_h:"A European tour", p1_p:"Google Cloud is taking AI Advantage to more than 30 organisations across Europe in 2026 and offers us to host one stop.",
+    p2_h:"They come to us", p2_p:"Google brings the demos, logistics, content and speakers. They set up the day before and pack up right after the event.",
+    p3_h:"A tailored programme", p3_p:"We build the agenda together, around our priorities. It is a private event, for SNCF only.",
+    p4_h:"The goal", p4_p:"Bring teams on board widely, showcase what already exists and pinpoint what can speed up our use cases.",
+    axes_h:"Three content themes",
+    a1_tag:"1 · Already done", a1_h:"What we have already built", a1_p:"Showcase internal work: the generative studio built on Google models, and other team initiatives (with their own models or other tools).",
+    a2_tag:"2 · Tomorrow", a2_h:"What we could do", a2_p:"“Make Dream” and outlook, including beyond AI: Chromebook and other Google products available in the group.",
+    a3_tag:"3 · Real cases", a3_h:"Use cases at or for SNCF",
+    uc1:"Frugal IT for dedicated subsidiaries", uc2:"On-board local AI for TGV", uc3:"Predictive maintenance for Intercités", uc4:"Customer master data", uc5:"Call centre modernisation",
+    plan_h:"Editable schedule",
+    plan_intro:"Doors open at 12:00 with lunch, stands open from 12:30, plenary at 13:45 with the key content before 15:00, then drinks. Drag the blocks, click a text to edit it.",
+    plan_tpl:"Start again from a template:",
+    newblock:"＋ New block", newblock_hint:"(drag it into a room)", trash:"🗑 Drop a block here to delete it",
+    lg_talk:"Google talk", lg_sncf:"SNCF session", lg_ws:"Workshop / deep-dive", lg_demo:"Demos / networking", lg_break:"Break / logistics",
+    esp_h:"On site at 574",
+    e1_tag:"Demos", e1_h:"Three corners, spread out", e1_p:"About 2 m × 4 m each, screen in the centre, turnkey Google kiosks. Spread rather than grouped: one at the entrance (on the right, on a long table), one near the terrace, one in the agora.",
+    e1_l1:"Creative Agent: a doodle becomes a video", e1_l2:"AI Quick-Build: a real-time creative challenge", e1_l3:"Gemini Enterprise: AI agents at work",
+    e2_tag:"Conference", e2_h:"The hub stays free", e2_p:"The conference space keeps all its room, with our own sound and video. Tables and chairs are fixed: we work with what is there.",
+    e3_tag:"Welcome", e3_h:"Badges at the entrance", e3_p:"A registration area to pick up badges. Guests arrive via 12 rue Jean-Philippe Rameau: someone must walk them to 574.",
+    
+    d3_h:"3D site plan",
+    v3d_hint:"Drag empty space to orbit, wheel or pinch to zoom, right-drag to pan. Click an element then drag it; Q / E rotate it; double-click a piece to detach it; Esc to deselect.",
+    v3d_soon:"The 574 venue model will be added soon, built from the fire-safety plan and photos.",
+    v3d_reset:"Reset layout", k_note:"Some dimensions are assumptions, to confirm with Google. Blender and 3D files are in the “3d” folder.",
+    
+    
+    footer:"Working document, indicative content. Based on Google Cloud's “AI Advantage for SNCF” deck and the internal summary.",
+    // dynamic
+    room_main:"Main room (decision-makers)", room_tech:"Technical area (engineers)",
+    start:"Start", end:"Expected end: ", empty:"Empty: drag a block here.", min:"min",
+    s_lunch:"Arrival and opening lunch", s_welcome_demos:"Welcome coffee, stands and short demos open", s_seat:"Taking seats",
+    s_opening:"SNCF welcome and Google Cloud introduction", s_keynote:"Google keynote: leading the AI transformation",
+    s_done:"What we have already built: generative studio and internal stories",
+    s_panel:"Panel: our use cases (TGV, Intercités, customer data, call centre, frugal IT)",
+    s_break:"Coffee break and demos", s_future:"Tomorrow: Make Dream, AI agents, Chromebook and the Google ecosystem",
+    s_buy:"How to use Google at SNCF (purchasing, Sokai) and questions", s_close:"Closing and feedback",
+    s_drinks:"Drinks, demos and networking", s_derig:"End of event, Google team packs up",
+    s_stands:"Google stands open: Creative Agent, AI Quick-Build, Gemini Enterprise", s_plenary:"Everyone in the plenary (main room)",
+    s_ws_tgv:"Mini-workshop: on-board local AI for TGV", s_ws_ic:"Mini-workshop: predictive maintenance for Intercités",
+    s_ws_crm:"Mini-workshop: customer data and call centre", s_deep:"Open deep-dive with Google engineers",
+    s_b_talk1:"Welcome and short talk #1: AI at SNCF with Google", s_b_stands:"Stands, demos and conversations",
+    s_b_talk2:"Short talk #2 (same content)", s_b_tgv:"Deep-dive: on-board local AI for TGV", s_b_ic:"Deep-dive: predictive maintenance for Intercités",
+    s_b_pause:"Break", s_b_crm:"Deep-dive: customer data and call centre", s_b_frugal:"Frugal IT for dedicated subsidiaries",
+    s_new:"New block",
+    v3d_loading:"Loading the 3D…", v3d_err:"The 3D view could not be loaded (connection or file). The rest of the page works normally.", v3d_retry:"Try again",
+    v3d_none:"No element selected · {n} elements to move", v3d_detached:"detached", v3d_left:"Rotate left", v3d_right:"Rotate right",
+    v3d_detach:"Detach a piece", v3d_regroup:"Group again", v3d_confirm:"Put every element back in its original place?",
+    m_moved:"Block moved.", m_deleted:"Block deleted.", m_added:"New block added. Type its title.", m_badtime:"Time not understood. Example: 14:30.",
+    m_baddur:"Duration not understood. Example: 30.", m_tpl:"Replace the current schedule with template Option ", m_tpl2:"?",
+    tbd:"TBD", all:"Everyone",
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  };
+  var FR = {
+    room_main:"Salle principale (décideurs)", room_tech:"Zone technique (ingénieurs)",
+    start:"Début", end:"Fin prévue : ", empty:"Vide : glissez un bloc ici.", min:"min",
+    s_lunch:"Arrivée et déjeuner d'ouverture", s_welcome_demos:"Accueil café, stands et petites démos ouverts", s_seat:"Installation en salle",
+    s_opening:"Mot d'accueil SNCF et introduction Google Cloud", s_keynote:"Keynote Google : mener la transformation IA",
+    s_done:"Ce qu'on a déjà réalisé : studio génératif et témoignages internes",
+    s_panel:"Table ronde : nos use cases (TGV, Intercités, référentiel client, centre d'appels, IT frugal)",
+    s_break:"Pause café et démos", s_future:"Demain : Make Dream, agents IA, Chromebook et écosystème Google",
+    s_buy:"Comment consommer Google chez SNCF (achats, Sokai) et questions", s_close:"Clôture et recueil des avis",
+    s_drinks:"Apéro / goûter, démos et networking", s_derig:"Fin de l'événement, démontage par l'équipe Google",
+    s_stands:"Stands Google ouverts : Creative Agent, AI Quick-Build, Gemini Enterprise", s_plenary:"Tout le monde en plénière (salle principale)",
+    s_ws_tgv:"Mini-atelier : IA locale embarquée TGV", s_ws_ic:"Mini-atelier : maintenance prédictive Intercités",
+    s_ws_crm:"Mini-atelier : référentiel client et centre d'appels", s_deep:"Deep-dive libre avec les ingénieurs Google",
+    s_b_talk1:"Mot d'accueil et conférence courte n°1 : l'IA chez SNCF avec Google", s_b_stands:"Stands, démos et échanges",
+    s_b_talk2:"Conférence courte n°2 (même contenu)", s_b_tgv:"Deep-dive : IA locale embarquée TGV", s_b_ic:"Deep-dive : maintenance prédictive Intercités",
+    s_b_pause:"Pause", s_b_crm:"Deep-dive : référentiel client et centre d'appels", s_b_frugal:"IT frugal pour les sociétés dédiées",
+    s_new:"Nouveau bloc",
+    v3d_loading:"Chargement de la 3D…", v3d_err:"La vue 3D n'a pas pu être chargée (connexion ou fichier). Le reste de la page fonctionne normalement.", v3d_retry:"Réessayer",
+    v3d_none:"Aucun élément sélectionné · {n} éléments déplaçables", v3d_detached:"détachée", v3d_left:"Pivoter à gauche", v3d_right:"Pivoter à droite",
+    v3d_detach:"Détacher une pièce", v3d_regroup:"Rattacher", v3d_confirm:"Remettre tous les éléments à leur place d'origine ?",
+    m_moved:"Bloc déplacé.", m_deleted:"Bloc supprimé.", m_added:"Nouveau bloc ajouté. Tapez son titre.", m_badtime:"Heure non comprise. Exemple : 14h30.",
+    m_baddur:"Durée non comprise. Exemple : 30.", m_tpl:"Repartir du modèle Option ", m_tpl2:" ? Le planning actuel sera remplacé.",
+    tbd:"À définir", all:"Tous",
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  };
+  var original = {};
+  var listeners = [];
+  var lang = "fr";
+  // French by default (SNCF audience); English is one click away and remembered.
+  try { lang = localStorage.getItem(LANG_KEY) || "fr"; } catch(e){}
+  if (lang !== "en") lang = "fr";
+
+  function t(key){ var d = lang === "en" ? EN : FR; return key in d ? d[key] : (FR[key] || key); }
+  function apply(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k = el.getAttribute("data-i18n");
+      if (!(k in original)) original[k] = el.textContent;
+      el.textContent = lang === "en" && EN[k] ? EN[k] : original[k];
+    });
+    var add = document.getElementById("todoAdd");
+    if (add){
+      if (!("todo_add" in original)) original.todo_add = add.placeholder;
+      add.placeholder = lang === "en" ? EN.todo_add : original.todo_add;
+      add.setAttribute("aria-label", add.placeholder.replace("＋ ", ""));
+    }
+    document.querySelectorAll("[data-lang]").forEach(function(a){ a.setAttribute("aria-current", String(a.dataset.lang === lang)); });
+    listeners.forEach(function(f){ f(); });
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("[data-lang]");
+    if (!a) return;
+    e.preventDefault();
+    lang = a.dataset.lang;
+    try { localStorage.setItem(LANG_KEY, lang); } catch(err){}
+    apply();
+  });
+  return { t: t, apply: apply, onChange: function(f){ listeners.push(f); }, lang: function(){ return lang; } };
+})();
+
+// Shared click-to-edit field. Enter or leaving saves, Escape cancels.
+function makeEditable(el, label, value, onSave){
+  el.contentEditable = "true"; el.spellcheck = true;
+  el.setAttribute("role", "textbox"); el.setAttribute("aria-label", label);
+  el.textContent = value;
+  var cancel = false;
+  el.addEventListener("keydown", function(e){
+    if (e.key === "Enter"){ e.preventDefault(); el.blur(); }
+    if (e.key === "Escape"){ cancel = true; el.blur(); }
+  });
+  el.addEventListener("paste", function(e){
+    e.preventDefault();
+    document.execCommand("insertText", false, (e.clipboardData || window.clipboardData).getData("text").replace(/\s+/g, " "));
+  });
+  el.addEventListener("blur", function(){
+    if (cancel){ cancel = false; el.textContent = value; return; }
+    onSave(el.textContent.replace(/\s+/g, " ").trim());
+  });
+}
+</script>
+
+<script>
+// ── Planning ─────────────────────────────────────────────────────────────
+(function(){
+  "use strict";
+  var t = I18N.t;
+  var KEY = "aiadv-sncf-planning-v5";
+  var TYPES = ["talk","sncf","workshop","demo","break"];
+
+  function uid(){ return Math.random().toString(36).slice(2,10); }
+  // A default block stores its text key (k); a block the person renamed stores title.
+  function s(k, type, dur){ return {id: uid(), k: k, type: type, dur: dur}; }
+  function titleOf(x){ return x.title || t(x.k || "s_new"); }
+  function nameOf(tr){ return tr.name || t(tr.k); }
+
+  // Frame agreed on 29/10: opening lunch at 12h, stands open 12h30-13h30,
+  // plenary from 13h45 with the strongest content before 15h (peak attendance), apéro at the end.
+  // Checked against Google's example agendas: intro Google, Q&A, feedback, demos, derig.
+  function template(opt){
+    if (opt === "A") {
+      return { tracks:[
+        {k:"room_main", start:"12:00", slots:[
+          s("s_lunch","break",30), s("s_welcome_demos","demo",60), s("s_seat","break",15),
+          s("s_opening","sncf",15), s("s_keynote","talk",25), s("s_done","sncf",15), s("s_panel","sncf",20),
+          s("s_break","break",20), s("s_future","talk",25), s("s_buy","sncf",20), s("s_close","sncf",10),
+          s("s_drinks","demo",75), s("s_derig","break",30)
+        ]},
+        {k:"room_tech", start:"12:30", slots:[
+          s("s_stands","demo",60), s("s_plenary","break",90), s("s_ws_tgv","workshop",30),
+          s("s_ws_ic","workshop",30), s("s_ws_crm","workshop",30), s("s_deep","workshop",60)
+        ]}
+      ]};
+    }
+    return { tracks:[
+      {k:"room_main", start:"12:00", slots:[
+        s("s_lunch","break",30), s("s_welcome_demos","demo",75), s("s_b_talk1","talk",25), s("s_b_stands","demo",95),
+        s("s_b_talk2","talk",20), s("s_close","sncf",10), s("s_drinks","demo",75), s("s_derig","break",30)
+      ]},
+      {k:"room_tech", start:"12:30", slots:[
+        s("s_stands","demo",75), s("s_plenary","break",25), s("s_b_tgv","workshop",40), s("s_b_ic","workshop",40),
+        s("s_b_pause","break",15), s("s_b_crm","workshop",40), s("s_b_frugal","workshop",40)
+      ]}
+    ]};
+  }
+
+  function clampDur(v){ v = parseInt(v, 10); return v >= 5 ? Math.min(v, 480) : 15; }
+  function valid(d){
+    if (!d || !Array.isArray(d.tracks) || !d.tracks.length) return null;
+    d.tracks.forEach(function(tr){
+      tr.start = /^\d{2}:\d{2}$/.test(tr.start) ? tr.start : "09:00";
+      if (!tr.k && !tr.name) tr.name = "Salle";
+      tr.slots = Array.isArray(tr.slots) ? tr.slots : [];
+      tr.slots.forEach(function(x){
+        x.id = x.id || uid();
+        if (!x.k && !x.title) x.title = "Bloc";
+        x.type = TYPES.indexOf(x.type) >= 0 ? x.type : "talk";
+        x.dur = clampDur(x.dur);
+      });
+    });
+    return d;
+  }
+  function load(){ try { var r = localStorage.getItem(KEY); return r ? valid(JSON.parse(r)) : null; } catch(e){ return null; } }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+  function toMin(hm){ var p = hm.split(":"); return (+p[0])*60 + (+p[1]); }
+  function fmt(m){
+    m = ((m % 1440) + 1440) % 1440;
+    var h = String(Math.floor(m/60)).padStart(2,"0"), mm = String(m%60).padStart(2,"0");
+    return I18N.lang() === "en" ? h + ":" + mm : h + "h" + mm;
+  }
+  // Accepts "14h", "14h30", "14:30", "1430", "2:30 pm".
+  function parseTime(txt){
+    var str = String(txt).trim().toLowerCase(), pm = /pm$/.test(str), am = /am$/.test(str);
+    str = str.replace(/\s*(am|pm)$/, "");
+    var m = str.match(/^(\d{1,2})\s*(?:[h:.]\s*(\d{0,2})|(\d{2}))?$/);
+    if (!m) return null;
+    var h = +m[1], mn = +(m[2] || m[3] || 0);
+    if (pm && h < 12) h += 12; if (am && h === 12) h = 0;
+    if (h > 23 || mn > 59) return null;
+    return String(h).padStart(2,"0") + ":" + String(mn).padStart(2,"0");
+  }
+
+  var state = load() || template("A");
+  var root = document.getElementById("tracks");
+  var statusEl = document.getElementById("status");
+  var drag = null;
+  var ph = document.createElement("div"); ph.className = "placeholder";
+
+  function say(msg){ statusEl.textContent = msg; }
+  function find(id){
+    for (var a = 0; a < state.tracks.length; a++)
+      for (var i = 0; i < state.tracks[a].slots.length; i++)
+        if (state.tracks[a].slots[i].id === id) return {t:a, i:i, slot: state.tracks[a].slots[i]};
+    return null;
+  }
+
+  function render(){
+    root.innerHTML = "";
+    state.tracks.forEach(function(track, ti){
+      var box = document.createElement("div"); box.className = "track";
+      var head = document.createElement("div"); head.className = "track-head";
+      var h = document.createElement("h3");
+      makeEditable(h, t("room_main").split(" (")[0], nameOf(track), function(v){
+        if (v && v !== nameOf(track)){ track.name = v; save(); } else h.textContent = nameOf(track);
+      });
+      var st = document.createElement("span"); st.className = "status";
+      st.appendChild(document.createTextNode(t("start") + " "));
+      var sv = document.createElement("span"); sv.className = "start";
+      makeEditable(sv, t("start"), fmt(toMin(track.start)), function(v){
+        var p = parseTime(v);
+        if (!p) say(t("m_badtime"));
+        if (p && p !== track.start){ track.start = p; commit(); } else sv.textContent = fmt(toMin(track.start));
+      });
+      st.appendChild(sv);
+      head.appendChild(h); head.appendChild(st);
+      box.appendChild(head);
+
+      var list = document.createElement("div");
+      list.className = "list"; list.dataset.track = ti;
+      var m = toMin(track.start);
+      track.slots.forEach(function(slot){ list.appendChild(slotEl(slot, m)); m += slot.dur; });
+      bindList(list);
+      box.appendChild(list);
+
+      var end = document.createElement("p"); end.className = "end";
+      end.textContent = track.slots.length ? t("end") + fmt(m) : t("empty");
+      box.appendChild(end);
+      root.appendChild(box);
+    });
+  }
+
+  function slotEl(slot, start){
+    var el = document.createElement("div");
+    el.className = "slot"; el.draggable = true;
+    el.dataset.id = slot.id; el.dataset.type = slot.type;
+    var time = document.createElement("div"); time.className = "time"; time.textContent = fmt(start);
+    var title = document.createElement("div"); title.className = "title";
+    makeEditable(title, fmt(start), titleOf(slot), function(v){
+      if (v && v !== titleOf(slot)){ slot.title = v; save(); }
+      else title.textContent = titleOf(slot);
+    });
+    var dur = document.createElement("div"); dur.className = "dur";
+    makeEditable(dur, t("min"), slot.dur + " " + t("min"), function(v){
+      var n = parseInt(v, 10);
+      if (!(n >= 5)) say(t("m_baddur"));
+      if (n >= 5 && Math.min(n, 480) !== slot.dur){ slot.dur = Math.min(n, 480); commit(); } else dur.textContent = slot.dur + " " + t("min");
+    });
+    el.appendChild(time); el.appendChild(title); el.appendChild(dur);
+
+    // While a text is being edited, the block must not start a drag (text selection wins).
+    el.addEventListener("focusin", function(){ el.draggable = false; });
+    el.addEventListener("focusout", function(){ el.draggable = true; });
+    // Keyboard fallback: Alt + arrow keys move the block whose text is focused.
+    el.addEventListener("keydown", function(e){
+      if (!e.altKey) return;
+      var f = find(slot.id); if (!f) return;
+      var to = null;
+      if (e.key === "ArrowUp" && f.i > 0) to = [f.t, f.i - 1];
+      if (e.key === "ArrowDown" && f.i < state.tracks[f.t].slots.length - 1) to = [f.t, f.i + 1];
+      if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && state.tracks.length > 1){
+        var o = (f.t + (e.key === "ArrowRight" ? 1 : state.tracks.length - 1)) % state.tracks.length;
+        to = [o, state.tracks[o].slots.length];
+      }
+      if (!to) return;
+      e.preventDefault();
+      state.tracks[f.t].slots.splice(f.i, 1);
+      state.tracks[to[0]].slots.splice(to[1], 0, slot);
+      commit();
+      var again = root.querySelector('[data-id="' + slot.id + '"] .title'); if (again) again.focus();
+      say(t("m_moved"));
+    });
+
+    el.addEventListener("dragstart", function(e){
+      if (e.target !== el) return;
+      var f = find(slot.id);
+      drag = {fromT: f.t, fromI: f.i};
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", titleOf(slot));
+      requestAnimationFrame(function(){ el.classList.add("dragging"); });
+    });
+    el.addEventListener("dragend", endDrag);
+    return el;
+  }
+
+  function endDrag(){
+    drag = null;
+    if (ph.parentNode) ph.parentNode.removeChild(ph);
+    document.querySelectorAll(".dragging,.over").forEach(function(n){ n.classList.remove("dragging","over"); });
+  }
+
+  function indexAt(list, y){
+    var items = Array.prototype.slice.call(list.querySelectorAll(".slot"));
+    for (var i = 0; i < items.length; i++){
+      var r = items[i].getBoundingClientRect();
+      if (y < r.top + r.height / 2) return {i: i, before: items[i]};
+    }
+    return {i: items.length, before: null};
+  }
+
+  function bindList(list){
+    list.addEventListener("dragover", function(e){
+      if (!drag) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = drag.isNew ? "copy" : "move";
+      var at = indexAt(list, e.clientY);
+      if (at.before) list.insertBefore(ph, at.before); else list.appendChild(ph);
+    });
+    list.addEventListener("drop", function(e){
+      if (!drag) return;
+      e.preventDefault();
+      var toT = +list.dataset.track, toI = indexAt(list, e.clientY).i, item;
+      if (drag.isNew){ item = s("s_new", "talk", 20); }
+      else {
+        item = state.tracks[drag.fromT].slots.splice(drag.fromI, 1)[0];
+        if (drag.fromT === toT && toI > drag.fromI) toI--;
+      }
+      state.tracks[toT].slots.splice(toI, 0, item);
+      var wasNew = drag.isNew;
+      endDrag(); commit();
+      if (wasNew){
+        var el = root.querySelector('[data-id="' + item.id + '"] .title');
+        if (el){ el.focus(); document.execCommand("selectAll", false, null); }
+        say(t("m_added"));
+      } else say(t("m_moved"));
+    });
+  }
+
+  var newBlock = document.getElementById("newBlock");
+  newBlock.addEventListener("dragstart", function(e){
+    drag = {isNew: true};
+    e.dataTransfer.effectAllowed = "copy";
+    e.dataTransfer.setData("text/plain", t("s_new"));
+  });
+  newBlock.addEventListener("dragend", endDrag);
+
+  var trash = document.getElementById("trash");
+  trash.addEventListener("dragover", function(e){
+    if (!drag || drag.isNew) return;
+    e.preventDefault(); trash.classList.add("over");
+    if (ph.parentNode) ph.parentNode.removeChild(ph);
+  });
+  trash.addEventListener("dragleave", function(){ trash.classList.remove("over"); });
+  trash.addEventListener("drop", function(e){
+    if (!drag || drag.isNew) return;
+    e.preventDefault();
+    state.tracks[drag.fromT].slots.splice(drag.fromI, 1);
+    endDrag(); commit();
+    say(t("m_deleted"));
+  });
+
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("[data-tpl]");
+    if (!a) return;
+    e.preventDefault();
+    if (!confirm(t("m_tpl") + a.dataset.tpl + t("m_tpl2"))) return;
+    state = template(a.dataset.tpl); commit();
+  });
+
+  function commit(){ save(); render(); }
+  I18N.onChange(render);
+  render();
+})();
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+// ── Plan 3D interactif ───────────────────────────────────────────────────
+// Each top-level node of the glb is one "element" (a group fixed together).
+// Click selects an element and drag slides it on the floor; "detach" selects a
+// single piece of it. Positions are saved in localStorage.
+(function(){
+  "use strict";
+  var t = I18N.t;
+  var GLB = window.__V3D_GLB || "3d/kit-google.glb";
+  var KEY = "aiadv-sncf-3d-layout-v1";
+  var canvas = document.getElementById("v3dCanvas");
+  var msgEl = document.getElementById("v3dMsg");
+  var capEl = document.getElementById("v3dCap");
+  var resetBtn = document.getElementById("v3dReset");
+  var stage = canvas.parentNode;
+  var state = "idle", progress = 0;      // idle | loading | error | ready
+  var T = null;                          // three.js namespace once loaded
+  var S = null;                          // scene objects once ready
+
+  function renderMsg(){
+    if (state === "ready"){ msgEl.hidden = true; return; }
+    msgEl.hidden = false; msgEl.className = "v3d-msg" + (state === "error" ? " err" : "");
+    msgEl.textContent = "";
+    if (state === "error"){
+      var p = document.createElement("div");
+      p.textContent = t("v3d_err");
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "v3d-link"; b.textContent = t("v3d_retry");
+      b.addEventListener("click", start);
+      p.appendChild(document.createElement("br")); p.appendChild(b);
+      msgEl.appendChild(p);
+    } else {
+      msgEl.textContent = t("v3d_loading") + (progress > 0 && progress < 100 ? " " + progress + " %" : "");
+    }
+  }
+  function fail(err){ state = "error"; try { console.warn("3D:", err); } catch(e){} renderMsg(); renderCap(); }
+
+  // ── helpers ──
+  function pretty(n){ return String(n || "").replace(/[_]+/g, " ").replace(/\.\d+$/, "").replace(/\s+/g, " ").trim(); }
+  function labelOf(node){
+    var u = node.userData || {}, l = I18N.lang();
+    return u["label_" + l] || u.label_fr || u.label_en || pretty(node.name) || "?";
+  }
+  function pieceLabel(node){
+    var u = node.userData || {}, l = I18N.lang();
+    return u["label_" + l] || u.label_fr || u.label_en || pretty(node.name) || "?";
+  }
+
+  function renderCap(){
+    capEl.textContent = "";
+    function link(txt, fn){
+      var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link"; b.textContent = txt;
+      b.addEventListener("click", function(){ fn(); canvas.focus({preventScroll:true}); });
+      capEl.appendChild(b); return b;
+    }
+    if (state !== "ready" || !S){ return; }
+    var sel = S.sel;
+    if (!sel){
+      var m = document.createElement("span");
+      m.textContent = t("v3d_none").replace("{n}", S.elements.length);
+      capEl.appendChild(m); return;
+    }
+    var name = document.createElement("span"); name.className = "name";
+    var txt = labelOf(sel.el);
+    if (sel.piece) txt += " › " + pieceLabel(sel.piece) + " (" + t("v3d_detached") + ")";
+    name.textContent = txt; capEl.appendChild(name);
+    link("⟲ " + t("v3d_left"), function(){ S.rotate(15); });
+    link("⟳ " + t("v3d_right"), function(){ S.rotate(-15); });
+    if (sel.piece) link(t("v3d_regroup"), function(){ S.regroup(); });
+    else if (sel.el.children.length > 0) link(t("v3d_detach"), function(){ S.detach(); });
+  }
+  I18N.onChange(function(){ renderMsg(); renderCap(); });
+
+  // ── loading ──
+  var started = false;
+  function start(){
+    if (state === "loading") return;
+    state = "loading"; progress = 0; renderMsg();
+    Promise.all([
+      import("three"),
+      import("three/addons/loaders/GLTFLoader.js"),
+      import("three/addons/controls/OrbitControls.js"),
+      import("three/addons/environments/RoomEnvironment.js").catch(function(){ return null; })
+    ]).then(function(m){
+      T = m[0];
+      var loader = new m[1].GLTFLoader();
+      loader.load(GLB, function(gltf){
+        try { build(gltf, m[2].OrbitControls, m[3]); state = "ready"; renderMsg(); renderCap(); S.render(); }
+        catch(e){ fail(e); }
+      }, function(ev){
+        if (ev && ev.total){ progress = Math.min(99, Math.round(ev.loaded / ev.total * 100)); renderMsg(); }
+      }, fail);
+    }).catch(fail);
+  }
+
+  function cssColor(name, fallback){
+    var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+
+  // ── scene ──
+  function build(gltf, OrbitControls, RoomEnv){
+    if (S) return;
+    var renderer;
+    try { renderer = new T.WebGLRenderer({canvas: canvas, antialias: true}); }
+    catch(e){ throw new Error("WebGL indisponible"); }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+    var scene = new T.Scene();
+    var root = gltf.scene;
+    // Elements = top-level nodes (unwrap a single wrapper node).
+    var kids = root.children.slice();
+    if (kids.length === 1 && kids[0].children.length > 1 && !kids[0].isMesh){ root = kids[0]; kids = root.children.slice(); }
+    scene.add(gltf.scene);
+    if (!kids.length) throw new Error("empty model");
+    var elements = kids;
+
+    // Registry of every node with its original transform (for save / reset).
+    var registry = {}, originals = {}, seen = {};
+    elements.forEach(function(el, i){
+      var base = el.name || ("el" + i);
+      if (seen[base]){ seen[base]++; base += "~" + seen[base]; } else seen[base] = 1;
+      (function walk(n, key){
+        registry[key] = n;
+        originals[key] = [n.position.x, n.position.y, n.position.z, n.quaternion.x, n.quaternion.y, n.quaternion.z, n.quaternion.w];
+        n.userData.__key = key;
+        n.children.forEach(function(c, j){ walk(c, key + "/" + j); });
+      })(el, base);
+    });
+    gltf.scene.traverse(function(o){ if (o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
+
+    var box = new T.Box3().setFromObject(gltf.scene);
+    if (box.isEmpty()) throw new Error("empty bbox");
+    var size = box.getSize(new T.Vector3()), center = box.getCenter(new T.Vector3());
+    var floorY = box.min.y;
+    var half = Math.ceil(Math.max(Math.abs(box.min.x), Math.abs(box.max.x), Math.abs(box.min.z), Math.abs(box.max.z)) + 3);
+    half = Math.max(5, Math.min(half, 80));
+
+    // floor grid (1 m cells) + shadow catcher
+    var grid = new T.GridHelper(half * 2, half * 2);
+    grid.position.y = floorY + 0.002;
+    grid.material.transparent = true; grid.material.opacity = 0.22;
+    scene.add(grid);
+    var floor = new T.Mesh(new T.PlaneGeometry(half * 2, half * 2), new T.ShadowMaterial({opacity: 0.18}));
+    floor.rotation.x = -Math.PI / 2; floor.position.y = floorY; floor.receiveShadow = true;
+    scene.add(floor);
+
+    // lights
+    scene.add(new T.HemisphereLight(0xffffff, 0xcfd3da, 1.1));
+    var sun = new T.DirectionalLight(0xffffff, 1.6);
+    sun.position.set(center.x + half * 0.5, floorY + half * 1.2, center.z + half * 0.4);
+    sun.target.position.set(center.x, floorY, center.z);
+    sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+    var sc = sun.shadow.camera; sc.left = -half; sc.right = half; sc.top = half; sc.bottom = -half; sc.near = 0.5; sc.far = half * 4;
+    sun.shadow.bias = -0.0005;
+    scene.add(sun); scene.add(sun.target);
+    if (RoomEnv){
+      try { var pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnv.RoomEnvironment(), 0.04).texture; pm.dispose(); } catch(e){}
+    }
+
+    // camera
+    var camera = new T.PerspectiveCamera(40, 1, 0.1, 500);
+    var radius = Math.max(size.length() / 2, 2);
+    var dist = radius / Math.sin(camera.fov * Math.PI / 360) * 0.85;
+    camera.position.set(center.x + dist * 0.55, center.y + dist * 0.5, center.z + dist * 0.75);
+    var controls = new OrbitControls(camera, canvas);
+    controls.target.copy(center);
+    controls.maxPolarAngle = Math.PI / 2 - 0.03;
+    controls.minDistance = 0.5; controls.maxDistance = Math.max(dist * 3, 20);
+    // Faster zoom, towards the pointer, so reaching a corner takes one or two wheel moves.
+    controls.zoomSpeed = 3; controls.zoomToCursor = true; controls.panSpeed = 1.5;
+    controls.update();
+
+    // selection outline
+    var outBox = new T.Box3();
+    var outline = new T.Box3Helper(outBox, new T.Color(cssColor("--accent", "#2f6bff")));
+    outline.material.depthTest = false; outline.material.transparent = true; outline.renderOrder = 999; outline.visible = false;
+    scene.add(outline);
+
+    function applyTheme(){
+      scene.background = new T.Color(cssColor("--soft", "#f7f8fa"));
+      var col = new T.Color(cssColor("--faint", "#a3a9b4")), c = grid.geometry.attributes.color;
+      for (var i = 0; i < c.count; i++) c.setXYZ(i, col.r, col.g, col.b);
+      c.needsUpdate = true;
+      outline.material.color.set(cssColor("--accent", "#2f6bff"));
+      requestRender();
+    }
+
+    // ── render on demand ──
+    var dirty = true, raf = 0;
+    function requestRender(){ dirty = true; if (!raf) raf = requestAnimationFrame(frame); }
+    function frame(){ raf = 0; if (!dirty) return; dirty = false; if (S && S.sel) updateOutline(); renderer.render(scene, camera); }
+    controls.addEventListener("change", requestRender);
+
+    function resize(){
+      var w = stage.clientWidth, h = stage.clientHeight;
+      if (!w || !h) return;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); requestRender();
+    }
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(stage); else window.addEventListener("resize", resize);
+    resize();
+
+    // ── selection ──
+    S = { elements: elements, sel: null, render: requestRender, rotate: rotate, detach: detach, regroup: regroup, select: select, save: save, reset: reset,
+          scene: scene, camera: camera, renderer: renderer, controls: controls, registry: registry, root: gltf.scene, hit: hitAt, nudge: nudge };
+    var lastPiece = null;
+
+    function active(){ return S.sel ? (S.sel.piece || S.sel.el) : null; }
+    function updateOutline(){
+      var a = active(); if (!a){ outline.visible = false; return; }
+      outBox.setFromObject(a); outline.visible = !outBox.isEmpty();
+    }
+    function select(el, piece){
+      S.sel = el ? {el: el, piece: piece && piece !== el ? piece : null} : null;
+      updateOutline(); renderCap(); requestRender();
+    }
+    function detach(){
+      if (!S.sel) return;
+      var p = lastPiece && elementOf(lastPiece) === S.sel.el ? pieceOf(lastPiece, S.sel.el) : S.sel.el.children[0];
+      if (p && p !== S.sel.el) select(S.sel.el, p);
+    }
+    function regroup(){ if (S.sel) select(S.sel.el, null); }
+
+    function elementOf(o){ while (o && o.parent && elements.indexOf(o) < 0) o = o.parent; return o && elements.indexOf(o) >= 0 ? o : null; }
+    function pieceOf(o, el){ while (o && o.parent !== el) o = o.parent; return o || null; }
+
+    // ── picking ──
+    var ray = new T.Raycaster(), ndc = new T.Vector2();
+    function setNdc(ev){
+      var r = canvas.getBoundingClientRect();
+      ndc.set((ev.clientX - r.left) / r.width * 2 - 1, -((ev.clientY - r.top) / r.height * 2 - 1));
+      ray.setFromCamera(ndc, camera);
+    }
+    function hitAt(ev){
+      setNdc(ev);
+      var hits = ray.intersectObjects(elements, true);
+      for (var i = 0; i < hits.length; i++){
+        var o = hits[i].object, vis = true;
+        for (var p = o; p; p = p.parent) if (!p.visible){ vis = false; break; }
+        if (!vis) continue;
+        var el = elementOf(o);
+        if (el) return {el: el, piece: el === o ? null : pieceOf(o, el), point: hits[i].point};
+      }
+      return null;
+    }
+
+    // ── transforms ──
+    var tmpV = new T.Vector3(), tmpQ = new T.Quaternion(), tmpQ2 = new T.Quaternion(), Y = new T.Vector3(0, 1, 0);
+    function setWorldPos(o, w){ o.position.copy(o.parent.worldToLocal(tmpV.copy(w))); o.updateMatrixWorld(true); }
+    function rotate(deg){
+      var a = active(); if (!a) return;
+      var c = new T.Box3().setFromObject(a).getCenter(new T.Vector3());
+      var R = new T.Quaternion().setFromAxisAngle(Y, deg * Math.PI / 180);
+      var wp = a.getWorldPosition(new T.Vector3()), wq = a.getWorldQuaternion(new T.Quaternion());
+      var np = wp.sub(c).applyQuaternion(R).add(c);
+      var nq = R.multiply(wq);
+      a.parent.updateMatrixWorld(true);
+      var pq = a.parent.getWorldQuaternion(new T.Quaternion()).invert();
+      a.quaternion.copy(pq.multiply(nq)).normalize();
+      a.position.copy(a.parent.worldToLocal(np));
+      a.updateMatrixWorld(true);
+      save(); requestRender();
+    }
+    function nudge(dx, dz){
+      var a = active(); if (!a) return;
+      var w = a.getWorldPosition(new T.Vector3()); w.x += dx; w.z += dz;
+      setWorldPos(a, w); save(); requestRender();
+    }
+
+    // ── persistence ──
+    function snapshot(n){ return [n.position.x, n.position.y, n.position.z, n.quaternion.x, n.quaternion.y, n.quaternion.z, n.quaternion.w]; }
+    function save(){
+      var out = {}, k, a, b, i, diff;
+      for (k in registry){
+        a = snapshot(registry[k]); b = originals[k]; diff = false;
+        for (i = 0; i < 7; i++) if (Math.abs(a[i] - b[i]) > 1e-5){ diff = true; break; }
+        if (diff) out[k] = a.map(function(x){ return Math.round(x * 1e5) / 1e5; });
+      }
+      try {
+        if (Object.keys(out).length) localStorage.setItem(KEY, JSON.stringify({v: 1, n: out}));
+        else localStorage.removeItem(KEY);
+      } catch(e){}
+    }
+    function restore(){
+      var data = null;
+      try { data = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
+      if (!data || data.v !== 1 || !data.n) return;
+      Object.keys(data.n).forEach(function(k){
+        var n = registry[k], v = data.n[k];
+        if (!n || !v || v.length !== 7) return;
+        for (var i = 0; i < 7; i++) if (typeof v[i] !== "number" || !isFinite(v[i])) return;
+        n.position.set(v[0], v[1], v[2]); n.quaternion.set(v[3], v[4], v[5], v[6]).normalize();
+      });
+      gltf.scene.updateMatrixWorld(true);
+    }
+    function reset(){
+      for (var k in registry){
+        var o = originals[k], n = registry[k];
+        n.position.set(o[0], o[1], o[2]); n.quaternion.set(o[3], o[4], o[5], o[6]);
+      }
+      gltf.scene.updateMatrixWorld(true);
+      try { localStorage.removeItem(KEY); } catch(e){}
+      updateOutline(); requestRender();
+    }
+    resetBtn.addEventListener("click", function(){ if (confirm(t("v3d_confirm"))) reset(); });
+    restore();
+
+    // ── pointer interaction ──
+    var drag = null, down = null, pointers = 0, hoverQueued = false, lastEv = null;
+    var plane = new T.Plane(), pt = new T.Vector3();
+    function endDrag(moved){
+      if (!drag) return;
+      drag = null; controls.enabled = true; canvas.classList.remove("drag");
+      if (moved) save();
+    }
+    canvas.addEventListener("pointerdown", function(ev){
+      pointers++;
+      if (pointers > 1){ endDrag(true); down = null; return; }
+      if (ev.button !== 0) { down = null; return; }
+      canvas.focus({preventScroll: true});
+      var h = hitAt(ev);
+      down = {x: ev.clientX, y: ev.clientY, empty: !h};
+      if (!h) return;
+      controls.enabled = false;
+      lastPiece = h.piece;
+      var sel = S.sel;
+      if (sel && sel.piece && h.el === sel.el && h.piece) select(h.el, h.piece);      // detached mode: switch piece
+      else if (sel && sel.piece && h.el === sel.el && !h.piece) select(h.el, null);
+      else select(h.el, null);
+      var a = active();
+      plane.set(Y, -h.point.y);
+      if (!ray.ray.intersectPlane(plane, pt)) { controls.enabled = true; return; }
+      drag = {id: ev.pointerId, start: pt.clone(), wp: a.getWorldPosition(new T.Vector3()), moved: false, obj: a};
+      try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
+    });
+    canvas.addEventListener("pointermove", function(ev){
+      if (drag && ev.pointerId === drag.id){
+        if (!drag.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4) return;
+        drag.moved = true; canvas.classList.add("drag");
+        setNdc(ev);
+        if (!ray.ray.intersectPlane(plane, pt)) return;
+        var w = drag.wp.clone(); w.x += pt.x - drag.start.x; w.z += pt.z - drag.start.z;
+        setWorldPos(drag.obj, w); requestRender();
+      } else if (ev.pointerType === "mouse" && !ev.buttons){
+        lastEv = ev;
+        if (!hoverQueued){ hoverQueued = true; requestAnimationFrame(function(){ hoverQueued = false; canvas.classList.toggle("over", !!hitAt(lastEv)); }); }
+      }
+    });
+    function up(ev){
+      pointers = Math.max(0, pointers - 1);
+      if (drag && ev.pointerId === drag.id) endDrag(drag.moved);
+      else if (down && down.empty && ev.type === "pointerup" && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4 && pointers === 0) select(null);
+      if (!pointers){ controls.enabled = true; down = null; }
+    }
+    canvas.addEventListener("pointerup", up);
+    canvas.addEventListener("pointercancel", up);
+    canvas.addEventListener("dblclick", function(ev){
+      var h = hitAt(ev);
+      if (h && h.piece) { lastPiece = h.piece; select(h.el, h.piece); }
+    });
+
+    // ── keyboard ──
+    canvas.addEventListener("keydown", function(ev){
+      var k = ev.key, step = ev.shiftKey ? 0.5 : 0.1, used = true;
+      if (k === "q" || k === "Q") rotate(15);
+      else if (k === "e" || k === "E") rotate(-15);
+      else if (k === "Escape") select(null);
+      else if (k === "Enter"){
+        var i = S.sel ? elements.indexOf(S.sel.el) : -1;
+        select(elements[(i + (ev.shiftKey ? elements.length - 1 : 1)) % elements.length], null);
+      }
+      else if (k === "ArrowLeft" && S.sel) nudge(-step, 0);
+      else if (k === "ArrowRight" && S.sel) nudge(step, 0);
+      else if (k === "ArrowUp" && S.sel) nudge(0, -step);
+      else if (k === "ArrowDown" && S.sel) nudge(0, step);
+      else used = false;
+      if (used) ev.preventDefault();
+    });
+
+    // theme follows the system / the data-theme attribute
+    applyTheme();
+    if (window.matchMedia){ var mq = matchMedia("(prefers-color-scheme: dark)"); (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(applyTheme); }
+    new MutationObserver(applyTheme).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
+    window.V3D = S;
+  }
+
+  // Load when the section is about to be seen.
+  function kick(){ if (!started){ started = true; start(); } }
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })){ io.disconnect(); kick(); } }, {rootMargin: "400px"});
+    io.observe(stage);
+  } else kick();
+  renderMsg();
+})();
+</script>
+<script>I18N.apply();</script>
+</body>
+</html>
