@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-public="1">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -157,7 +157,18 @@ header.hero .wrap{position:relative}
 .v3d-tools .grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
 .v3d-tools .sep{color:var(--faint)}
 .v3d-fshint{margin:6px 0 0}
-.v3d-share{margin:8px 0 0}
+.v3d-public-note{margin:-8px 0 14px;padding:10px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--ink);border-radius:0 8px 8px 0;font-size:14px}
+.v3d-public-note[hidden]{display:none}
+html[data-public="1"] #v3dImpOpen,html[data-public="1"] #v3dImp,html[data-public="1"] #v3dImpUndo{display:none!important}
+.pub-pill{position:fixed;left:16px;bottom:16px;z-index:2147483200;font:inherit;font-size:14px;font-weight:400;color:#fff;background:var(--accent);border:0;border-radius:999px;padding:10px 18px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.pub-pill:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.pub-pill[hidden]{display:none}
+.pub-modal{position:fixed;inset:0;z-index:2147483600;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.5)}
+.pub-dlg{max-width:460px;width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.pub-dlg p{margin:0 0 14px;font-size:16px}
+.pub-dlg .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+.pub-dlg .ok{color:var(--accent);font-weight:600;font-size:13px}
+.pub-dlg .v3d-link{font-size:15px}
 .v3d-share[hidden]{display:none}
 .v3d-share p{margin:0 0 4px}
 .v3d-share .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px}
@@ -236,86 +247,16 @@ html.v3d-lock{overflow:hidden}
 </header>
 
 <main>
-<section id="principe">
-  <div class="wrap">
-    <h2 data-i18n="principe_h">Le principe</h2>
-    <div class="grid">
-      <div class="card"><h3 data-i18n="p1_h">Une tournée européenne</h3><p data-i18n="p1_p">Google Cloud emmène AI Advantage dans plus de 30 organisations en Europe en 2026 et nous propose d'accueillir une étape.</p></div>
-      <div class="card"><h3 data-i18n="p2_h">Ils viennent chez nous</h3><p data-i18n="p2_p">Google apporte les démos, la logistique, le contenu et ses intervenants. Ils s'installent la veille et démontent juste après l'événement.</p></div>
-      <div class="card"><h3 data-i18n="p3_h">Un programme fait sur mesure</h3><p data-i18n="p3_p">Nous construisons l'agenda ensemble, autour de nos priorités. C'est un événement privé, réservé à SNCF.</p></div>
-      <div class="card"><h3 data-i18n="p4_h">Le but</h3><p data-i18n="p4_p">Embarquer largement les équipes, valoriser ce qui existe déjà et repérer concrètement ce qui peut accélérer nos cas d'usage.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="axes">
-  <div class="wrap">
-    <h2 data-i18n="axes_h">Trois grands axes de contenu</h2>
-    <div class="grid">
-      <div class="card"><span class="tag" data-i18n="a1_tag">1 · Déjà réalisé</span><h3 data-i18n="a1_h">Ce que nous avons déjà fait</h3><p data-i18n="a1_p">Mettre en avant les réalisations internes : le studio génératif basé sur les modèles Google, et d'autres initiatives des équipes (avec leurs propres modèles ou d'autres outils).</p></div>
-      <div class="card"><span class="tag" data-i18n="a2_tag">2 · Demain</span><h3 data-i18n="a2_h">Ce que nous pourrions faire</h3><p data-i18n="a2_p">« Make Dream » et perspectives, y compris au-delà de l'IA : Chromebook et les autres produits Google disponibles dans le groupe.</p></div>
-      <div class="card"><span class="tag" data-i18n="a3_tag">3 · Cas concrets</span><h3 data-i18n="a3_h">Use cases chez ou pour SNCF</h3>
-        <ul>
-          <li data-i18n="uc1">IT frugal pour les sociétés dédiées</li>
-          <li data-i18n="uc2">IA locale embarquée TGV</li>
-          <li data-i18n="uc3">Maintenance prédictive Intercités</li>
-          <li data-i18n="uc4">Référentiel client</li>
-          <li data-i18n="uc5">Modernisation du centre d'appels</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="planning">
-  <div class="wrap">
-    <h2 data-i18n="plan_h">Planning modifiable</h2>
-    <p class="status" style="margin-bottom:6px" data-i18n="plan_intro">Ouverture à 12h avec un déjeuner, stands ouverts dès 12h30, plénière à 13h45 avec le contenu fort avant 15h, puis un apéro / goûter. Glissez les blocs, cliquez sur un texte pour le modifier.</p>
-    <p class="status"><span data-i18n="plan_tpl">Repartir d'un modèle :</span> <a href="#planning" data-tpl="A">Option A</a> · <a href="#planning" data-tpl="B">Option B</a></p>
-    <p class="sr" id="status" role="status" aria-live="polite"></p>
-
-    <div class="tracks" id="tracks"></div>
-
-    <div class="tray">
-      <div class="newblock" id="newBlock" draggable="true"><span data-i18n="newblock">＋ Nouveau bloc</span> <small data-i18n="newblock_hint">(glissez-le dans une salle)</small></div>
-      <div class="trash" id="trash" data-i18n="trash">🗑 Glissez un bloc ici pour le supprimer</div>
-    </div>
-
-    <div class="legend" aria-hidden="true">
-      <span style="--c:var(--t-talk)" data-i18n="lg_talk">Conférence Google</span>
-      <span style="--c:var(--t-sncf)" data-i18n="lg_sncf">Intervention SNCF</span>
-      <span style="--c:var(--t-workshop)" data-i18n="lg_ws">Atelier / deep-dive</span>
-      <span style="--c:var(--t-demo)" data-i18n="lg_demo">Démos / networking</span>
-      <span style="--c:var(--t-break)" data-i18n="lg_break">Pause / logistique</span>
-    </div>
-  </div>
-</section>
-
-<section id="espaces">
-  <div class="wrap">
-    <h2 data-i18n="esp_h">Sur place au 574</h2>
-    <div class="grid">
-      <div class="card"><span class="tag" data-i18n="e1_tag">Démos</span><h3 data-i18n="e1_h">Trois corners répartis</h3><p data-i18n="e1_p">Environ 2 m × 4 m chacun, écran au centre, bornes Google clé en main. Plutôt répartis que regroupés : un à l'entrée (à droite, sur une grande table), un près de la terrasse, un dans l'agora.</p>
-        <ul style="margin-top:8px">
-          <li data-i18n="e1_l1">Creative Agent : un dessin devient une vidéo</li>
-          <li data-i18n="e1_l2">AI Quick-Build : un défi de création en temps réel</li>
-          <li data-i18n="e1_l3">Gemini Enterprise : les agents IA au travail</li>
-        </ul>
-      </div>
-      <div class="card"><span class="tag" data-i18n="e2_tag">Conférence</span><h3 data-i18n="e2_h">Le hub reste libre</h3><p data-i18n="e2_p">L'espace conférence garde tout son espace, avec notre propre matériel son et vidéo. Les tables et chaises sont fixes : on compose avec l'existant.</p></div>
-      <div class="card"><span class="tag" data-i18n="e3_tag">Accueil</span><h3 data-i18n="e3_h">Badges à l'entrée</h3><p data-i18n="e3_p">Une zone d'enregistrement pour récupérer son badge. Les invités arrivent par le 12 rue Jean-Philippe Rameau : il faut quelqu'un pour les accompagner jusqu'au 574.</p></div>
-    </div>
-  </div>
-</section>
-
 <section id="plan3d">
   <div class="wrap">
     <h2 data-i18n="d3_h">Plan 3D du lieu</h2>
+    <p class="v3d-public-note" id="v3dPublicNote" data-i18n="v3d_public_note" hidden>Ce site n'est relié à rien : vos modifications (3D et calendrier) restent dans votre navigateur. Pour les partager, copiez-les et envoyez-les à Alexandre, qui mettra la version commune à jour.</p>
     <div class="v3d" id="v3d">
       <div class="v3d-bar" id="v3dBar" hidden>
         <span class="grp" role="group">
           <button type="button" class="v3d-link" id="v3dModeOver" aria-pressed="true" data-i18n="v3d_mode_over">Vue d'ensemble</button>
           <button type="button" class="v3d-link" id="v3dModeWalk" aria-pressed="false" data-i18n="v3d_mode_walk">Visite</button>
+          <button type="button" class="v3d-link" id="v3dModeChar" aria-pressed="false" data-i18n="v3d_mode_char">Personnage</button>
         </span>
         <span class="grp" id="v3dZones" role="group"></span>
       </div>
@@ -346,6 +287,7 @@ html.v3d-lock{overflow:hidden}
       </div>
       <div class="v3d-cap" id="v3dCap" aria-live="polite"></div>
       <p class="status" data-i18n="v3d_hint">Vue d'ensemble : glissez dans le vide pour tourner, molette ou pincement pour zoomer vers le curseur, clic droit pour déplacer la vue, double-clic au sol pour s'y rendre. Cliquez un élément (kit ou mobilier) : glissez-le pour le déplacer, tournez-le avec l'anneau autour (Maj = par 15°) ; Q / E aussi. « Déplacer : une pièce » (ou double-clic) pour bouger une pièce seule. Suppr : retirer l'élément. F : plein écran ; Échap pour désélectionner.</p>
+      <p class="status" id="v3dHintChar" data-i18n="v3d_hint_char" hidden>Personnage : un petit personnage se promène dans la salle, vu de derrière. ↑ / ↓ (ou Z / S, W / S) pour avancer ou reculer ; ← / → (ou Q / D, A / D) pour tourner (Maj pour courir). Glissez pour tourner la caméra autour de lui, molette pour l'éloigner ou le rapprocher, cliquez au sol pour qu'il y aille. Les éléments se sélectionnent et se déplacent comme d'habitude. F : plein écran. Échap pour quitter.</p>
       <p class="status" id="v3dHintWalk" data-i18n="v3d_hint_walk" hidden>Visite : vous êtes dans la salle, à hauteur d'yeux. Glissez pour regarder autour de vous ; W A S D ou les flèches pour marcher (Maj pour aller plus vite) ; cliquez au sol pour y aller ; la molette fait avancer ou reculer. Les éléments et le mobilier se déplacent et se tournent (anneau) comme en vue d'ensemble. F : plein écran, plus immersif. Échap pour quitter.</p>
       <div class="v3d-share" id="v3dShare" hidden>
         <p class="status intro" data-i18n="v3d_share_p">Vous pouvez modifier la 3D comme vous voulez (déplacer, tourner, retirer, ouvrir/fermer les rideaux). Quand c'est bon, copiez vos modifications et envoyez-les à Alexandre.</p>
@@ -370,6 +312,43 @@ html.v3d-lock{overflow:hidden}
       </div>
     </div>
     <p class="status" data-i18n="k_note">Dimensions en partie supposées, à confirmer avec Google. Fichiers Blender et 3D dans le dossier « 3d ».</p>
+  </div>
+</section>
+
+
+<section id="planning">
+  <div class="wrap">
+    <h2 data-i18n="plan_h">Planning modifiable</h2>
+    <p class="status" style="margin-bottom:6px" data-i18n="plan_intro">Ouverture à 12h avec un déjeuner, stands ouverts dès 12h30, plénière à 13h45 avec le contenu fort avant 15h, puis un apéro / goûter. Glissez les blocs, cliquez sur un texte pour le modifier.</p>
+    <p class="status"><span data-i18n="plan_tpl">Repartir d'un modèle :</span> <a href="#planning" data-tpl="A">Option A</a> · <a href="#planning" data-tpl="B">Option B</a></p>
+    <p class="sr" id="status" role="status" aria-live="polite"></p>
+
+    <div class="tracks" id="tracks"></div>
+
+    <div class="tray">
+      <div class="newblock" id="newBlock" draggable="true"><span data-i18n="newblock">＋ Nouveau bloc</span> <small data-i18n="newblock_hint">(glissez-le dans une salle)</small></div>
+      <div class="trash" id="trash" data-i18n="trash">🗑 Glissez un bloc ici pour le supprimer</div>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span style="--c:var(--t-talk)" data-i18n="lg_talk">Conférence Google</span>
+      <span style="--c:var(--t-sncf)" data-i18n="lg_sncf">Intervention SNCF</span>
+      <span style="--c:var(--t-workshop)" data-i18n="lg_ws">Atelier / deep-dive</span>
+      <span style="--c:var(--t-demo)" data-i18n="lg_demo">Démos / networking</span>
+      <span style="--c:var(--t-break)" data-i18n="lg_break">Pause / logistique</span>
+    </div>
+  </div>
+</section>
+
+<section id="principe">
+  <div class="wrap">
+    <h2 data-i18n="principe_h">Le principe</h2>
+    <div class="grid">
+      <div class="card"><h3 data-i18n="p1_h">Une tournée européenne</h3><p data-i18n="p1_p">Google Cloud emmène AI Advantage dans plus de 30 organisations en Europe en 2026 et nous propose d'accueillir une étape.</p></div>
+      <div class="card"><h3 data-i18n="p2_h">Ils viennent chez nous</h3><p data-i18n="p2_p">Google apporte les démos, la logistique, le contenu et ses intervenants. Ils s'installent la veille et démontent juste après l'événement.</p></div>
+      <div class="card"><h3 data-i18n="p3_h">Un programme fait sur mesure</h3><p data-i18n="p3_p">Nous construisons l'agenda ensemble, autour de nos priorités. C'est un événement privé, réservé à SNCF.</p></div>
+      <div class="card"><h3 data-i18n="p4_h">Le but</h3><p data-i18n="p4_p">Embarquer largement les équipes, valoriser ce qui existe déjà et repérer concrètement ce qui peut accélérer nos cas d'usage.</p></div>
+    </div>
   </div>
 </section>
 
@@ -438,6 +417,11 @@ var I18N = (function(){
     v3d_imp_open:"Load a received version", v3d_imp_lbl:"Paste the whole text you received:", v3d_imp_go:"Load", v3d_imp_close:"Close", v3d_imp_undo:"Undo import",
     v3d_imp_confirm:"Replace your current layout?", v3d_imp_done:"Version loaded.", v3d_imp_undone:"Previous layout restored.",
     v3d_imp_e_marker:"Code not found: the text must contain a line starting with AIADV574:", v3d_imp_e_json:"The code is not valid (unreadable).", v3d_imp_e_shape:"The code does not look like a 3D layout (wrong content).", v3d_imp_e_empty:"Paste the received text first.",
+    v3d_none_char:"Character · {n} elements you can move, click one to select it · Esc to leave",
+    v3d_mode_char:"Character", v3d_aria_char:"Character walk: a small person walks in the venue, seen from behind. Arrow keys or W A S D to walk and turn, Shift to run, drag to turn the camera around, wheel for distance, click the floor to walk there, Escape to leave.",
+    v3d_hint_char:"Character: a little person walks around the room, seen from behind. Up / Down (or W / S, Z / S) to walk forward or back; Left / Right (or A / D, Q / D) to turn (Shift to run). Drag to turn the camera around them, wheel to move the camera away or closer, click the floor to make them walk there. Elements still select and move as usual. F: full screen. Esc to leave.",
+    v3d_public_note:"This site is not connected to anything: your changes (3D and schedule) stay in your browser. To share them, copy them and send them to Alexandre, who will update the common version.",
+    v3d_pub_msg:"You changed the plan. Copy your changes and send them to Alexandre so he can update the common version.", v3d_later:"Later", v3d_pill:"Send my changes",
     v3d_reset:"Reset layout", k_note:"Some dimensions are assumptions, to confirm with Google. Blender and 3D files are in the “3d” folder.",
     
     
@@ -519,6 +503,10 @@ var I18N = (function(){
     v3d_imp_open:"Charger une version reçue", v3d_imp_lbl:"Collez ici tout le texte reçu :", v3d_imp_go:"Charger", v3d_imp_close:"Fermer", v3d_imp_undo:"Annuler l'import",
     v3d_imp_confirm:"Remplacer votre disposition actuelle ?", v3d_imp_done:"Version chargée.", v3d_imp_undone:"Disposition précédente rétablie.",
     v3d_imp_e_marker:"Code introuvable : le texte doit contenir une ligne qui commence par AIADV574:", v3d_imp_e_json:"Le code n'est pas valide (illisible).", v3d_imp_e_shape:"Le code ne ressemble pas à une disposition 3D (contenu incorrect).", v3d_imp_e_empty:"Collez d'abord le texte reçu.",
+    v3d_none_char:"Personnage · {n} éléments déplaçables, cliquez-en un pour le sélectionner · Échap pour quitter",
+    v3d_mode_char:"Personnage", v3d_aria_char:"Promenade avec un personnage : une petite personne marche dans le lieu, vue de derrière. Flèches ou Z Q S D pour avancer et tourner, Maj pour courir, glisser pour tourner la caméra autour, molette pour la distance, cliquer au sol pour y aller, Échap pour quitter.",
+    v3d_public_note:"Ce site n'est relié à rien : vos modifications (3D et calendrier) restent dans votre navigateur. Pour les partager, copiez-les et envoyez-les à Alexandre, qui mettra la version commune à jour.",
+    v3d_pub_msg:"Vous avez modifié le plan. Copiez vos modifications et envoyez-les à Alexandre pour qu'il mette à jour la version commune.", v3d_later:"Plus tard", v3d_pill:"Envoyer mes modifications",
     v3d_loading:"Chargement de la 3D…", v3d_err:"La vue 3D n'a pas pu être chargée (connexion ou fichier). Le reste de la page fonctionne normalement.", v3d_retry:"Réessayer",
     v3d_none:"Aucun élément sélectionné · {n} éléments déplaçables", v3d_detached:"détachée", v3d_left:"Pivoter à gauche", v3d_right:"Pivoter à droite",
     v3d_detach:"Détacher une pièce", v3d_regroup:"Rattacher", v3d_confirm:"Remettre tous les éléments à leur place d'origine ?",
@@ -656,7 +644,7 @@ function makeEditable(el, label, value, onSave){
     return d;
   }
   function load(){ try { var r = localStorage.getItem(KEY); return r ? valid(JSON.parse(r)) : null; } catch(e){ return null; } }
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} try { document.dispatchEvent(new Event("aiadv:changed")); } catch(e){} }
 
   function toMin(hm){ var p = hm.split(":"); return (+p[0])*60 + (+p[1]); }
   function fmt(m){
@@ -855,6 +843,8 @@ function makeEditable(el, label, value, onSave){
   function commit(){ save(); render(); }
   I18N.onChange(render);
   render();
+  // Used by the 3D script's "load a received version": re-read the stored planning and redraw it.
+  window.AIADV_PLAN = {key: KEY, reload: function(){ state = load() || template("A"); render(); }};
 })();
 </script>
 
@@ -872,6 +862,7 @@ function makeEditable(el, label, value, onSave){
   var GLB = window.__V3D_GLB || "3d/kit-google.glb";
   var VENUE = window.__V3D_VENUE || "3d/lieu-574.glb";
   var DISPO = window.__V3D_DISPO || "3d/disposition-574.json";
+  var VALID = window.__V3D_VALID || "3d/disposition-validee.json";   // validated default layout (optional): same shape as the stored layout
   var MOB = window.__V3D_MOB || "3d/mobilier-574.glb";   // movable furniture of the venue (optional)
   var KEY = "aiadv-sncf-3d-layout-v3";   // v3: furniture + single pieces; everybody sees the new defaults
   var EYE = 1.65;                         // eye height in the walk-through, metres
@@ -883,6 +874,7 @@ function makeEditable(el, label, value, onSave){
   var stage = canvas.parentNode;
   var barEl = document.getElementById("v3dBar"), zonesEl = document.getElementById("v3dZones");
   var modeOverBtn = document.getElementById("v3dModeOver"), modeWalkBtn = document.getElementById("v3dModeWalk");
+  var modeCharBtn = document.getElementById("v3dModeChar"), hintCharEl = document.getElementById("v3dHintChar");
   var hintWalkEl = document.getElementById("v3dHintWalk"), soonEl = document.getElementById("v3dSoon");
   var box = document.getElementById("v3d"), toolsEl = document.getElementById("v3dTools"), fsHintEl = document.getElementById("v3dFsHint");
   var moveAllBtn = document.getElementById("v3dMoveAll"), movePieceBtn = document.getElementById("v3dMovePiece");
@@ -934,7 +926,7 @@ function makeEditable(el, label, value, onSave){
     var sel = S.sel;
     if (!sel){
       var m = document.createElement("span");
-      m.textContent = t(S.mode === "walk" ? "v3d_none_walk" : "v3d_none").replace("{n}", S.elements.length);
+      m.textContent = t(S.mode === "char" ? "v3d_none_char" : S.mode !== "over" ? "v3d_none_walk" : "v3d_none").replace("{n}", S.elements.length);
       capEl.appendChild(m); return;
     }
     var tag = document.createElement("span"); tag.textContent = t(sel.el.userData.__grp === "mob" ? "v3d_grp_mob" : "v3d_grp_kit");
@@ -958,7 +950,7 @@ function makeEditable(el, label, value, onSave){
   function renderTools(){
     var ok = state === "ready" && !!S;
     toolsEl.hidden = !ok;
-    var fsHint = ok && S.mode === "walk" && !fsOn;
+    var fsHint = ok && S.mode !== "over" && !fsOn;
     fsHintEl.hidden = !fsHint;
     if (fsHint){
       fsHintEl.textContent = t("v3d_fshint") + " ";
@@ -995,6 +987,7 @@ function makeEditable(el, label, value, onSave){
     if (!on && fsOn){ try { window.scrollTo(0, scrollY0); } catch(e){} }
     if (on !== fsOn){ fsOn = on; wide = on; if (S && S.onFs) S.onFs(on); }
     renderTools();
+    if (typeof renderPublic === "function"){ renderPublic(); if (pubModal && pubModal.parentNode !== pubHost()) pubHost().appendChild(pubModal); }
   }
   function enterFs(){
     if (fsOn) return;
@@ -1029,12 +1022,23 @@ function makeEditable(el, label, value, onSave){
   var shareEl = document.getElementById("v3dShare"), shCopy = document.getElementById("v3dShCopy"), shMail = document.getElementById("v3dShMail"), shOk = document.getElementById("v3dShOk");
   var impOpen = document.getElementById("v3dImpOpen"), impUndo = document.getElementById("v3dImpUndo"), impBox = document.getElementById("v3dImp"), impTa = document.getElementById("v3dImpTa");
   var impLbl = document.getElementById("v3dImpLbl"), impGo = document.getElementById("v3dImpGo"), impClose = document.getElementById("v3dImpClose"), impMsg = document.getElementById("v3dImpMsg");
-  var MARK = "AIADV574:", BAK = KEY + "-avant-import", NONE = "__aucune__";
+  var MARK = "AIADV574:", BAK = KEY + "-avant-import", NONE = "__aucune__", PLAN_KEY = "aiadv-sncf-planning-v5", BAKP = PLAN_KEY + "-avant-import";
   function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  // The code = the visitor's own stored 3D layout, plus (field p) the planning if they changed it. Nothing changed = nothing to send.
   function shareCode(){
-    var raw = lsGet(KEY); if (!raw) return null;
+    var rawL = lsGet(KEY), rawP = lsGet(PLAN_KEY), raw = rawL, obj, pl = null;
+    if (!rawL && !rawP) return null;
+    if (rawP){ try { pl = JSON.parse(rawP); } catch(e){} }
+    if (pl){
+      try { obj = rawL ? JSON.parse(rawL) : {v: 1, n: {}}; } catch(e){ obj = {v: 1, n: {}}; }
+      obj.p = pl; raw = JSON.stringify(obj);
+    }
+    if (!raw) return null;
+    // Spaces (and other blanks) only occur inside planning titles: write them as \uXXXX so that a mail client that wraps or re-flows the text cannot damage them (the import drops blanks first).
+    raw = raw.replace(/[\s\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]/g, function(c){ return "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4); });
     return t("v3d_sh_head") + " — " + new Date().toISOString().slice(0, 10) + "\n" + MARK + raw;
   }
+  function notifyChange(){ try { document.dispatchEvent(new Event("aiadv:changed")); } catch(e){} }
   function mailHref(){
     var code = shareCode(), to = shMail.getAttribute("data-mail"), subj = t("v3d_sh_subj");
     var mk = function(body){ return "mailto:" + to + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body); };
@@ -1080,6 +1084,29 @@ function makeEditable(el, label, value, onSave){
     }
     if (raw.length > 400000) throw "v3d_imp_e_shape";
     try { d = JSON.parse(raw); } catch(e){ throw "v3d_imp_e_json"; }
+    return cleanLayoutObj(d);
+  }
+  // Planning shape check (same fields the planning script stores): copy only what is expected.
+  function cleanPlan(p){
+    var BAD = "v3d_imp_e_shape", TY = ["talk", "sncf", "workshop", "demo", "break"];
+    function str(v, max){ if (v === undefined) return undefined; if (typeof v !== "string" || v.length > max) throw BAD; return v; }
+    if (!p || typeof p !== "object" || Array.isArray(p) || !Array.isArray(p.tracks) || !p.tracks.length || p.tracks.length > 12) throw BAD;
+    return {tracks: p.tracks.map(function(tr){
+      if (!tr || typeof tr !== "object" || !Array.isArray(tr.slots) || tr.slots.length > 300 || typeof tr.start !== "string" || !/^\d{2}:\d{2}$/.test(tr.start)) throw BAD;
+      var o = {start: tr.start, slots: tr.slots.map(function(x){
+        if (!x || typeof x !== "object" || typeof x.dur !== "number" || !isFinite(x.dur) || x.dur < 1 || x.dur > 1440 || TY.indexOf(x.type) < 0) throw BAD;
+        var y = {type: x.type, dur: Math.round(x.dur)}, id = str(x.id, 40), k = str(x.k, 60), ti = str(x.title, 300);
+        if (id) y.id = id; if (k) y.k = k; if (ti !== undefined) y.title = ti;
+        if (!k && ti === undefined) throw BAD;
+        return y;
+      })};
+      var k2 = str(tr.k, 60), nm = str(tr.name, 200);
+      if (k2) o.k = k2; if (nm !== undefined) o.name = nm;
+      if (!k2 && nm === undefined) throw BAD;
+      return o;
+    })};
+  }
+  function cleanLayoutObj(d){
     if (!d || typeof d !== "object" || Array.isArray(d) || d.v !== 1) throw "v3d_imp_e_shape";
     var n = d.n === undefined ? {} : d.n;
     if (!n || typeof n !== "object" || Array.isArray(n)) throw "v3d_imp_e_shape";
@@ -1088,7 +1115,9 @@ function makeEditable(el, label, value, onSave){
     keys.forEach(function(k){ if (k.length > 200 || !isNum7(n[k])) throw "v3d_imp_e_shape"; out.n[k] = n[k].slice(); });
     var h = keyList(d.h), c = keyList(d.c);
     if (h.length) out.h = h; if (c.length) out.c = c;
-    if (!keys.length && !h.length && !c.length) throw "v3d_imp_e_shape";
+    if (d.d === 1) out.d = 1;
+    if (d.p !== undefined) out.p = cleanPlan(d.p);
+    if (!keys.length && !h.length && !c.length && out.d !== 1 && !out.p) throw "v3d_imp_e_shape";
     return out;
   }
   function renderShare(){
@@ -1096,7 +1125,7 @@ function makeEditable(el, label, value, onSave){
     shareEl.hidden = !ok; if (!ok) return;
     shCopy.textContent = t("v3d_sh_copy"); shMail.textContent = t("v3d_sh_mail");
     impOpen.textContent = t("v3d_imp_open"); impLbl.textContent = t("v3d_imp_lbl"); impGo.textContent = t("v3d_imp_go"); impClose.textContent = t("v3d_imp_close");
-    impUndo.textContent = t("v3d_imp_undo"); impUndo.hidden = lsGet(BAK) === null;
+    impUndo.textContent = t("v3d_imp_undo"); impUndo.hidden = lsGet(BAK) === null && lsGet(BAKP) === null;
     shareEl.querySelector(".row").setAttribute("role", "group");
     freshMail();
   }
@@ -1109,32 +1138,110 @@ function makeEditable(el, label, value, onSave){
     var lay;
     try { lay = parseShare(impTa.value); } catch(k){ impMsg.className = "bad"; impMsg.textContent = t(typeof k === "string" ? k : "v3d_imp_e_json"); return; }
     if (!confirm(t("v3d_imp_confirm"))) return;
+    var hasLay = !!(Object.keys(lay.n).length || lay.h || lay.c || lay.d === 1), plan = lay.p;
     try {
-      var cur = lsGet(KEY);
-      localStorage.setItem(BAK, cur === null ? NONE : cur);
-      localStorage.setItem(KEY, JSON.stringify(lay));
+      var cur = lsGet(KEY), curP = lsGet(PLAN_KEY);
+      localStorage.setItem(BAK, cur === null ? NONE : cur);            // both parts are backed up, so "Undo" restores exactly the previous state
+      localStorage.setItem(BAKP, curP === null ? NONE : curP);
+      if (hasLay){ var l2 = {v: 1, n: lay.n}; if (lay.h) l2.h = lay.h; if (lay.c) l2.c = lay.c; if (lay.d === 1) l2.d = 1; localStorage.setItem(KEY, JSON.stringify(l2)); }
+      if (plan) localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
     } catch(e){ impMsg.className = "bad"; impMsg.textContent = t("v3d_imp_e_json"); return; }
-    if (S && S.reloadLayout) S.reloadLayout();
+    if (hasLay && S && S.reloadLayout) S.reloadLayout();
+    if (plan && window.AIADV_PLAN) window.AIADV_PLAN.reload();
     impTa.value = ""; impMsg.className = "ok"; impMsg.textContent = t("v3d_imp_done"); renderShare();
   });
   impUndo.addEventListener("click", function(){
-    var b = lsGet(BAK); if (b === null) return;
-    try { if (b === NONE) localStorage.removeItem(KEY); else localStorage.setItem(KEY, b); localStorage.removeItem(BAK); } catch(e){}
+    var b = lsGet(BAK), bp = lsGet(BAKP); if (b === null && bp === null) return;
+    try {
+      if (b !== null){ if (b === NONE) localStorage.removeItem(KEY); else localStorage.setItem(KEY, b); localStorage.removeItem(BAK); }
+      if (bp !== null){ if (bp === NONE) localStorage.removeItem(PLAN_KEY); else localStorage.setItem(PLAN_KEY, bp); localStorage.removeItem(BAKP); }
+    } catch(e){}
     if (S && S.reloadLayout) S.reloadLayout();
+    if (window.AIADV_PLAN) window.AIADV_PLAN.reload();
     impMsg.className = "ok"; impMsg.textContent = t("v3d_imp_undone"); renderShare();
   });
 
+  // ── Public copy only (<html data-public="1">, set by the build script): notice, first-change popup, floating pill ──
+  function isPublic(){ return document.documentElement.getAttribute("data-public") === "1"; }
+  function hasChanges(){ return !!(lsGet(KEY) || lsGet(PLAN_KEY)); }
+  var pubNote = document.getElementById("v3dPublicNote"), pubPill = null, pubModal = null, pubPrev = null, pubSeenMem = false, pubOkEl = null;
+  function pubSeen(){ try { return sessionStorage.getItem("aiadv-sncf-pub-popup") === "1" || pubSeenMem; } catch(e){ return pubSeenMem; } }
+  function pubMark(){ pubSeenMem = true; try { sessionStorage.setItem("aiadv-sncf-pub-popup", "1"); } catch(e){} }
+  function pubHost(){ return fsOn ? box : document.body; }
+  function renderPublic(){
+    var pub = isPublic();
+    pubNote.hidden = !pub;
+    if (!pub){ if (pubPill) pubPill.hidden = true; return; }
+    if (!pubPill){
+      pubPill = document.createElement("button"); pubPill.type = "button"; pubPill.className = "pub-pill";
+      pubPill.addEventListener("click", openPopup);
+    }
+    pubPill.textContent = t("v3d_pill");
+    var host = pubHost(); if (pubPill.parentNode !== host) host.appendChild(pubPill);
+    pubPill.hidden = !hasChanges() || !!pubModal;
+    if (pubModal){
+      pubModal.querySelector("p").textContent = t("v3d_pub_msg");
+      var bs = pubModal.querySelectorAll("button, a");
+      bs[0].textContent = t("v3d_sh_copy"); bs[1].textContent = t("v3d_sh_mail"); bs[2].textContent = t("v3d_later");
+    }
+  }
+  function openPopup(){
+    if (pubModal) return;
+    pubPrev = document.activeElement;
+    var m = document.createElement("div"); m.className = "pub-modal";
+    var dlg = document.createElement("div"); dlg.className = "pub-dlg"; dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true"); dlg.setAttribute("aria-labelledby", "pubMsg");
+    var p = document.createElement("p"); p.id = "pubMsg"; dlg.appendChild(p);
+    var row = document.createElement("div"); row.className = "row";
+    var bCopy = document.createElement("button"); bCopy.type = "button"; bCopy.className = "v3d-link";
+    var aMail = document.createElement("a"); aMail.className = "v3d-link"; aMail.href = "#";
+    var bLater = document.createElement("button"); bLater.type = "button"; bLater.className = "v3d-link";
+    pubOkEl = document.createElement("span"); pubOkEl.className = "ok"; pubOkEl.setAttribute("role", "status");
+    row.appendChild(bCopy); row.appendChild(aMail); row.appendChild(bLater); row.appendChild(pubOkEl); dlg.appendChild(row); m.appendChild(dlg);
+    bCopy.addEventListener("click", function(){
+      var code = shareCode();
+      if (!code){ pubOkEl.textContent = t("v3d_sh_none"); return; }
+      copyText(code, function(ok){ pubOkEl.textContent = t(ok ? "v3d_sh_ok" : "v3d_sh_fail"); });
+    });
+    ["pointerdown", "focus", "mouseover", "touchstart", "keydown", "click"].forEach(function(ev){ aMail.addEventListener(ev, function(){ aMail.href = mailHref(); }); });
+    bLater.addEventListener("click", closePopup);
+    m.addEventListener("pointerdown", function(e){ if (e.target === m) closePopup(); });
+    m.addEventListener("keydown", function(e){
+      if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); closePopup(); return; }
+      if (e.key === "Tab"){
+        var f = [bCopy, aMail, bLater], i = f.indexOf(document.activeElement);
+        e.preventDefault(); f[(i + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus();
+      }
+    });
+    pubModal = m; pubHost().appendChild(m); renderPublic(); aMail.href = mailHref(); bCopy.focus();
+  }
+  function closePopup(){
+    if (!pubModal) return;
+    pubModal.parentNode.removeChild(pubModal); pubModal = null;
+    renderPublic();
+    try { if (pubPrev && pubPrev.focus) pubPrev.focus({preventScroll: true}); } catch(e){}
+  }
+  document.addEventListener("aiadv:changed", function(){
+    if (!isPublic()) return;
+    renderPublic();
+    if (hasChanges() && !pubSeen()){ pubMark(); openPopup(); }
+  });
+  new MutationObserver(renderPublic).observe(document.documentElement, {attributes: true, attributeFilter: ["data-public"]});
+  I18N.onChange(renderPublic);
+  renderPublic();
+
   function renderBar(){
     renderTools(); renderShare();
-    if (state === "ready" && S) canvas.setAttribute("aria-label", t(S.mode === "walk" ? "v3d_aria_walk" : "v3d_aria"));
+    if (state === "ready" && S) canvas.setAttribute("aria-label", t(S.mode === "walk" ? "v3d_aria_walk" : S.mode === "char" ? "v3d_aria_char" : "v3d_aria"));
     var showBar = state === "ready" && !!S && !!S.venue;
     barEl.hidden = !showBar;
-    hintWalkEl.hidden = !showBar;
+    hintWalkEl.hidden = !(showBar && S.mode === "walk");
+    hintCharEl.hidden = !(showBar && S.mode === "char");
     soonEl.hidden = !(state === "ready" && S && !S.venue);
     if (!showBar) return;
     barEl.querySelector(".grp").setAttribute("aria-label", t("v3d_modes"));
     modeOverBtn.setAttribute("aria-pressed", S.mode === "over" ? "true" : "false");
     modeWalkBtn.setAttribute("aria-pressed", S.mode === "walk" ? "true" : "false");
+    modeCharBtn.setAttribute("aria-pressed", S.mode === "char" ? "true" : "false");
     zonesEl.textContent = "";
     if (!S.zones.length) return;
     var lab = document.createElement("span"); lab.textContent = t("v3d_goto"); zonesEl.appendChild(lab);
@@ -1151,6 +1258,7 @@ function makeEditable(el, label, value, onSave){
   I18N.onChange(function(){ renderMsg(); renderCap(); renderBar(); });
   modeOverBtn.addEventListener("click", function(){ if (S) S.setMode("over"); });
   modeWalkBtn.addEventListener("click", function(){ if (S) S.setMode("walk"); canvas.focus({preventScroll:true}); });
+  modeCharBtn.addEventListener("click", function(){ if (S) S.setMode("char"); canvas.focus({preventScroll:true}); });
 
   // ── loading ──
   var started = false;
@@ -1168,10 +1276,11 @@ function makeEditable(el, label, value, onSave){
       // The venue and the default layout are optional: if either fails, the kit alone is shown.
       var venueP = new Promise(function(res){ loader.load(VENUE, function(g){ res(g); }, null, function(){ res(null); }); });
       var dispoP = fetch(DISPO).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).catch(function(){ return null; });
+      var valP = fetch(VALID).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(j){ try { return cleanLayoutObj(j); } catch(e){ return null; } }).catch(function(){ return null; });
       var mobP = new Promise(function(res){ loader.load(MOB, function(g){ res(g); }, null, function(){ res(null); }); });
       loader.load(GLB, function(gltf){
-        Promise.all([venueP, dispoP, mobP]).then(function(x){
-          try { build(gltf, m[2].OrbitControls, m[3], x[0], x[1], x[2]); state = "ready"; renderMsg(); renderCap(); renderBar(); S.render(); }
+        Promise.all([venueP, dispoP, mobP, valP]).then(function(x){
+          try { build(gltf, m[2].OrbitControls, m[3], x[0], x[1], x[2], x[3]); state = "ready"; renderMsg(); renderCap(); renderBar(); S.render(); }
           catch(e){ fail(e); }
         });
       }, function(ev){
@@ -1186,7 +1295,7 @@ function makeEditable(el, label, value, onSave){
   }
 
   // ── scene ──
-  function build(gltf, OrbitControls, RoomEnv, venueGltf, dispo, mobGltf){
+  function build(gltf, OrbitControls, RoomEnv, venueGltf, dispo, mobGltf, valLayout){
     if (S) return;
     var renderer;
     try { renderer = new T.WebGLRenderer({canvas: canvas, antialias: true}); }
@@ -1812,25 +1921,49 @@ function makeEditable(el, label, value, onSave){
 
     // ── persistence ──
     function snapshot(n){ return [n.position.x, n.position.y, n.position.z, n.quaternion.x, n.quaternion.y, n.quaternion.z, n.quaternion.w]; }
+    // Layers: file defaults (+ disposition-574.json) = "legacy" reference; the validated layout on top = default reference.
+    // A stored layout with d:1 is relative to the validated default; a stored layout without d (older saves) keeps its old meaning.
+    var legacyRef = {orig: originals, h: [], c: []}, defRef = legacyRef;
+    if (valLayout){
+      var vo = {}, vk;
+      for (vk in originals) vo[vk] = (valLayout.n[vk] && registry[vk]) ? valLayout.n[vk].slice() : originals[vk];
+      defRef = {orig: vo, h: (valLayout.h || []).filter(function(k){ return !!registry[k]; }), c: (valLayout.c || []).filter(function(k){ return !!registry[k]; })};
+    }
+    var curRef = defRef;
+    function sameSet(a, b){ return a.slice().sort().join("|") === b.slice().sort().join("|"); }
+    function applyRef(ref){
+      var k, o, n;
+      for (k in registry){ o = ref.orig[k]; n = registry[k]; n.position.set(o[0], o[1], o[2]); n.quaternion.set(o[3], o[4], o[5], o[6]); }
+      removed.forEach(function(n){ n.visible = true; }); removed.length = 0;
+      ref.h.forEach(function(k){ var n = registry[k]; if (n && removed.indexOf(n) < 0){ n.visible = false; removed.push(n); } });
+      curtains.forEach(function(e){ setCurtain(e, ref.c.indexOf(e.userData.__key) >= 0 ? true : e.userData.__curt.def); });
+      scene.updateMatrixWorld(true);
+    }
     function save(){
       var out = {}, k, a, b, i, diff;
       for (k in registry){
-        a = snapshot(registry[k]); b = originals[k]; diff = false;
+        a = snapshot(registry[k]); b = curRef.orig[k]; diff = false;
         for (i = 0; i < 7; i++) if (Math.abs(a[i] - b[i]) > 1e-5){ diff = true; break; }
         if (diff) out[k] = a.map(function(x){ return Math.round(x * 1e5) / 1e5; });
       }
-      // Additive fields (older saves stay valid): h = removed nodes, c = closed curtains.
+      // Additive fields (older saves stay valid): h = removed nodes, c = closed curtains, d = relative to the validated default.
       var hid = removed.map(function(n){ return n.userData.__key; }), clo = curtains.filter(function(e){ return e.userData.__curt.isClosed; }).map(function(e){ return e.userData.__key; });
-      var rec = {v: 1, n: out}; if (hid.length) rec.h = hid; if (clo.length) rec.c = clo;
+      var rec = {v: 1, n: out}; if (hid.length) rec.h = hid; if (clo.length) rec.c = clo; if (valLayout && curRef === defRef) rec.d = 1;
+      var unchanged = !Object.keys(out).length && sameSet(hid, curRef.h) && sameSet(clo, curRef.c);
       try {
-        if (Object.keys(out).length || hid.length || clo.length) localStorage.setItem(KEY, JSON.stringify(rec));
+        if (!unchanged) localStorage.setItem(KEY, JSON.stringify(rec));
         else localStorage.removeItem(KEY);
       } catch(e){}
+      notifyChange();
     }
-    function restore(){
+    // Boot / import / undo: start from the right reference, then lay the stored layout (if any) on top.
+    function loadStored(){
       var data = null;
       try { data = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
-      if (!data || data.v !== 1 || (!data.n && !data.h && !data.c)) return;
+      if (!data || data.v !== 1 || (!data.n && !data.h && !data.c)){ curRef = defRef; applyRef(defRef); return; }
+      var rel = data.d === 1;
+      curRef = rel ? defRef : legacyRef;
+      applyRef(rel ? {orig: defRef.orig, h: [], c: []} : legacyRef);
       Object.keys(data.n || {}).forEach(function(k){
         var n = registry[k], v = data.n[k];
         if (!n || !v || v.length !== 7) return;
@@ -1863,28 +1996,20 @@ function makeEditable(el, label, value, onSave){
       save(); renderTools(); requestRender();
     }
     S.curtains = curtains; S.toggleCurtain = toggleCurtain; S.allCurtains = allCurtains; S.removeSel = removeSel; S.bringBack = bringBack;
-    function resetScene(){
-      for (var k in registry){
-        var o = originals[k], n = registry[k];
-        n.position.set(o[0], o[1], o[2]); n.quaternion.set(o[3], o[4], o[5], o[6]);
-      }
-      removed.forEach(function(n){ n.visible = true; }); removed.length = 0;
-      curtains.forEach(function(e){ setCurtain(e, e.userData.__curt.def); });
-      scene.updateMatrixWorld(true);
-    }
     function reset(){
-      resetScene();
+      curRef = defRef; applyRef(defRef);
       try { localStorage.removeItem(KEY); } catch(e){}
-      updateOutline(); requestRender(); renderTools();
+      updateOutline(); requestRender(); renderTools(); notifyChange();
     }
-    // Re-read the stored layout (after an import / undo): everything back to the file's positions, then the saved layout on top.
+    // Re-read the stored layout (after an import / undo).
     S.reloadLayout = function(){
-      select(null); resetScene(); restore();
+      select(null); loadStored();
       for (var i = picks.length - 1; i >= 0; i--) if (picks[i].type === "obj" && !((picks[i].piece || picks[i].el).visible)) picks.splice(i, 1);
       rebuildPickVisuals(); updateOutline(); renderCap(); renderTools(); requestRender();
     };
+    S.layoutInfo = function(){ return {hasValidated: !!valLayout, rel: curRef === defRef, removed: removed.length, validatedEntries: valLayout ? Object.keys(valLayout.n).length : 0}; };
     resetBtn.addEventListener("click", function(){ if (confirm(t("v3d_confirm"))) reset(); });
-    restore();
+    loadStored();
 
     // ── pointer interaction ──
     var mode = "over";
@@ -1910,8 +2035,8 @@ function makeEditable(el, label, value, onSave){
       if (selMode){                                   // selection mode: a click picks, nothing moves
         var sh = hitAt(ev);
         down = {x: ev.clientX, y: ev.clientY, empty: !sh, pick: sh};
-        if (!sh && mode === "walk"){
-          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, moved: false};
+        if (!sh && (mode === "walk" || mode === "char")){
+          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, off: CH.off, pit: CH.pit, moved: false};
           try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
         }
         return;
@@ -1933,8 +2058,8 @@ function makeEditable(el, label, value, onSave){
       var h = hitAt(ev);
       down = {x: ev.clientX, y: ev.clientY, empty: !h};
       if (!h){
-        if (mode === "walk"){
-          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, moved: false};
+        if (mode === "walk" || mode === "char"){
+          look = {id: ev.pointerId, yaw: yaw, pitch: pitch, off: CH.off, pit: CH.pit, moved: false};
           try { canvas.setPointerCapture(ev.pointerId); } catch(e){}
         }
         return;
@@ -1965,9 +2090,15 @@ function makeEditable(el, label, value, onSave){
       } else if (look && ev.pointerId === look.id){
         if (!look.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4) return;
         look.moved = true; canvas.classList.add("drag");
-        yaw = look.yaw + (ev.clientX - down.x) * 0.005;
-        pitch = Math.max(-1.3, Math.min(1.3, look.pitch + (ev.clientY - down.y) * 0.005));
-        applyLook(); requestRender();
+        if (mode === "char"){
+          CH.off = look.off - (ev.clientX - down.x) * 0.005;
+          CH.pit = Math.max(-0.5, Math.min(1.2, look.pit + (ev.clientY - down.y) * 0.004));
+          CH.wake = true; kickLoop(); requestRender();
+        } else {
+          yaw = look.yaw + (ev.clientX - down.x) * 0.005;
+          pitch = Math.max(-1.3, Math.min(1.3, look.pitch + (ev.clientY - down.y) * 0.005));
+          applyLook(); requestRender();
+        }
       } else if (drag && ev.pointerId === drag.id){
         if (!drag.moved && Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 4) return;
         drag.moved = true; canvas.classList.add("drag");
@@ -2002,7 +2133,7 @@ function makeEditable(el, label, value, onSave){
       else if (drag && ev.pointerId === drag.id) endDrag(drag.moved);
       else if (selPick) togglePick(selPick);
       else if (selEmpty) addPoint(ev);
-      else if (tap){ select(null); if (mode === "walk") tapFloor(ev); }
+      else if (tap){ select(null); if (mode === "walk") tapFloor(ev); else if (mode === "char") charTap(ev); }
       if (!pointers){ controls.enabled = mode === "over"; down = null; }
     }
     canvas.addEventListener("pointerleave", function(){ if (!pointers) setHover(null); });
@@ -2022,6 +2153,7 @@ function makeEditable(el, label, value, onSave){
     canvas.addEventListener("keydown", function(ev){
       var k = ev.key, step = ev.shiftKey ? 0.5 : 0.1, used = true;
       if (mode === "walk" && walkKey(ev, true)){ ev.preventDefault(); return; }
+      if (mode === "char" && charKey(ev, true)){ ev.preventDefault(); return; }
       if (k === "q" || k === "Q") rotate(15);
       else if (k === "e" || k === "E") rotate(-15);
       else if ((k === "f" || k === "F") && !ev.ctrlKey && !ev.metaKey && !ev.altKey) toggleFs();
@@ -2039,7 +2171,7 @@ function makeEditable(el, label, value, onSave){
       if (used) ev.preventDefault();
     });
 
-    canvas.addEventListener("keyup", function(ev){ if (mode === "walk" && walkKey(ev, false)) ev.preventDefault(); });
+    canvas.addEventListener("keyup", function(ev){ if (mode === "walk" && walkKey(ev, false)) ev.preventDefault(); else if (mode === "char" && charKey(ev, false)) ev.preventDefault(); });
     canvas.addEventListener("blur", function(){ held = {}; });
 
     // ── walk-through (first person) ──
@@ -2060,17 +2192,25 @@ function makeEditable(el, label, value, onSave){
       return allowed;
     }
     // Move by (dx, dz) one axis at a time, so we slide along walls instead of sticking.
-    function tryMove(dx, dz){
-      var p = camera.position, x0 = p.x, z0 = p.z;
+    function tryMove(dx, dz){ return tryMoveP(camera.position, dx, dz); }
+    function tryMoveP(p, dx, dz){
+      var x0 = p.x, z0 = p.z;
       if (dx){ wDir.set(dx > 0 ? 1 : -1, 0, 0); p.x += wDir.x * freeDist(p, wDir, Math.abs(dx)); }
       if (dz){ wDir.set(0, 0, dz > 0 ? 1 : -1); p.z += wDir.z * freeDist(p, wDir, Math.abs(dz)); }
       return p.x !== x0 || p.z !== z0;
     }
     function anyHeld(){ for (var k in held) return true; return false; }
-    function kickLoop(){ if (!loopRaf && mode === "walk" && (glide || anyHeld())){ lastT = performance.now(); loopRaf = requestAnimationFrame(loop); } }
+    function kickLoop(again){      // again = called from the loop itself: keep the frame clock (resetting it would shrink every step)
+      if (loopRaf) return;
+      if ((mode === "walk" && (glide || anyHeld())) || (mode === "char" && (CH.wake || CH.goal || anyHeld()))){ if (!again) lastT = performance.now(); loopRaf = requestAnimationFrame(loop); }
+    }
     function loop(ts){
       loopRaf = 0;
       var dt = Math.min(0.25, Math.max(0, (ts - lastT) / 1000)); lastT = ts;
+      if (mode === "char"){
+        charStep(dt); var cs = charCamStep(dt); updateCharModel();
+        dirty = true; frame(); CH.wake = !cs; kickLoop(true); return;
+      }
       if (mode !== "walk") return;
       var f = 0, r = 0, id;
       for (var k in held){ id = held[k]; if (id === "f") f++; else if (id === "b") f--; else if (id === "r") r++; else if (id === "l") r--; }
@@ -2089,8 +2229,101 @@ function makeEditable(el, label, value, onSave){
         if (glide.t >= 1) glide = null;
       }
       dirty = true; frame();
-      kickLoop();
+      kickLoop(true);
     }
+
+    // ── character mode: a little person, third-person camera behind and above ──
+    var CH = {x: 0, z: 0, h: 0, off: 0, pit: 0, dist: 1, goal: null, phase: 0, swing: 0, bob: 0, moving: false, placed: false, wake: false};
+    var charG = new T.Group(), charLegs = [], charArms = [], lookT = new T.Vector3();
+    charG.visible = false; scene.add(charG);
+    (function buildChar(){
+      function mat(c){ return new T.MeshStandardMaterial({color: c, roughness: 0.75, metalness: 0}); }
+      function add(g, geo, m, x, y, z){ var me = new T.Mesh(geo, m); me.position.set(x, y, z); me.castShadow = true; g.add(me); return me; }
+      var jacket = mat(0xc4003a), navy = mat(0x1d2a4a), skin = mat(0xf0c6a0), hair = mat(0x2a2320), mark = new T.MeshBasicMaterial({color: 0xffb000});
+      var torso = add(charG, new T.CapsuleGeometry(0.2, 0.42, 6, 14), jacket, 0, 1.18, 0); torso.scale.z = 0.8;
+      add(charG, new T.SphereGeometry(0.14, 20, 14), skin, 0, 1.62, 0);
+      var cap = add(charG, new T.SphereGeometry(0.15, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2), hair, 0, 1.64, 0.01);
+      var nose = add(charG, new T.ConeGeometry(0.03, 0.08, 8), mark, 0, 1.6, -0.17); nose.rotation.x = -Math.PI / 2;
+      [-1, 1].forEach(function(sg){
+        var leg = new T.Group(); leg.position.set(sg * 0.1, 0.8, 0); add(leg, new T.CapsuleGeometry(0.085, 0.52, 4, 10), navy, 0, -0.38, 0); charG.add(leg); charLegs.push(leg);
+        var arm = new T.Group(); arm.position.set(sg * 0.27, 1.45, 0); add(arm, new T.CapsuleGeometry(0.06, 0.45, 4, 10), jacket, 0, -0.28, 0); charG.add(arm); charArms.push(arm);
+      });
+      var arrow = new T.Mesh(new T.ConeGeometry(0.13, 0.32, 3), new T.MeshBasicMaterial({color: 0xffb000, transparent: true, opacity: 0.85}));
+      arrow.rotation.x = -Math.PI / 2; arrow.position.set(0, 0.03, -0.5); charG.add(arrow);
+    })();
+    function placeChar(x, z, h){ CH.x = x; CH.z = z; CH.h = h; CH.goal = null; CH.placed = true; CH.swing = 0; CH.bob = 0; updateCharModel(); }
+    function updateCharModel(){
+      charG.position.set(CH.x, floorY + CH.bob, CH.z); charG.rotation.y = CH.h;
+      charLegs[0].rotation.x = CH.swing; charLegs[1].rotation.x = -CH.swing;
+      charArms[0].rotation.x = -CH.swing * 0.8; charArms[1].rotation.x = CH.swing * 0.8;
+    }
+    function wrapA(a){ return Math.atan2(Math.sin(a), Math.cos(a)); }
+    function charStep(dt){
+      var f = 0, turn = 0, id, k;
+      for (k in held){ id = held[k]; if (id === "f") f++; else if (id === "b") f--; else if (id === "l") turn++; else if (id === "r") turn--; }
+      var run = fast, moved = false;
+      if (turn){ CH.h += turn * (run ? 2.8 : 2.0) * dt; CH.goal = null; }
+      if (f){
+        CH.goal = null;
+        var sp = (run ? 3.2 : 1.4) * dt * (f > 0 ? 1 : -0.6);
+        moved = tryMoveP(CH, -Math.sin(CH.h) * sp, -Math.cos(CH.h) * sp);
+      } else if (CH.goal){
+        var dx = CH.goal.x - CH.x, dz = CH.goal.z - CH.z, d = Math.hypot(dx, dz);
+        if (d < 0.1) CH.goal = null;
+        else {
+          var diff = wrapA(Math.atan2(-dx, -dz) - CH.h), st = Math.min(Math.abs(diff), 7 * dt);
+          CH.h += (diff < 0 ? -st : st);
+          if (Math.abs(diff) < 0.7){
+            var s2 = Math.min(d, (run ? 3.2 : 1.8) * dt);
+            moved = tryMoveP(CH, dx / d * s2, dz / d * s2);
+            if (!moved) CH.goal = null;
+          }
+        }
+      }
+      CH.moving = moved;
+      if (moved){ CH.phase += dt * (run ? 11 : 7.5); var amp = run ? 0.8 : 0.55; CH.swing = Math.sin(CH.phase) * amp; CH.bob = Math.abs(Math.sin(CH.phase)) * 0.04; }
+      else { CH.swing *= Math.exp(-dt * 10); CH.bob *= Math.exp(-dt * 10); if (Math.abs(CH.swing) < 0.005) CH.swing = 0; if (CH.bob < 0.001) CH.bob = 0; }
+    }
+    var chCam = new T.Vector3(), chDes = new T.Vector3(), chTgt = new T.Vector3(), chRay = new T.Raycaster();
+    // Smooth follow: the camera sits behind the character (heading + drag offset), ~4 m back and ~2.5 m up at distance 1.
+    function charCamStep(dt, snap){
+      var a = CH.h + CH.off, k = CH.dist, back = 4 * k;
+      chDes.set(CH.x + Math.sin(a) * back, Math.max(floorY + 0.5, floorY + 2.5 * k + CH.pit * 3), CH.z + Math.cos(a) * back);
+      chTgt.set(CH.x, floorY + 1.2, CH.z);
+      if (venueMeshes.length){      // do not let the camera go through a wall behind the character
+        chCam.set(CH.x, floorY + 1.5, CH.z); var dv = chDes.clone().sub(chCam), len = dv.length(); dv.normalize();
+        chRay.set(chCam, dv); chRay.near = 0; chRay.far = len;
+        var hh = chRay.intersectObjects(venueMeshes, false)[0];
+        if (hh) chDes.copy(chCam).addScaledVector(dv, Math.max(1.4, hh.distance - 0.3));
+      }
+      var kp = snap ? 1 : 1 - Math.exp(-dt * 6), kt = snap ? 1 : 1 - Math.exp(-dt * 10);
+      camera.position.lerp(chDes, kp); lookT.lerp(chTgt, kt);
+      camera.lookAt(lookT);
+      return camera.position.distanceTo(chDes) < 0.02 && lookT.distanceTo(chTgt) < 0.02;
+    }
+    function charKey(ev, down){
+      var c = ev.code, k = ev.key, id = null;
+      fast = ev.shiftKey;
+      if (S.sel && (k === "q" || k === "Q" || k === "e" || k === "E")) return false;   // rotate the selection instead
+      if (c === "KeyW" || c === "ArrowUp" || k === "z" || k === "Z" || k === "w" || k === "W") id = "f";
+      else if (c === "KeyS" || c === "ArrowDown") id = "b";
+      else if (c === "KeyA" || c === "ArrowLeft" || k === "q" || k === "Q") id = "l";
+      else if (c === "KeyD" || c === "ArrowRight") id = "r";
+      if (!id) return false;
+      var kk = c || k;
+      if (down) held[kk] = id; else delete held[kk];
+      CH.wake = true; kickLoop(); return true;
+    }
+    function charTap(ev){
+      if (!venueMeshes.length) return;
+      setNdc(ev);
+      var h = ray.intersectObjects(venueMeshes, false)[0];
+      if (!h || !h.face) return;
+      nrm.copy(h.face.normal).transformDirection(h.object.matrixWorld);
+      if (nrm.y < 0.7 || Math.abs(h.point.y - floorY) > 0.25) return;
+      CH.goal = {x: h.point.x, z: h.point.z}; CH.wake = true; kickLoop();
+    }
+    S.char = CH; S.charTap = charTap;
     function walkKey(ev, down){
       var c = ev.code, k = ev.key, id = null;
       fast = ev.shiftKey;
@@ -2130,6 +2363,12 @@ function makeEditable(el, label, value, onSave){
       glideTo(h.point.x, h.point.z);
     }
     canvas.addEventListener("wheel", function(ev){
+      if (mode === "char"){
+        ev.preventDefault();
+        var u2 = ev.deltaMode === 1 ? 16 : ev.deltaMode === 2 ? 100 : 1;
+        CH.dist = Math.max(0.35, Math.min(3.5, CH.dist * Math.exp(Math.max(-300, Math.min(300, ev.deltaY * u2)) * 0.0015)));
+        CH.wake = true; kickLoop(); requestRender(); return;
+      }
       if (mode !== "walk") return;
       ev.preventDefault();
       var d = -Math.sign(ev.deltaY) * Math.min(2, Math.max(0.3, Math.abs(ev.deltaY) / 100)) * 0.6;
@@ -2138,7 +2377,7 @@ function makeEditable(el, label, value, onSave){
     document.addEventListener("keydown", function(ev){
       if (ev.key !== "Escape") return;
       if (fsFallback){ exitFs(); return; }          // first Esc leaves the full-window overlay
-      if (mode === "walk") setMode("over");
+      if (mode === "walk" || mode === "char") setMode("over");
     });
 
     function spawnPose(){
@@ -2166,27 +2405,41 @@ function makeEditable(el, label, value, onSave){
     }
     function setMode(m){
       if (m === mode || !venue) return;
-      glide = null; held = {}; nav = null;
-      if (m === "walk"){
-        saved = {pos: camera.position.clone(), target: controls.target.clone(), fov: camera.fov, near: camera.near};
-        var sp = spawnPose();
-        controls.enabled = false;
-        camera.fov = wide ? 90 : 70; camera.near = 0.05; camera.updateProjectionMatrix();
-        camera.position.set(sp.x, EYE_Y, sp.z); yaw = sp.yaw; pitch = 0; applyLook();
-        stage.classList.add("walk");
-      } else {
-        stage.classList.remove("walk");
+      var from = mode, sp;
+      glide = null; held = {}; nav = null; CH.goal = null;
+      if (from === "over") saved = {pos: camera.position.clone(), target: controls.target.clone(), fov: camera.fov, near: camera.near};
+      if (m === "over"){
+        stage.classList.remove("walk"); stage.classList.remove("char"); charG.visible = false;
         camera.fov = saved.fov; camera.near = saved.near; camera.updateProjectionMatrix();
         camera.position.copy(saved.pos); controls.target.copy(saved.target);
         controls.enabled = true; controls.update();
+      } else if (m === "walk"){
+        controls.enabled = false; charG.visible = false;
+        camera.fov = wide ? 90 : 70; camera.near = 0.05; camera.updateProjectionMatrix();
+        if (from === "char"){ camera.position.set(CH.x, EYE_Y, CH.z); yaw = CH.h; }
+        else { sp = spawnPose(); camera.position.set(sp.x, EYE_Y, sp.z); yaw = sp.yaw; }
+        pitch = 0; applyLook();
+        stage.classList.add("walk"); stage.classList.remove("char");
+      } else {
+        controls.enabled = false;
+        camera.fov = 60; camera.near = 0.1; camera.updateProjectionMatrix();
+        if (from === "walk") placeChar(camera.position.x, camera.position.z, yaw);
+        else if (!CH.placed){ sp = spawnPose(); placeChar(sp.x, sp.z, sp.yaw); }
+        CH.off = 0; CH.pit = 0; charG.visible = true; updateCharModel();
+        lookT.set(CH.x, floorY + 1.2, CH.z); camera.position.set(CH.x, EYE_Y, CH.z);
+        charCamStep(0, true);
+        stage.classList.add("walk"); stage.classList.add("char");
       }
       mode = S.mode = m;
-      setDeco(m === "walk");           // hanging decor: shown in the walk-through, hidden in the overview
-      canvas.setAttribute("aria-label", t(m === "walk" ? "v3d_aria_walk" : "v3d_aria"));
+      setDeco(m !== "over");           // hanging decor: shown inside, hidden in the overview
+      canvas.setAttribute("aria-label", t(m === "walk" ? "v3d_aria_walk" : m === "char" ? "v3d_aria_char" : "v3d_aria"));
       renderBar(); renderCap(); updateOutline(); requestRender();
     }
     function goZone(z){
-      if (mode === "walk"){
+      if (mode === "char"){        // teleport the character, facing the middle of the venue
+        var far2 = Math.hypot(z.pos.x, z.pos.z) > 2.5;
+        placeChar(z.pos.x, z.pos.z, far2 ? Math.atan2(z.pos.x, z.pos.z) : CH.h); CH.wake = true; kickLoop();
+      } else if (mode === "walk"){
         var far = Math.hypot(z.pos.x, z.pos.z) > 2.5;
         glideTo(z.pos.x, z.pos.z, {free: true, yaw: far ? Math.atan2(z.pos.x, z.pos.z) : undefined});
       } else {
@@ -2196,6 +2449,7 @@ function makeEditable(el, label, value, onSave){
     S.applyFov = function(){ if (mode === "walk"){ camera.fov = wide ? 90 : 70; camera.updateProjectionMatrix(); requestRender(); } };
     S.onFs = function(){ S.applyFov(); resize(); requestRender(); };
     S.setMode = setMode; S.goZone = goZone; S.spawn = spawnPose;
+    S.charPose = function(){ return {x: CH.x, z: CH.z, h: CH.h, goal: CH.goal, dist: CH.dist, cam: camera.position.clone(), visible: charG.visible, fov: camera.fov}; };
     S.pose = function(){ return {mode: mode, x: camera.position.x, y: camera.position.y, z: camera.position.z, yaw: yaw, pitch: pitch}; };
     S.tapFloor = tapFloor;
     S.free = function(dx, dz, maxD){ wDir.set(dx, 0, dz).normalize(); return freeDist(camera.position, wDir, maxD); };

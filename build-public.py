@@ -13,7 +13,7 @@ HERE = Path(__file__).resolve().parent
 SRC = HERE / "index.html"
 OUT = HERE / "docs"
 # Venue published on Alex's decision (29/10): drawn textures only, no photos or names inside.
-MODELS = ["kit-google.glb", "lieu-574.glb", "mobilier-574.glb", "disposition-574.json"]
+MODELS = ["kit-google.glb", "lieu-574.glb", "mobilier-574.glb", "disposition-574.json", "disposition-validee.json"]
 # The only e-mail address allowed online: where visitors send their 3D layout.
 ALLOWED_EMAILS = {"alexandre.cormeraie@sncf.fr"}
 
@@ -35,6 +35,20 @@ def main():
     # Logistics card: delivery dock, service lift, overnight storage.
     html = drop(html, r'\s*<div class="card"><span class="tag" data-i18n="e4_tag">.*?</div>(?=\s*</div>\s*</div>\s*</section>)',
                 "the logistics card")
+    # Public page = 3D + calendar only (Alex, 29/10): drop the content themes and the on-site cards,
+    # then order the sections 3D, planning, principle, right under the header.
+    html = drop(html, r'<section id="axes">.*?</section>\s*', "the content themes section")
+    html = drop(html, r'<section id="espaces">.*?</section>\s*', "the on-site section")
+    blocks = {}
+    for sid in ("plan3d", "planning", "principe"):
+        m = re.search(r'<section id="%s">.*?</section>\s*' % sid, html, flags=re.S)
+        if not m:
+            raise SystemExit(f"build-public: section {sid} not found")
+        blocks[sid] = m.group(0)
+        html = html.replace(m.group(0), "", 1)
+    html = html.replace("<main>", "<main>\n" + blocks["plan3d"] + blocks["planning"] + blocks["principe"], 1)
+    # Lets the page show the "not connected / send your changes" notices.
+    html = html.replace('<html lang="fr">', '<html lang="fr" data-public="1">', 1)
     # Their texts in the FR/EN tables too: hidden, but readable in the page source.
     html = re.sub(r'\b(?:t_\w+|g_(?:google|site|guests|other)|e4_\w+|todo_\w+|contacts):"(?:[^"\\]|\\.)*",?[ \t]*', "", html)
     for word in ("Sylvie", "quai", "Laurent", "Damien"):
