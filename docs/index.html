@@ -8,19 +8,20 @@
 :root{
   --bg:#ffffff; --soft:#f7f8fa; --ink:#3b414c; --muted:#6f7684; --faint:#a3a9b4; --line:#eef0f3;
   --accent:#2f6bff; --accent-soft:#eef3ff; --warn:#a15c00; --warn-soft:#fff8ec;
+  --edge:#dfe3ea; --edge-strong:#c5cbd6; --danger:#c4321f; --danger-soft:#fdf0ee;
   --t-talk:#2f6bff; --t-demo:#16a37a; --t-break:#b3b8c2; --t-workshop:#9a6bff; --t-sncf:#e2405a;
   --radius:14px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#111317; --soft:#191c21; --ink:#d9dce2; --muted:#9aa1ad; --faint:#6f7683; --line:#23272e;
-    --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12;
+    --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12; --edge:#30353e; --edge-strong:#454b56; --danger:#ff8f80; --danger-soft:#2a1714;
     --t-talk:#7aa2ff; --t-demo:#48cc9b; --t-break:#6f7683; --t-workshop:#b796ff; --t-sncf:#ff7489;
   }
 }
 :root[data-theme="dark"]{
   --bg:#111317; --soft:#191c21; --ink:#d9dce2; --muted:#9aa1ad; --faint:#6f7683; --line:#23272e;
-  --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12;
+  --accent:#7aa2ff; --accent-soft:#1b2337; --warn:#ffbf66; --warn-soft:#231d12; --edge:#30353e; --edge-strong:#454b56; --danger:#ff8f80; --danger-soft:#2a1714;
   --t-talk:#7aa2ff; --t-demo:#48cc9b; --t-break:#6f7683; --t-workshop:#b796ff; --t-sncf:#ff7489;
 }
 *{box-sizing:border-box}
@@ -196,7 +197,7 @@ html[data-public="1"] #v3dImpOpen,html[data-public="1"] #v3dImp,html[data-public
 .v3d-share .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 18px}
 .v3d-share .ok{color:var(--accent);font-weight:600;font-size:13px}
 .v3d-share .bad{color:var(--warn);font-size:13px}
-.v3d-share a.v3d-link{display:inline-block}
+.v3d-share a.v3d-link{display:inline-flex}
 .v3d-imp{margin:6px 0 0}
 .v3d-imp[hidden]{display:none}
 .v3d-imp textarea{width:100%;min-height:72px;resize:vertical;font:inherit;font-size:13px;font-weight:300;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
@@ -216,6 +217,62 @@ html[data-public="1"] #v3dImpOpen,html[data-public="1"] #v3dImp,html[data-public
 .v3d-claude .ok{color:var(--accent);font-weight:600}
 .v3d.fs .v3d-claude{max-height:38vh;overflow:auto;flex:0 0 auto}
 .v3d-fshint[hidden]{display:none}
+/* 3D controls: real buttons (pill), segmented choices, icons drawn with a CSS mask in the text colour */
+.v3d-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:0 14px;font:inherit;font-size:13.5px;font-weight:400;line-height:1.2;color:var(--ink);background:var(--bg);border:1px solid var(--edge);border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s,transform .1s}
+.v3d-link:hover{background:var(--soft);border-color:var(--edge-strong)}
+.v3d-link:active{transform:translateY(1px)}
+.v3d-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.v3d-link[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.v3d-link[data-ic]::before{content:"";width:16px;height:16px;flex:none;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+.v3d-link.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:500}
+.v3d-link.primary:hover{background:var(--accent);filter:brightness(1.08)}
+.v3d-link.danger{color:var(--danger)}
+.v3d-link.danger:hover{background:var(--danger-soft);border-color:var(--danger)}
+.v3d-link.quiet{color:var(--muted);border-color:transparent;background:transparent}
+.v3d-link.quiet:hover{color:var(--ink);background:var(--soft)}
+.v3d-link.sm{min-height:32px;padding:0 12px;font-size:13px}
+.v3d-link[data-ic="over"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z%22/%3E%3Cpath d=%22M9 3v15M15 6v15%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="walk"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%223%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="char"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%224.5%22 r=%222.5%22/%3E%3Cpath d=%22M12 8v7M8 22l4-7 4 7M6.5 11.5h11%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="pin"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z%22/%3E%3Ccircle cx=%2212%22 cy=%2210%22 r=%222.5%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="all"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 2v20M2 12h20M9 5l3-3 3 3M9 19l3 3 3-3M5 9l-3 3 3 3M19 9l3 3-3 3%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="piece"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 2l9 5v10l-9 5-9-5V7z%22/%3E%3Cpath d=%22M12 12l9-5M12 12v10M12 12L3 7%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="deco"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 2v6M6 15a6 6 0 0 1 12 0z%22/%3E%3Cpath d=%22M10 18a2 2 0 0 0 4 0%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="copen"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 3h18M5 3c0 7 2 13 4 18M19 3c0 7-2 13-4 18%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="cclose"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 3h18M5 3v18M19 3v18M12 3v18%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="spark"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z%22/%3E%3Cpath d=%22M19 3v4M17 5h4%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="fs"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="copy"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%228%22 y=%228%22 width=%2213%22 height=%2213%22 rx=%222%22/%3E%3Cpath d=%22M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="mail"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%223%22 y=%225%22 width=%2218%22 height=%2214%22 rx=%222%22/%3E%3Cpath d=%22M3 7l9 6 9-6%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="reset"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 12a9 9 0 1 0 3-6.7L3 8%22/%3E%3Cpath d=%22M3 3v5h5%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="rotr"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M21 12a9 9 0 1 1-3-6.7L21 8%22/%3E%3Cpath d=%22M21 3v5h-5%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="trash"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="cut"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%226%22 cy=%226%22 r=%223%22/%3E%3Ccircle cx=%226%22 cy=%2218%22 r=%223%22/%3E%3Cpath d=%22M8.5 7.5L20 19M8.5 16.5L20 5%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="link"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1%22/%3E%3Cpath d=%22M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="wide"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M2 12h20M5 9l-3 3 3 3M19 9l3 3-3 3%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="upload"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4%22/%3E%3C/svg%3E")}
+.v3d-link[data-ic="check"]{--ic:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22black%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M4 12l5 5L20 6%22/%3E%3C/svg%3E")}
+.v3d-seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--soft);border:1px solid var(--edge);border-radius:999px}
+.v3d-seg .v3d-link{border-color:transparent;background:transparent;min-height:32px}
+.v3d-seg .v3d-link:hover{background:var(--bg)}
+.v3d-seg .v3d-link[aria-pressed="true"]{background:var(--bg);color:var(--ink);border-color:var(--edge);box-shadow:0 1px 3px rgba(0,0,0,.12);font-weight:500}
+.v3d-bar{align-items:center;gap:10px 16px;padding:0 0 12px}
+.v3d-bar #v3dZones{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.v3d-bar #v3dZones>span{font-size:13px;color:var(--muted);margin-right:2px}
+.v3d-tools{align-items:center;gap:10px 12px;padding:12px 0 0}
+.v3d-tools .grp{align-items:center;gap:6px}
+.v3d-tools .grp>span:not(.sep):not(.v3d-seg){font-size:13px;color:var(--muted)}
+.v3d-tools .sep{display:none}
+.v3d-cap{align-items:center;gap:8px 10px;min-height:52px;padding:12px 0 0}
+.v3d-cap .name{font-weight:500}
+.v3d-cap .ang{margin-right:4px}
+.v3d-share .row{align-items:center;gap:8px 10px;margin:8px 0 0}
+.v3d-claude .row{align-items:center;gap:8px}
+.pub-dlg .row{align-items:center;gap:8px 10px}
+.pub-dlg .v3d-link{font-size:14px}
+.v3d-coach .v3d-link{margin-top:8px;color:#fff;background:#2f6bff;border-color:#2f6bff;min-height:32px}
+.v3d-foot{align-items:center;margin-top:10px}
+@media (max-width:480px){.v3d-seg .v3d-link{padding:0 10px;font-size:13px}.v3d-seg .v3d-link[data-ic]::before{display:none}.v3d-link{padding:0 12px}}
 html.v3d-lock{overflow:hidden}
 .v3d.fs{position:fixed;inset:0;z-index:2147483000;background:var(--bg);display:flex;flex-direction:column;padding:10px 16px;overflow:auto}
 .v3d.fs .v3d-stage{flex:1 1 auto;height:auto;min-height:200px}
@@ -281,10 +338,10 @@ html.v3d-lock{overflow:hidden}
     </figure>
     <div class="v3d" id="v3d">
       <div class="v3d-bar" id="v3dBar" hidden>
-        <span class="grp" role="group">
-          <button type="button" class="v3d-link" id="v3dModeOver" aria-pressed="true" data-i18n="v3d_mode_over">Vue d'ensemble</button>
-          <button type="button" class="v3d-link" id="v3dModeWalk" aria-pressed="false" data-i18n="v3d_mode_walk">Visite</button>
-          <button type="button" class="v3d-link" id="v3dModeChar" aria-pressed="false" data-i18n="v3d_mode_char">Personnage</button>
+        <span class="grp v3d-seg" role="group">
+          <button type="button" class="v3d-link" data-ic="over" id="v3dModeOver" aria-pressed="true" data-i18n="v3d_mode_over">Vue d'ensemble</button>
+          <button type="button" class="v3d-link" data-ic="walk" id="v3dModeWalk" aria-pressed="false" data-i18n="v3d_mode_walk">Visite</button>
+          <button type="button" class="v3d-link" data-ic="char" id="v3dModeChar" aria-pressed="false" data-i18n="v3d_mode_char">Personnage</button>
         </span>
         <span class="grp" id="v3dZones" role="group"></span>
       </div>
@@ -299,29 +356,29 @@ html.v3d-lock{overflow:hidden}
             <li><span class="ic" aria-hidden="true">✕</span><span data-i18n="v3d_coach_3">Retirez-le avec « Retirer » sous la 3D (ou la touche Suppr)</span></li>
             <li><span class="ic" aria-hidden="true">↻</span><span data-i18n="v3d_coach_4">Glissez dans le vide pour tourner la vue, molette pour zoomer</span></li>
           </ul>
-          <button type="button" class="v3d-link" id="v3dCoachOk" data-i18n="v3d_coach_ok">J'ai compris</button>
+          <button type="button" class="v3d-link" data-ic="check" id="v3dCoachOk" data-i18n="v3d_coach_ok">J'ai compris</button>
         </div>
       </div>
       <p class="status v3d-fshint" id="v3dFsHint" hidden></p>
       <div class="v3d-tools" id="v3dTools" hidden>
         <span class="grp" id="v3dMoveGrp" role="group"><span data-i18n="v3d_move">Déplacer :</span>
-          <button type="button" class="v3d-link" id="v3dMoveAll" aria-pressed="true" data-i18n="v3d_move_all">l'ensemble</button><span class="sep" aria-hidden="true">·</span>
-          <button type="button" class="v3d-link" id="v3dMovePiece" aria-pressed="false" data-i18n="v3d_move_piece">une pièce</button></span>
-        <button type="button" class="v3d-link" id="v3dDeco" hidden></button>
-        <button type="button" class="v3d-link" id="v3dFov" hidden></button>
-        <button type="button" class="v3d-link" id="v3dRestore" hidden></button>
+          <span class="v3d-seg"><button type="button" class="v3d-link" data-ic="all" id="v3dMoveAll" aria-pressed="true" data-i18n="v3d_move_all">l'ensemble</button><span class="sep" aria-hidden="true">·</span>
+          <button type="button" class="v3d-link" data-ic="piece" id="v3dMovePiece" aria-pressed="false" data-i18n="v3d_move_piece">une pièce</button></span></span>
+        <button type="button" class="v3d-link" data-ic="deco" id="v3dDeco" hidden></button>
+        <button type="button" class="v3d-link" data-ic="wide" id="v3dFov" hidden></button>
+        <button type="button" class="v3d-link" data-ic="reset" id="v3dRestore" hidden></button>
         <span class="grp" id="v3dCurt" role="group" hidden><span data-i18n="v3d_curt">Rideaux :</span>
-          <button type="button" class="v3d-link" id="v3dCurtOpen" data-i18n="v3d_curt_open_all">tout ouvrir</button><span class="sep" aria-hidden="true">·</span>
-          <button type="button" class="v3d-link" id="v3dCurtClose" data-i18n="v3d_curt_close_all">tout fermer</button></span>
-        <button type="button" class="v3d-link" id="v3dSelBtn" aria-pressed="false"></button>
-        <button type="button" class="v3d-link" id="v3dFs"></button>
+          <button type="button" class="v3d-link" data-ic="copen" id="v3dCurtOpen" data-i18n="v3d_curt_open_all">tout ouvrir</button><span class="sep" aria-hidden="true">·</span>
+          <button type="button" class="v3d-link" data-ic="cclose" id="v3dCurtClose" data-i18n="v3d_curt_close_all">tout fermer</button></span>
+        <button type="button" class="v3d-link" data-ic="spark" id="v3dSelBtn" aria-pressed="false"></button>
+        <button type="button" class="v3d-link" data-ic="fs" id="v3dFs"></button>
       </div>
       <div class="v3d-claude" id="v3dClaude" hidden>
         <p id="v3dClHead"></p>
         <ol id="v3dClList"></ol>
         <label for="v3dClWant" id="v3dClWantLbl"></label>
         <textarea id="v3dClWant" rows="3"></textarea>
-        <div class="row"><button type="button" class="v3d-link" id="v3dClCopy"></button><button type="button" class="v3d-link" id="v3dClClear"></button><span class="ok" id="v3dClOk" role="status" aria-live="polite"></span></div>
+        <div class="row"><button type="button" class="v3d-link primary" data-ic="copy" id="v3dClCopy"></button><button type="button" class="v3d-link quiet" id="v3dClClear"></button><span class="ok" id="v3dClOk" role="status" aria-live="polite"></span></div>
       </div>
       <div class="v3d-cap" id="v3dCap" aria-live="polite"></div>
       <details class="v3d-more"><summary data-i18n="v3d_more">Toutes les commandes (souris et clavier)</summary>
@@ -331,12 +388,12 @@ html.v3d-lock{overflow:hidden}
       <div class="v3d-share" id="v3dShare" hidden>
         <p class="status intro" data-i18n="v3d_share_p">Vous pouvez modifier la 3D comme vous voulez (déplacer, tourner, retirer, ouvrir/fermer les rideaux). Quand c'est bon, copiez vos modifications et envoyez-les à Alexandre.</p>
         <div class="row">
-          <button type="button" class="v3d-link" id="v3dShCopy"></button>
-          <a class="v3d-link" id="v3dShMail" data-mail="alexandre.cormeraie@sncf.fr" href="#"></a>
+          <button type="button" class="v3d-link primary" data-ic="copy" id="v3dShCopy"></button>
+          <a class="v3d-link" data-ic="mail" id="v3dShMail" data-mail="alexandre.cormeraie@sncf.fr" href="#"></a>
           <span class="ok" id="v3dShOk" role="status" aria-live="polite"></span>
         </div>
         <div class="row">
-          <button type="button" class="v3d-link quiet" id="v3dImpOpen" aria-expanded="false"></button>
+          <button type="button" class="v3d-link quiet" data-ic="upload" id="v3dImpOpen" aria-expanded="false"></button>
           <button type="button" class="v3d-link" id="v3dImpUndo" hidden></button>
         </div>
         <div class="v3d-imp" id="v3dImp" hidden>
@@ -347,8 +404,9 @@ html.v3d-lock{overflow:hidden}
       </div>
       <div class="v3d-foot">
         <p class="status" id="v3dSoon" data-i18n="v3d_soon" hidden>La maquette du lieu (574) n'a pas pu être chargée : le kit est présenté sur une grille en attendant.</p>
-        <p class="status"><button type="button" class="v3d-link" id="v3dReset" data-i18n="v3d_reset">Réinitialiser la disposition</button></p>
+        <p class="status"><button type="button" class="v3d-link quiet sm" data-ic="reset" id="v3dReset" data-i18n="v3d_reset">Réinitialiser la disposition</button></p>
       </div>
+    </div>
     </div>
     <p class="status" data-i18n="k_note">Dimensions en partie supposées, à confirmer avec Google. Fichiers Blender et 3D dans le dossier « 3d ».</p>
   </div>
@@ -973,8 +1031,8 @@ function makeEditable(el, label, value, onSave){
 
   function renderCap(){
     capEl.textContent = "";
-    function link(txt, fn){
-      var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link"; b.textContent = txt;
+    function link(txt, fn, ic, cls){
+      var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link sm" + (cls ? " " + cls : ""); b.textContent = txt; if (ic) b.dataset.ic = ic;
       b.addEventListener("click", function(){ fn(); canvas.focus({preventScroll:true}); });
       capEl.appendChild(b); return b;
     }
@@ -993,14 +1051,14 @@ function makeEditable(el, label, value, onSave){
     name.textContent = txt; capEl.appendChild(name);
     var angEl = document.createElement("span"); angEl.className = "ang"; angEl.id = "v3dAng"; angEl.setAttribute("aria-hidden", "true");
     capEl.appendChild(angEl); if (S.updateAngle) S.updateAngle();
-    link("⟲ " + t("v3d_left"), function(){ S.rotate(15); });
-    link("⟳ " + t("v3d_right"), function(){ S.rotate(-15); });
+    link(t("v3d_left"), function(){ S.rotate(15); }, "reset");
+    link(t("v3d_right"), function(){ S.rotate(-15); }, "rotr");
     var cu = !sel.piece && sel.el.userData.__curt;
-    if (cu) link(t(cu.isClosed ? "v3d_curt_open" : "v3d_curt_close"), function(){ S.toggleCurtain(sel.el); });
-    link(t("v3d_remove"), function(){ S.removeSel(); });
+    if (cu) link(t(cu.isClosed ? "v3d_curt_open" : "v3d_curt_close"), function(){ S.toggleCurtain(sel.el); }, cu.isClosed ? "copen" : "cclose");
+    link(t("v3d_remove"), function(){ S.removeSel(); }, "trash", "danger");
     if (S.pieceMode){ /* single-piece mode: every click already picks one piece */ }
-    else if (sel.piece) link(t("v3d_regroup"), function(){ S.regroup(); });
-    else if (sel.el.children.length > 0) link(t("v3d_detach"), function(){ S.detach(); });
+    else if (sel.piece) link(t("v3d_regroup"), function(){ S.regroup(); }, "link");
+    else if (sel.el.children.length > 1) link(t("v3d_detach"), function(){ S.detach(); }, "cut");
   }
   // Move mode / hanging decor / wide view / full screen links (below the 3D view).
   function renderTools(){
@@ -1248,9 +1306,9 @@ function makeEditable(el, label, value, onSave){
     var dlg = document.createElement("div"); dlg.className = "pub-dlg"; dlg.setAttribute("role", "dialog"); dlg.setAttribute("aria-modal", "true"); dlg.setAttribute("aria-labelledby", "pubMsg");
     var p = document.createElement("p"); p.id = "pubMsg"; dlg.appendChild(p);
     var row = document.createElement("div"); row.className = "row";
-    var bCopy = document.createElement("button"); bCopy.type = "button"; bCopy.className = "v3d-link";
-    var aMail = document.createElement("a"); aMail.className = "v3d-link"; aMail.href = "#";
-    var bLater = document.createElement("button"); bLater.type = "button"; bLater.className = "v3d-link";
+    var bCopy = document.createElement("button"); bCopy.type = "button"; bCopy.className = "v3d-link primary"; bCopy.dataset.ic = "copy";
+    var aMail = document.createElement("a"); aMail.className = "v3d-link"; aMail.dataset.ic = "mail"; aMail.href = "#";
+    var bLater = document.createElement("button"); bLater.type = "button"; bLater.className = "v3d-link quiet";
     pubOkEl = document.createElement("span"); pubOkEl.className = "ok"; pubOkEl.setAttribute("role", "status");
     row.appendChild(bCopy); row.appendChild(aMail); row.appendChild(bLater); row.appendChild(pubOkEl); dlg.appendChild(row); m.appendChild(dlg);
     bCopy.addEventListener("click", function(){
@@ -1302,7 +1360,8 @@ function makeEditable(el, label, value, onSave){
     if (!S.zones.length) return;
     var lab = document.createElement("span"); lab.textContent = t("v3d_goto"); zonesEl.appendChild(lab);
     S.zones.forEach(function(z){
-      var b = document.createElement("button"); b.type = "button"; b.className = "v3d-link"; b.textContent = zoneLabel(z.node);
+      var b = document.createElement("button"), full = zoneLabel(z.node), short = full.replace(/\s*\(.*\)\s*$/, "");
+      b.type = "button"; b.className = "v3d-link sm"; b.dataset.ic = "pin"; b.textContent = short; if (short !== full) b.title = full;
       b.addEventListener("click", function(){ S.goZone(z); canvas.focus({preventScroll:true}); });
       zonesEl.appendChild(b);
     });
